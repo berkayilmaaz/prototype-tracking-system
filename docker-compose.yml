@@ -1,0 +1,14 @@
+services:
+  prototip-takip:
+    build: .
+    container_name: prototip-takip
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    environment:
+      TZ: Europe/Istanbul
+      # Ters vekil (IIS / nginx) Windows/AD kimliğini bir başlıkla iletiyorsa açın:
+      # PT_USER_HEADER: X-Remote-User
+      # PT_BACKUP_KEEP: "30"

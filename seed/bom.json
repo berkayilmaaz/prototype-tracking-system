@@ -1,0 +1,675 @@
+{
+ "products": {
+  "ambient": {
+   "name": "Ambient",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 1,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 9,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Black",
+     "owner": "Erdi"
+    },
+    {
+     "part": "PCBA ID 02",
+     "perSet": 3,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01 ID-02",
+     "owner": "Salih"
+    },
+    {
+     "part": "PCBA ID 04",
+     "perSet": 6,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01 ID-04",
+     "owner": "Salih"
+    },
+    {
+     "part": "Pipe 200mm",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "200mm",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Pipe 350mm",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "350mm",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Pipe 400mm",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "400mm",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Pipe 545mm",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "545mm",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "ceiling-left": {
+   "name": "Ceiling Left",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 2,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Gray",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Lens",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Clear",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Divider",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Gray",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Klips",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource-StarYay",
+     "material": "AISI302",
+     "owner": "Sefa"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev03",
+     "owner": "Nuri"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "ceiling-right": {
+   "name": "Ceiling Right",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 3,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Space Gray",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Lens",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Clear",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Divider",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Space Gray",
+     "owner": "Sefa"
+    },
+    {
+     "part": "Klips",
+     "perSet": 1,
+     "type": "Fason",
+     "maker": "OutSource-StarYay",
+     "material": "AISI302",
+     "owner": "Sefa"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev03",
+     "owner": "Nuri"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "overhead": {
+   "name": "Overhead",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 4,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Space Gray",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Lens",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "3D Reçine - Clear",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Klips",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "OutSource-StarYay",
+     "material": "AISI302",
+     "owner": "Erdi"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01",
+     "owner": "Salih"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "puddle": {
+   "name": "Puddle",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 5,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "3D Reçine - Gray",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Lens",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "3D Reçine - Clear",
+     "owner": "Erdi"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01",
+     "owner": "Salih"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "reading": {
+   "name": "Reading Lamp",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 6,
+   "parts": [
+    {
+     "part": "Gövde Üst",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Gövde Alt",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Lens",
+     "perSet": 2,
+     "type": "Stok",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "PCBA",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01",
+     "owner": "Nuri"
+    },
+    {
+     "part": "PCB Tutucu",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Rubber Buton",
+     "perSet": 2,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Flex",
+     "perSet": 2,
+     "type": "Stok",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Flex Tutucu",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Braket",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Braket Kapak",
+     "perSet": 2,
+     "type": "Fason",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Ara Kablo",
+     "perSet": 2,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 2,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": ""
+    }
+   ]
+  },
+  "stowage": {
+   "name": "Stowage",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 7,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "3D Reçine - Black",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Lens",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "3D Reçine - Clear",
+     "owner": "Erdi"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev03",
+     "owner": "Nuri"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 2,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "uppershelf": {
+   "name": "Uppershelf Stowage",
+   "program": "H84X",
+   "customer": "Ford",
+   "ord": 8,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 8,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "MJF",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Lens",
+     "perSet": 8,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "3D Reçine - Clear",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Switch",
+     "perSet": 8,
+     "type": "Fason",
+     "maker": "Sanel",
+     "material": "MJF",
+     "owner": "Erdi"
+    },
+    {
+     "part": "Slider",
+     "perSet": 8,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "Slider",
+     "owner": "Hamdi"
+    },
+    {
+     "part": "Yay",
+     "perSet": 8,
+     "type": "Fason",
+     "maker": "OutSource",
+     "material": "Yay",
+     "owner": "Hamdi"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 8,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev02",
+     "owner": "Nuri"
+    },
+    {
+     "part": "Kablo+Konnektör",
+     "perSet": 8,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Tesisat 2m",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "conv25a": {
+   "name": "25A Converter",
+   "program": "25A Converter",
+   "customer": "Ford",
+   "ord": 9,
+   "parts": [
+    {
+     "part": "PCBA",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev01",
+     "owner": ""
+    },
+    {
+     "part": "Profil",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Alu",
+     "owner": ""
+    },
+    {
+     "part": "Üst Kapak",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "PC-ABS",
+     "owner": ""
+    },
+    {
+     "part": "Yan Kapak 1",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "PC-ABS",
+     "owner": ""
+    },
+    {
+     "part": "Yan Kapak 2",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "PC-ABS",
+     "owner": ""
+    },
+    {
+     "part": "Vida x8",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "",
+     "owner": ""
+    }
+   ]
+  },
+  "entrance": {
+   "name": "Entrance Lamp",
+   "program": "Entrance Lamp",
+   "customer": "Daimler Truck",
+   "ord": 10,
+   "parts": [
+    {
+     "part": "Gövde",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "",
+     "owner": "Ömür"
+    },
+    {
+     "part": "Lens",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "",
+     "owner": "Ömür"
+    },
+    {
+     "part": "PCBA",
+     "perSet": 1,
+     "type": "Sanel",
+     "maker": "Sanel",
+     "material": "Rev02",
+     "owner": "Ali"
+    },
+    {
+     "part": "Pin Header",
+     "perSet": 1,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": "Salih Tosun"
+    },
+    {
+     "part": "Kablo",
+     "perSet": 1,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Konnektör",
+     "perSet": 1,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": "Mesut"
+    },
+    {
+     "part": "Terminal",
+     "perSet": 1,
+     "type": "Belirsiz",
+     "maker": "",
+     "material": "",
+     "owner": "Mesut"
+    }
+   ]
+  },
+  "sti-left": {
+   "name": "STI Left",
+   "program": "STI",
+   "customer": "",
+   "ord": 11,
+   "parts": []
+  },
+  "sti-right": {
+   "name": "STI Right",
+   "program": "STI",
+   "customer": "",
+   "ord": 12,
+   "parts": []
+  }
+ },
+ "config": {
+  "phases": [
+   "Müşteri Prototip",
+   "MBN60306",
+   "Prototype Project NCP",
+   "Multimedia Test",
+   "Pre-EMC",
+   "Yellow Board (19.10)",
+   "DCV (Off-Tool)",
+   "EMC",
+   "DVP",
+   "Iveco-Gallicchio Stampi",
+   "Eskişehir",
+   "ECE R10",
+   "FMC1278",
+   "Sancaktepe",
+   "R148",
+   "R10"
+  ],
+  "platforms": [
+   "Bench",
+   "Test",
+   "Araç",
+   "Farplas",
+   "Araç Numunesi",
+   "R148",
+   "R10"
+  ],
+  "people": [
+   "Ali",
+   "Erdi",
+   "Hamdi",
+   "Mesut",
+   "Nuri",
+   "Ömür",
+   "Salih",
+   "Salih Tosun",
+   "Sefa"
+  ],
+  "makers": [
+   "Sanel",
+   "OutSource",
+   "OutSource-StarYay",
+   "Aksem",
+   "YSH"
+  ],
+  "customers": [
+   "Ford",
+   "Daimler Truck"
+  ],
+  "programs": [
+   "H84X",
+   "25A Converter",
+   "Entrance Lamp",
+   "STI"
+  ]
+ }
+}
