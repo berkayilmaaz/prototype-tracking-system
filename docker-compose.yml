@@ -9,6 +9,15 @@ services:
       - ./data:/data
     environment:
       TZ: Europe/Istanbul
-      # Ters vekil (IIS / nginx) Windows/AD kimliğini bir başlıkla iletiyorsa açın:
-      # PT_USER_HEADER: X-Remote-User
-      # PT_BACKUP_KEEP: "30"
+      # Şirket hesabıyla giriş (Active Directory). Ayarlıyken giriş zorunludur.
+      PT_LDAP_URL: ldap://10.34.10.1:389          # şifreli bağlantı için: ldaps://10.34.10.1:636
+      PT_LDAP_DOMAIN: sanelelk.local
+      PT_DEFAULT_ROLE: viewer                     # ilk kez giren kullanıcının rolü: viewer / editor / none
+      # Yerel yönetici şifresini buraya YAZMAYIN (git'e gider). Kurulumdan sonra bir kez çalıştırın:
+      #   docker compose exec prototip-takip python server.py --set-admin-password
+      # AD bağlantısını denemek için:
+      #   docker compose exec prototip-takip python server.py --ldap-test kullanici.adi
+      # Uygulama HTTPS (IIS/nginx) arkasındaysa:
+      # PT_COOKIE_SECURE: "1"
+      # ldaps sertifikası kurum içi bir CA ile imzalıysa, CA dosyasını /data altına koyup:
+      # PT_LDAP_CA_FILE: /data/sirket-ca.pem

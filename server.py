@@ -10,15 +10,27 @@ Veriler tek bir SQLite dosyasında tutulur: data/prototip.db
     python server.py --port 9000 --data D:\\prototip-data
     python server.py --import seed/seed.json # verileri bu dosyayla değiştir (önce otomatik yedek alır)
     python server.py --export yedek.json     # tüm veriyi JSON olarak dışa aktar
+    python server.py --set-admin-password    # yerel yönetici (admin) şifresini belirle
+    python server.py --ldap-test berkay.yilmaz   # AD bağlantısını dene (şifre sorar)
 
 Ortam değişkenleri (isteğe bağlı):
     PT_PORT, PT_HOST, PT_DATA        komut satırı seçenekleriyle aynı
     PT_USER_HEADER                   ters vekil (IIS/nginx) kimliği bu başlıkta iletiyorsa, ör. X-Remote-User
     PT_READONLY=1                    yalnızca okuma (yazma istekleri 403 döner)
     PT_BACKUP_KEEP=30                saklanacak günlük yedek sayısı
+
+Giriş ve yetki (ayrıntı: auth.py ve README):
+    PT_LDAP_URL=ldap://10.34.10.1:389    Active Directory adresi (ayarlıysa giriş zorunlu olur)
+    PT_LDAP_DOMAIN=sanelelk.local        AD alan adı
+    PT_AUTH=1                            LDAP olmadan da giriş zorunlu olsun (yalnızca yerel yönetici)
+    PT_DEFAULT_ROLE=viewer               ilk kez giren şirket kullanıcısının rolü (viewer / editor / none)
+    PT_ADMIN_PASSWORD=...                ilk açılışta yerel yönetici hesabı yoksa bu şifreyle oluşturulur
+    PT_SESSION_HOURS=168                 oturum süresi (saat)
+    PT_COOKIE_SECURE=1                   uygulama HTTPS arkasındaysa açın
 """
 import argparse
 import datetime as dt
+import getpass
 import json
 import mimetypes
 import os
@@ -32,7 +44,10 @@ import time
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from http.cookies import SimpleCookie
 from urllib.parse import unquote, urlparse
+
+import auth as authmod
 
 ROOT = Path(__file__).resolve().parent
 APP_DIR = ROOT / "app"
@@ -214,6 +229,8 @@ class Handler(BaseHTTPRequestHandler):
     store: Store = None
     readonly = False
     user_header = ""
+    auth: "authmod.Auth" = None   # None ise giriş kapalı (eski davranış: herkes düzenleyebilir)
+    cookie_secure = False
 
     def log_message(self, fmt, *args):
         if not self.path.startswith("/api/events"):
@@ -232,12 +249,47 @@ class Handler(BaseHTTPRequestHandler):
     def _err(self, code, code_name, message):
         self._json(code, {"error": {"code": code_name, "message": message}})
 
-    def _user(self):
+    def _legacy_user(self):
         if self.user_header:
             u = self.headers.get(self.user_header, "").strip()
             if u:
                 return u.split("\\")[-1][:120]
         return (unquote(self.headers.get("X-PT-User", "")) or "").strip()[:120] or "anonim"
+
+    def _token(self):
+        c = SimpleCookie()
+        try:
+            c.load(self.headers.get("Cookie", ""))
+        except Exception:
+            return None
+        m = c.get(authmod.COOKIE)
+        return m.value if m else None
+
+    def _ident(self):
+        """İsteği yapan kişi: {'user', 'display', 'role'} ya da None (giriş yapılmamış)."""
+        if not self.auth:
+            u = self._legacy_user()
+            return {"user": u, "display": u, "role": "editor"}
+        if self.user_header and self.headers.get(self.user_header, "").strip():
+            return self.auth.header_user(self.headers.get(self.user_header))
+        return self.auth.session_user(self._token())
+
+    def _need(self, role):
+        """Yetki kontrolü. Yetki yoksa hata yanıtını kendisi gönderir ve None döner."""
+        me = self._ident()
+        if not me:
+            self._err(401, "unauthenticated", "Oturum açmanız gerekiyor.")
+            return None
+        rank = {"viewer": 1, "editor": 2, "admin": 3}
+        if rank.get(me["role"], 0) < rank[role]:
+            msg = {"editor": "Düzenleme yetkiniz yok.", "admin": "Bu işlem için yönetici yetkisi gerekiyor."}
+            self._err(403, "invalid_argument", msg.get(role, "Yetkiniz yok."))
+            return None
+        return me
+
+    def _cookie(self, token, max_age):
+        v = f"{authmod.COOKIE}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={max_age}"
+        return v + ("; Secure" if self.cookie_secure else "")
 
     def _body(self):
         n = int(self.headers.get("Content-Length") or 0)
@@ -261,12 +313,27 @@ class Handler(BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
         path = urlparse(self.path).path
-        if path == "/api/state":
-            return self._json(200, self.store.state())
         if path == "/api/health":
             return self._json(200, {"ok": True, "readonly": self.readonly})
         if path == "/api/me":
-            return self._json(200, {"user": self._user() if self.user_header else None, "readonly": self.readonly})
+            me = self._ident()
+            if not me:
+                return self._json(401, {"error": {"code": "unauthenticated", "message": "Oturum açmanız gerekiyor."},
+                                        "auth": True, "ldap": bool(self.auth and self.auth.ldap)})
+            return self._json(200, {
+                "user": me["user"] if (self.auth or self.user_header) else None,
+                "display": me["display"], "role": me["role"], "auth": bool(self.auth),
+                "sso": bool(self.user_header), "readonly": self.readonly or me["role"] == "viewer",
+                "canManage": bool(self.auth) and me["role"] == "admin"})
+        if path.startswith("/api/") and not self._need("viewer"):
+            return
+        if path == "/api/state":
+            return self._json(200, self.store.state())
+        if path == "/api/admin/users":
+            if not self._need("admin"):
+                return
+            return self._json(200, {"users": self.auth.list_users(), "defaultRole": self.auth.default_role,
+                                    "adminUser": self.auth.admin_user, "roles": authmod.ROLE_TR})
         if path == "/api/export.json":
             st = self.store.state()
             body = json.dumps({"products": st["products"], "requests": st["requests"], "config": st["config"],
@@ -336,8 +403,11 @@ class Handler(BaseHTTPRequestHandler):
             return self._err(400, "invalid_argument", "Geçersiz adres")
         if self.readonly:
             return self._err(403, "invalid_argument", "Bu sunucu yalnızca okuma modunda")
+        me = self._need("editor")
+        if not me:
+            return
         col, id_ = t
-        by = self._user()
+        by = me["user"]
         try:
             if op == "delete":
                 seq = self.store.delete(col, id_, by)
@@ -358,13 +428,81 @@ class Handler(BaseHTTPRequestHandler):
             log("Yazma hatası:", repr(e))
             return self._err(500, "unavailable", "Sunucu hatası")
 
+    def _is_json(self):
+        # Başka sitelerden gelen düz form gönderimlerini reddetmek için (CSRF): JSON zorunlu
+        return self.headers.get("Content-Type", "").split(";")[0].strip().lower() == "application/json"
+
+    def do_POST(self):
+        path = urlparse(self.path).path
+        if not self.auth or path not in ("/api/login", "/api/logout"):
+            return self._err(404, "not_found", "Bulunamadı")
+        if not self._is_json():
+            return self._err(400, "invalid_argument", "JSON bekleniyor")
+        if path == "/api/logout":
+            self.auth.logout(self._token())
+            body = b'{"ok": true}'
+            self.send_response(200)
+            self.send_header("Set-Cookie", self._cookie("", 0))
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        try:
+            data = self._body()
+        except (ValueError, json.JSONDecodeError):
+            return self._err(400, "invalid_argument", "Geçersiz istek")
+        ip = self.client_address[0]
+        token, info = self.auth.login(str(data.get("username", "")), str(data.get("password", "")), ip)
+        if not token:
+            log(ip, "Giriş başarısız:", authmod.normalize_username(str(data.get("username", ""))) or "?", "-", info)
+            return self._err(401, "unauthenticated", info)
+        log(ip, "Giriş:", info["user"], f"({info['role']})")
+        body = json.dumps({"ok": True, **info}, ensure_ascii=False).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Set-Cookie", self._cookie(token, self.auth.session_hours * 3600))
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _admin_users(self, op):
+        m = re.match(r"^/api/admin/users/([^/]+)$", urlparse(self.path).path)
+        if not self.auth or not m:
+            return False
+        me = self._need("admin")
+        if not me:
+            return True
+        target = unquote(m.group(1))
+        try:
+            if op == "set":
+                if not self._is_json():
+                    return self._err(400, "invalid_argument", "JSON bekleniyor") or True
+                role = str(self._body().get("role", ""))
+                user = self.auth.set_role(me["user"], target, role)
+                log("Yetki:", me["user"], "->", user, "=", role)
+            else:
+                user = self.auth.remove_user(me["user"], target)
+                log("Yetki:", me["user"], "kaldırdı:", user)
+            self._json(200, {"ok": True, "users": self.auth.list_users()})
+        except PermissionError as e:
+            self._err(403, "invalid_argument", str(e))
+        except (ValueError, json.JSONDecodeError) as e:
+            self._err(400, "invalid_argument", str(e))
+        return True
+
     def do_PUT(self):
+        if self._admin_users("set"):
+            return
         self._write("set")
 
     def do_PATCH(self):
         self._write("update")
 
     def do_DELETE(self):
+        if self._admin_users("delete"):
+            return
         self._write("delete")
 
 
@@ -375,6 +513,8 @@ def main():
     ap.add_argument("--data", default=os.environ.get("PT_DATA", str(ROOT / "data")))
     ap.add_argument("--import", dest="import_file", help="Verileri bu seed/yedek JSON dosyasıyla değiştir ve çık")
     ap.add_argument("--export", dest="export_file", help="Tüm veriyi bu JSON dosyasına yaz ve çık")
+    ap.add_argument("--set-admin-password", action="store_true", help="Yerel yönetici şifresini belirle ve çık")
+    ap.add_argument("--ldap-test", metavar="KULLANICI", help="Active Directory girişini dene ve çık")
     args = ap.parse_args()
 
     data_dir = Path(args.data)
@@ -396,6 +536,40 @@ def main():
         print(f"{n} belge yüklendi ({len(seed.get('requests', {}))} talep).")
         return
 
+    ldap = authmod.ldap_from_env()
+    auth_on = bool(ldap) or os.environ.get("PT_AUTH", "") == "1"
+    auth = authmod.Auth(store.conn, DB_LOCK, ldap=ldap,
+                        default_role=os.environ.get("PT_DEFAULT_ROLE", "viewer").strip(),
+                        admin_user=os.environ.get("PT_ADMIN_USER", "admin").strip().lower(),
+                        session_hours=int(os.environ.get("PT_SESSION_HOURS", "168")))
+
+    if args.set_admin_password:
+        pw = os.environ.get("PT_ADMIN_PASSWORD") or getpass.getpass(f"'{auth.admin_user}' için yeni şifre: ")
+        if not os.environ.get("PT_ADMIN_PASSWORD") and pw != getpass.getpass("Tekrar: "):
+            sys.exit("Şifreler aynı değil.")
+        try:
+            auth.set_local_admin_password(pw)
+        except ValueError as e:
+            sys.exit(str(e))
+        print(f"Yerel yönetici '{auth.admin_user}' şifresi kaydedildi.")
+        return
+    if args.ldap_test:
+        if not ldap:
+            sys.exit("PT_LDAP_URL ayarlı değil.")
+        user = authmod.normalize_username(args.ldap_test)
+        print("Sunucu:", ldap.describe(), "| bağlanılacak ad:", ldap.bind_format.format(user=user, domain=ldap.domain))
+        try:
+            info = ldap.authenticate(user, getpass.getpass("Şifre: "))
+            print("BAŞARILI. Görünen ad:", info["display"])
+        except authmod.LdapError as e:
+            print("BAŞARISIZ:", e.user_message, f"(kod {e.code}: {e})")
+            sys.exit(1)
+        return
+
+    if auth_on and not auth.has_local_admin() and os.environ.get("PT_ADMIN_PASSWORD"):
+        auth.set_local_admin_password(os.environ["PT_ADMIN_PASSWORD"])
+        log(f"Yerel yönetici '{auth.admin_user}' oluşturuldu (PT_ADMIN_PASSWORD).")
+
     if store.is_empty():
         seed_path = ROOT / "seed" / "seed.json"
         if seed_path.exists():
@@ -405,6 +579,17 @@ def main():
     Handler.store = store
     Handler.readonly = os.environ.get("PT_READONLY", "") == "1"
     Handler.user_header = os.environ.get("PT_USER_HEADER", "").strip()
+    Handler.auth = auth if auth_on else None
+    Handler.cookie_secure = os.environ.get("PT_COOKIE_SECURE", "") == "1"
+    if auth_on:
+        log("Giriş zorunlu. Şirket hesabı:", ldap.describe() if ldap else "kapalı (yalnızca yerel yönetici)",
+            "| ilk girişte rol:", auth.default_role)
+        if not auth.has_local_admin():
+            log("UYARI: Yerel yönetici şifresi yok. 'python server.py --set-admin-password' ile belirleyin.")
+        if ldap and not ldap.secure:
+            log("UYARI: LDAP şifresiz (ldap://) bağlantı kullanıyor; şifreler ağda açık gider. Mümkünse ldaps:// kullanın.")
+    else:
+        log("Giriş kapalı: adrese erişen herkes düzenleyebilir (PT_LDAP_URL ayarlanınca giriş zorunlu olur).")
     keep = int(os.environ.get("PT_BACKUP_KEEP", "30"))
     threading.Thread(target=backup_loop, args=(store, backups, keep), daemon=True).start()
 

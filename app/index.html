@@ -207,6 +207,18 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .prow>div{padding:0 5px}
 .prow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
 .prow.off{opacity:.45}
+/* giriş ve yetki paneli */
+.login{max-width:380px;margin:56px auto;border:1px solid var(--line);border-radius:6px;padding:28px 28px 24px;background:#FFFFFF;display:flex;flex-direction:column;gap:14px}
+.login h2{margin:0;font:700 20px var(--f-cond)}
+.login .in{height:38px;font-size:14px}
+.login .btn{height:38px;justify-content:center;font-size:14px}
+.login .err{color:#8A1822;background:#FDECEC;border-radius:3px;padding:8px 10px;font-size:13px}
+.utbl{width:100%;border-collapse:collapse;font-size:13px}
+.utbl th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line-2)}
+.utbl td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.utbl td.m{color:var(--muted);font-size:12px;white-space:nowrap}
+.utbl select{height:30px}
+.rtag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:12px;font-weight:600;background:#EEF1F4}
 .warn{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#FDECEC;color:#8A1822;border-radius:3px;padding:8px 10px;font-size:13px}
 
 .empty{padding:40px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line-2);border-radius:4px;margin-block:10px 28px}
@@ -226,10 +238,12 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
       <button type="button" role="tab" data-tab="liste">Liste</button>
       <button type="button" role="tab" data-tab="grafik">Grafik</button>
       <button type="button" role="tab" data-tab="urunler">Ürünler</button>
+      <button type="button" role="tab" data-tab="yetki" id="navAdmin" hidden>Yetkiler</button>
     </nav>
     <span class="grow"></span>
     <span class="sync" id="sync">Bağlanıyor…</span>
     <button type="button" class="who" id="who" hidden title="Değişiklikler bu adla kaydedilir"></button>
+    <button type="button" class="who" id="logout" hidden>Çıkış</button>
     <button type="button" class="btn-new" id="btnNew"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 2v10M2 7h10"/></svg><span class="lbl-new">Yeni talep</span></button>
   </div>
 </header>
@@ -277,6 +291,7 @@ const S={db:null,user:null,me:null,canWrite:true,loaded:{p:false,r:false},downlo
   f:Object.assign({customer:"Ford",phase:"Yellow Board (19.10)",product:"",status:"open",owner:"",type:"",q:""},LS.get("f",{})),
   sel:new Set(),closed:new Set(LS.get("closed",[])),bomSel:null,bomDraft:null,names:{}};
 const saveF=()=>LS.set("f",S.f);
+let loginShown=false;
 
 /* ---------- Veri türetme ---------- */
 const prodOf=r=>S.products[r.product]||{name:r.product||"?",program:"",customer:"",ord:99,parts:[]};
@@ -352,7 +367,7 @@ function renderFilters(){
   const prods=Object.entries(S.products).filter(([,p])=>!f.customer||(p.customer||"—")===f.customer).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
   const owners=[...new Set([...S.cfg.people,...allItems().map(x=>x.it.owner).filter(Boolean)])].sort((a,b)=>a.localeCompare(b,"tr"));
   const showStatus=S.tab==="liste";
-  $("#filters").hidden=S.tab==="urunler";
+  $("#filters").hidden=S.tab==="urunler"||S.tab==="yetki";
   $("#filters").innerHTML=
    '<label class="fl">Müşteri<select class="in" id="fCust" style="min-width:140px"><option value="">Tümü</option>'+customers.map(c=>'<option value="'+esc(c)+'"'+(f.customer===c?" selected":"")+'>'+esc(c==="—"?"Belirtilmemiş":c)+'</option>').join("")+'</select></label>'+
    '<label class="fl">Faz<select class="in" id="fPhase" style="min-width:190px"><option value="">Tümü</option>'+phases.map(p=>'<option'+(f.phase===p?" selected":"")+'>'+esc(p)+'</option>').join("")+'</select></label>'+
@@ -566,12 +581,15 @@ async function saveBom(){
 /* ---------- Ana render ---------- */
 let deferred=false;
 function focusedInView(){const a=document.activeElement;return a&&(a.closest("#view"))&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&a.type!=="checkbox"}
-function render(){if(!(S.loaded.p&&S.loaded.r))return;renderFilters();renderBody()}
+function render(){if(loginShown||!(S.loaded.p&&S.loaded.r))return;renderFilters();renderBody()}
 function renderBody(){
+  if(loginShown)return;
   if(focusedInView()){deferred=true;return}
   deferred=false;closeMenu();
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
   $("#btnNew").hidden=!canEdit();
+  if(S.tab==="yetki"&&!S.canManage)S.tab="liste";
+  if(S.tab==="yetki"){$("#filters").hidden=true;$("#view").innerHTML=viewAdmin();loadAdmin();return}
   $("#view").innerHTML=S.tab==="grafik"?viewCharts():S.tab==="urunler"?viewProducts():viewList();
   renderBulk();resolveNames();
 }
@@ -803,7 +821,7 @@ async function exportCsv(){
 }
 
 /* ---------- Başlatma ---------- */
-bindFilters();bind();bindModal();
+bindFilters();bind();bindModal();bindAdmin();
 document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
 async function boot(){
   if(!window.claude||!window.claude.use){return bootStandalone()}
@@ -826,11 +844,12 @@ function restDb(onFail){
     const o=st[s.col]||{};const docs=Object.keys(o).map(id=>({id,exists:true,data:()=>o[id],metadata:{}}));return{docs,size:docs.length,empty:!docs.length,metadata:{}}};
   const emit=col=>{if(!st)return;subs.filter(s=>!col||s.col===col).forEach(s=>{try{s.cb(snapFor(s))}catch(e){console.error(e)}})};
   const apply=ev=>{if(!st||!ev||!ev.col)return;if(ev.col==="config"){if(ev.id==="lists")st.config=ev.doc||{}}else{const o=st[ev.col]=st[ev.col]||{};if(ev.doc)o[ev.id]=ev.doc;else delete o[ev.id]}emit(ev.col)};
-  const load=async()=>{const r=await fetch("api/state",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);st=await r.json();emit()};
+  const load=async()=>{const r=await fetch("api/state",{cache:"no-store"});if(r.status===401){showLogin();throw new Error("401")}if(!r.ok)throw new Error("HTTP "+r.status);st=await r.json();emit()};
   const req=async(method,col,id,body)=>{
     let r;try{r=await fetch("api/docs/"+encodeURIComponent(col)+"/"+encodeURIComponent(id),{method,headers:{"Content-Type":"application/json","X-PT-User":encodeURIComponent(S.me||"")},body:body?JSON.stringify(body):undefined})}
     catch(e){throw{code:"unavailable",message:"Sunucuya ulaşılamadı"}}
     let j={};try{j=await r.json()}catch(e){}
+    if(r.status===401){showLogin();throw{code:"unauthenticated",message:"Oturum süresi doldu"}}
     if(!r.ok)throw{code:(j.error&&j.error.code)||"unavailable",message:(j.error&&j.error.message)||r.statusText};
     apply({col,id,doc:method==="DELETE"?null:j.doc});
   };
@@ -846,7 +865,7 @@ function restDb(onFail){
 function blobDownloads(){return{save:async({filename,data})=>{const blob=new Blob([data],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return{status:"saved"}}}}
 function renderWho(){
   const b=$("#who");b.hidden=false;
-  if(S.serverUser){b.textContent=S.me;b.disabled=true;b.title="Kurum hesabınızla giriş yapıldı";return}
+  if(S.serverUser){b.textContent=(S.meDisplay||S.me)+(S.role?" · "+(ROLE_TR[S.role]||S.role):"");b.disabled=true;b.title="Şirket hesabıyla giriş yapıldı: "+S.me;return}
   b.textContent=S.me?S.me:"Adınızı girin";b.classList.toggle("need",!S.me);
 }
 function editWho(){
@@ -857,7 +876,13 @@ function editWho(){
 }
 async function bootStandalone(){
   S.standalone=true;S.downloads=blobDownloads();S.me=LS.get("me","");
-  try{const r=await fetch("api/me",{cache:"no-store"});if(r.ok){const j=await r.json();if(j.user){S.me=j.user;S.serverUser=true}if(j.readonly){S.canWrite=false;S.canWriteKnown=true;$("#ro").hidden=false;$("#ro").textContent="Bu sunucu yalnızca okuma modunda çalışıyor."}}}catch(e){}
+  try{const r=await fetch("api/me",{cache:"no-store"});
+    if(r.status===401){showLogin();return}
+    if(r.ok){const j=await r.json();
+      if(j.user){S.me=j.user;S.meDisplay=j.display||j.user;S.serverUser=true}
+      S.auth=!!j.auth;S.role=j.role||"";S.canManage=!!j.canManage;$("#navAdmin").hidden=!S.canManage;$("#logout").hidden=!S.auth||!!j.sso;
+      if(j.readonly){S.canWrite=false;S.canWriteKnown=true;$("#ro").hidden=false;$("#ro").textContent=j.role==="viewer"?"Görüntüleme yetkiniz var. Düzenleme yetkisi için Ar-Ge yöneticisine başvurun.":"Bu sunucu yalnızca okuma modunda çalışıyor."}
+      else{S.canWriteKnown=true}}}catch(e){}
   renderWho();$("#who").addEventListener("click",editWho);
   setSync("Yükleniyor…");
   const db=restDb(()=>{setSync("Sunucuya ulaşılamadı",true);$("#view").innerHTML='<div class="empty"><h3>Sunucuya ulaşılamadı</h3>Prototip Takip sunucusu çalışmıyor ya da ağ bağlantısı yok. Sayfayı birkaç saniye sonra yenileyin; sorun sürerse IT ile görüşün.</div>'});
@@ -866,6 +891,68 @@ async function bootStandalone(){
   db.collection("requests").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.requests=o;S.loaded.r=true;ready()});
   db.doc("config/lists").onSnapshot(s=>{const d=s.exists?s.data():{};S.cfg={phases:d.phases||[],platforms:d.platforms||[],people:d.people||[],makers:d.makers||[],customers:d.customers||[],programs:d.programs||[]};ready()});
 }
+/* ---------- Giriş ---------- */
+const ROLE_TR={viewer:"Görüntüleme",editor:"Düzenleme",admin:"Yönetici",none:"Engelli"};
+async function api(method,path,body){
+  const r=await fetch(path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined,cache:"no-store"});
+  let j={};try{j=await r.json()}catch(e){}
+  if(r.status===401&&path!=="api/login"){showLogin();throw new Error("Oturum süresi doldu")}
+  if(!r.ok)throw new Error((j.error&&j.error.message)||("HTTP "+r.status));
+  return j;
+}
+function showLogin(){
+  if(loginShown)return;loginShown=true;S.db=null;
+  ["#nav","#btnNew","#who","#logout","#filters","#ro"].forEach(s=>{const e=$(s);if(e)e.hidden=true});
+  setSync("Giriş yapılmadı");$("#modal").innerHTML="";$("#bulk")&&($("#bulk").hidden=true);
+  $("#view").innerHTML='<form class="login" id="loginForm" autocomplete="on"><h2>Prototip Takip</h2>'+
+    '<p class="hint" style="margin:0">Şirket kullanıcı adınız ve şifrenizle (Windows girişi) giriş yapın.</p>'+
+    '<label class="fl">Kullanıcı adı<input class="in" id="lgU" name="username" autocomplete="username" placeholder="ör. berkay.yilmaz" required autofocus></label>'+
+    '<label class="fl">Şifre<input class="in" id="lgP" name="password" type="password" autocomplete="current-password" required></label>'+
+    '<div id="lgE"></div><button class="btn dark" type="submit" id="lgB">Giriş yap</button></form>';
+  $("#loginForm").addEventListener("submit",async e=>{
+    e.preventDefault();const b=$("#lgB");b.disabled=true;b.textContent="Kontrol ediliyor…";$("#lgE").innerHTML="";
+    try{await api("POST","api/login",{username:$("#lgU").value,password:$("#lgP").value});location.reload()}
+    catch(x){$("#lgE").innerHTML='<div class="err" role="alert">'+esc(x.message)+'</div>';b.disabled=false;b.textContent="Giriş yap";$("#lgP").value="";$("#lgP").focus()}
+  });
+}
+
+/* ---------- Yetki paneli (yalnızca yöneticiler) ---------- */
+let ADM={users:null,err:"",busy:false,confirm:""};
+function viewAdmin(){
+  const u=ADM.users;const opts=(v,me)=>Object.entries(ROLE_TR).map(([k,l])=>'<option value="'+k+'"'+(k===v?" selected":"")+'>'+l+'</option>').join("");
+  const when=s=>s?new Date(s).toLocaleString("tr-TR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—";
+  const rows=!u?'<tr><td colspan="6" class="m">Yükleniyor…</td></tr>':u.users.map(x=>{
+    const fixed=x.source==="local"||x.user===S.me;
+    return '<tr><td><b>'+esc(x.display||x.user)+'</b><div class="m" style="color:var(--muted);font-size:12px">'+esc(x.user)+(x.source==="local"?" · yerel hesap":"")+(x.user===S.me?" · siz":"")+'</div></td>'+
+      '<td>'+(fixed?'<span class="rtag">'+esc(ROLE_TR[x.role]||x.role)+'</span>':'<select class="in" data-urole="'+esc(x.user)+'" aria-label="'+esc(x.user)+' rolü">'+opts(x.role)+'</select>')+'</td>'+
+      '<td class="m">'+when(x.lastLogin)+'</td><td class="m">'+esc(x.updatedBy||x.addedBy||"—")+'</td>'+
+      '<td>'+(fixed?"":'<button type="button" class="btn'+(ADM.confirm===x.user?" danger":"")+'" data-urm="'+esc(x.user)+'">'+(ADM.confirm===x.user?"Emin misiniz?":"Kaldır")+'</button>')+'</td></tr>'}).join("");
+  return '<section class="panel"><div class="ph"><h2>Yetkiler</h2><span class="sub">Şirket hesabıyla ilk kez giren herkes <b>'+esc(ROLE_TR[u?u.defaultRole:"viewer"]||"")+'</b> rolüyle eklenir. Yöneticiler başkalarına rol verebilir.</span></div>'+
+    (ADM.err?'<div class="warn">'+esc(ADM.err)+'</div>':"")+
+    '<form class="form" id="uAdd" style="margin:0;align-items:flex-end"><label class="fl">Kullanıcı adı<input class="in" id="uAddU" placeholder="ör. ahmet.kaya" style="width:220px" required></label>'+
+    '<label class="fl">Rol<select class="in" id="uAddR">'+opts("editor")+'</select></label><button class="btn dark" type="submit">Ekle / güncelle</button></form>'+
+    '<p class="hint" style="margin:0"><b>Görüntüleme:</b> listeyi ve grafikleri görür. <b>Düzenleme:</b> talep, parça ve durum değiştirir. <b>Yönetici:</b> düzenler ve bu sayfadan yetki verir. <b>Engelli:</b> giriş yapamaz.</p>'+
+    '<div style="overflow-x:auto"><table class="utbl"><thead><tr><th>Kullanıcı</th><th>Rol</th><th>Son giriş</th><th>Son değiştiren</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+}
+async function loadAdmin(){
+  if(ADM.busy)return;ADM.busy=true;
+  try{const j=await api("GET","api/admin/users");ADM.users=j;ADM.err=""}catch(e){ADM.err=e.message}
+  ADM.busy=false;if(S.tab==="yetki")$("#view").innerHTML=viewAdmin();
+}
+async function adminDo(method,user,body,msg){
+  try{const j=await api(method,"api/admin/users/"+encodeURIComponent(user),body);ADM.users.users=j.users;ADM.err="";ADM.confirm="";toast(msg)}
+  catch(e){ADM.err=e.message;toast(e.message,true)}
+  $("#view").innerHTML=viewAdmin();
+}
+function bindAdmin(){
+  const v=$("#view");
+  v.addEventListener("change",e=>{const s=e.target.closest("[data-urole]");if(!s||S.tab!=="yetki")return;adminDo("PUT",s.dataset.urole,{role:s.value},s.dataset.urole+": "+ROLE_TR[s.value])});
+  v.addEventListener("click",e=>{const b=e.target.closest("[data-urm]");if(!b||S.tab!=="yetki")return;const u=b.dataset.urm;
+    if(ADM.confirm!==u){ADM.confirm=u;$("#view").innerHTML=viewAdmin();return}adminDo("DELETE",u,null,u+" kaldırıldı")});
+  v.addEventListener("submit",e=>{const f=e.target.closest("#uAdd");if(!f)return;e.preventDefault();const u=$("#uAddU").value.trim(),r=$("#uAddR").value;if(u)adminDo("PUT",u,{role:r},u+": "+ROLE_TR[r])});
+  $("#logout").addEventListener("click",async()=>{try{await api("POST","api/logout",{})}catch(e){}location.reload()});
+}
+
 function noDb(){setSync("Veritabanı yok",true);$("#view").innerHTML='<div class="empty"><h3>Paylaşılan veritabanına ulaşılamadı</h3>Bu sayfa verilerini claude.ai üzerindeki paylaşılan veritabanında tutar. Sayfayı claude.ai içinde açın; erişiminiz yoksa sayfa sahibinden paylaşım isteyin.</div>';$("#btnNew").hidden=true}
 boot();
 })();

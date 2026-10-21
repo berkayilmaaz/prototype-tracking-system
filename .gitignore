@@ -3,3 +3,5 @@ data/*.db-shm
 data/*.db-wal
 data/backups/
 __pycache__/
+.env
+*.pem

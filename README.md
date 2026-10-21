@@ -10,7 +10,8 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 | Veritabanı | Tek dosya SQLite: `data/prototip.db` |
 | Port | 8080 (değiştirilebilir) |
 | Dış bağlantı | Yok. Sayfa internetten hiçbir şey yüklemez |
-| Kimlik doğrulama | Uygulamanın kendi girişi yok; kurum içi ağda ya da ters vekil arkasında çalıştırılmalı (aşağıda) |
+| Giriş | Şirket kullanıcı adı ve şifresiyle (Active Directory / LDAP) + bir yerel yönetici hesabı |
+| Yetki | Kullanıcı bazında rol: Görüntüleme, Düzenleme, Yönetici (yetki verebilir), Engelli |
 | Yedek | Günlük otomatik (`data/backups/`, son 30 gün) + istenince JSON dışa aktarma |
 | Kayıt geçmişi | Her değişiklik kim/ne zaman bilgisiyle `history` tablosuna yazılır |
 
@@ -22,7 +23,7 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 - **server.py** değişikliği SQLite'a yazar, `history` tablosuna kim/ne zaman bilgisini ekler ve aynı olayı **SSE** (`/api/events`) ile açık olan tüm sekmelere gönderir; başka kullanıcılar sayfayı yenilemeden görür.
 - **İlk kurulumda** veritabanı boşsa `seed/seed.json` yüklenir (Excel'den `tools/excel_to_seed.py` ile üretilir).
 - **Yedek:** her gün `data/backups/` altına tutarlı bir `.db` kopyası alınır.
-- **İleride:** IIS/nginx + Windows/AD girişi önüne konursa kullanıcı adı `PT_USER_HEADER` başlığıyla gelir (kesik çizgili kutu).
+- **Giriş:** kullanıcı adı ve şifre `server.py` → `auth.py` üzerinden Active Directory'ye (LDAP) sorulur; şifre hiçbir yerde saklanmaz. Kullanıcının rolü SQLite'ta tutulur ve her istekte kontrol edilir.
 
 Şemanın kaynağı `docs/mimari.html` (tarayıcıda açılır) ve `docs/mimari.svg`.
 
@@ -31,6 +32,7 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 ```
 prototip-takip/
 ├─ server.py            Sunucu (HTTP + API + canlı güncelleme + yedek)
+├─ auth.py              Giriş (AD/LDAP), yerel yönetici, roller ve oturumlar
 ├─ app/index.html       Arayüz (tek dosya)
 ├─ seed/seed.json       İlk kurulum verisi (güncel Excel'den üretildi)
 ├─ seed/bom.json        Ürün ağacı ve açılır liste tanımları
@@ -79,14 +81,53 @@ WantedBy=multi-user.target
 
 İlk çalıştırmada veritabanı boşsa `seed/seed.json` otomatik yüklenir.
 
-## Erişim ve kimlik
+## Giriş ve yetkiler
 
-Uygulamada şifre ekranı yoktur. Önerilen kurulum:
+`PT_LDAP_URL` ayarlıyken uygulama açılışta giriş ekranı gösterir. Kullanıcılar Windows'ta kullandıkları kullanıcı adı ve şifreyle girer (`berkay.yilmaz`, `SANELELK\berkay.yilmaz` ve `berkay.yilmaz@sanelelk.local` yazımlarının hepsi kabul edilir).
 
-- Sunucuyu yalnızca kurum içi ağdan erişilebilir yapın.
-- Kimlik isteniyorsa önüne IIS (Windows Authentication) veya nginx koyun ve kullanıcı adını bir başlıkla iletin. Sonra `PT_USER_HEADER` değişkenini o başlığın adıyla ayarlayın (ör. `X-Remote-User`). Böylece her değişiklik AD kullanıcı adıyla kaydedilir. Bu ayar yokken kullanıcılar adlarını sağ üstteki alana kendileri yazar.
-- Salt okunur bir kopya gerekirse ikinci bir örneği `PT_READONLY=1` ile çalıştırın.
-- Ters vekil arkasında alt yol (ör. `/prototip/`) kullanılabilir; arayüz tüm isteklerde göreli adres kullanır. Vekilde `/api/events` için tamponlamayı kapatın (nginx: `proxy_buffering off;`). Bu adres canlı güncelleme akışıdır (Server-Sent Events).
+**Nasıl çalışır:** Sunucu, girilen ad ve şifreyle Active Directory'ye bağlanmayı dener (LDAP simple bind, `kullanici@sanelelk.local`). AD kabul ederse şifre doğrudur. Şifre uygulamada saklanmaz; yalnızca kullanıcının adı ve rolü `data/prototip.db` içindeki `users` tablosuna yazılır. Oturum, tarayıcıya verilen HttpOnly bir çerezle sürer (varsayılan 7 gün).
+
+| Rol | Ne yapabilir |
+|---|---|
+| Görüntüleme (`viewer`) | Liste ve grafikleri görür, Excel'e aktarır |
+| Düzenleme (`editor`) | Talep, parça, durum, ürün ağacı ve listeleri değiştirir |
+| Yönetici (`admin`) | Düzenler ve **Yetkiler** sekmesinden başkalarına rol verir (başka yönetici de atayabilir) |
+| Engelli (`none`) | Giriş yapamaz |
+
+- Şirket hesabıyla ilk kez giren herkes `PT_DEFAULT_ROLE` rolüyle (varsayılan: Görüntüleme) eklenir. Henüz giriş yapmamış birine de kullanıcı adını yazarak önceden rol verilebilir.
+- Rol değişikliği hemen geçerli olur; "Engelli" yapılan kişinin açık oturumu kapanır. "Kaldır" kişiyi listeden siler, bir sonraki girişinde varsayılan rolü alır.
+- Kimse kendi rolünü değiştiremez; yerel yönetici hesabı değiştirilemez ve silinemez.
+- Aynı kullanıcı adıyla 5 dakika içinde 5 hatalı denemeden sonra 5 dakika beklenir (AD hesabının kilitlenmesini de önler).
+- Her değişiklik `history` tablosuna kullanıcı adıyla kaydedilir.
+
+### İlk kurulumda yerel yönetici
+
+Yerel yönetici (`admin`), AD'ye ulaşılamasa da giriş yapabilen ve ilk rolleri dağıtan hesaptır. Şifresi bu sunucuda PBKDF2 özetiyle saklanır. Kurulumdan sonra bir kez:
+
+```bash
+docker compose exec prototip-takip python server.py --set-admin-password
+# Docker olmadan:  python server.py --set-admin-password
+```
+
+Sonra tarayıcıdan `admin` ile girip **Yetkiler** sekmesinden Ar-Ge'de düzenleme yapacak kişilere *Düzenleme*, yetki dağıtacak kişilere *Yönetici* rolü verin.
+
+### AD bağlantısını denemek
+
+```bash
+docker compose exec prototip-takip python server.py --ldap-test berkay.yilmaz
+# Sunucu: ldap://10.34.10.1:389 (alan: sanelelk.local) | bağlanılacak ad: berkay.yilmaz@sanelelk.local
+# Şifre:
+# BAŞARILI. Görünen ad: Berkay Yılmaz
+```
+
+Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı, hesap kilitli, şifreli bağlantı gerekli vb.).
+
+### Güvenlik notları (IT)
+
+- **`ldap://` (389) şifreleri ağda açık taşır.** Mümkünse `PT_LDAP_URL=ldaps://10.34.10.1:636` kullanın. Sertifika kurum içi bir CA ile imzalıysa CA dosyasını `PT_LDAP_CA_FILE` ile verin. AD "LDAP signing" zorunlu tutuyorsa `ldap://` ile giriş reddedilir; uygulama bunu "şifreli bağlantı gerekli" diye bildirir.
+- **Tarayıcı ile uygulama arası da HTTP'dir;** giriş şifresi bu yolda da açık gider. Önüne IIS/nginx koyup HTTPS açmanız ve `PT_COOKIE_SECURE=1` ayarlamanız önerilir. Vekilde `/api/events` için tamponlamayı kapatın (nginx: `proxy_buffering off;`); bu adres canlı güncelleme akışıdır (Server-Sent Events).
+- Uygulama yalnızca iç ağdan erişilebilir olmalı. Ters vekil arkasında `PT_HOST=127.0.0.1` ile çalıştırın.
+- İsterseniz giriş ekranı yerine IIS Windows Authentication kullanılabilir: vekil kullanıcı adını bir başlıkla iletir, `PT_USER_HEADER` o başlığın adına ayarlanır (rol yine Yetkiler sekmesinden verilir).
 
 ## Ayarlar (ortam değişkenleri)
 
@@ -98,6 +139,17 @@ Uygulamada şifre ekranı yoktur. Önerilen kurulum:
 | `PT_USER_HEADER` | (boş) | Kimliği ileten başlık adı |
 | `PT_READONLY` | (boş) | `1` ise yazma kapalı |
 | `PT_BACKUP_KEEP` | 30 | Saklanacak günlük yedek sayısı |
+| `PT_LDAP_URL` | (boş) | AD adresi, ör. `ldap://10.34.10.1:389` veya `ldaps://10.34.10.1:636`. Ayarlıysa giriş zorunlu |
+| `PT_LDAP_DOMAIN` | (boş) | AD alan adı, ör. `sanelelk.local` |
+| `PT_LDAP_BIND_FORMAT` | `{user}@{domain}` | AD'ye bağlanılırken kullanılan ad; gerekirse `SANELELK\{user}` |
+| `PT_LDAP_BASE_DN` | alan adından | Görünen adı (displayName) aramak için kök, ör. `dc=sanelelk,dc=local` |
+| `PT_LDAP_CA_FILE` | (boş) | `ldaps` için kurum CA sertifikası |
+| `PT_LDAP_TLS_VERIFY` | 1 | `0` ise ldaps sertifikası doğrulanmaz (önerilmez) |
+| `PT_DEFAULT_ROLE` | viewer | İlk kez giren kullanıcının rolü: `viewer`, `editor`, `none` |
+| `PT_ADMIN_USER` | admin | Yerel yönetici kullanıcı adı |
+| `PT_SESSION_HOURS` | 168 | Oturum süresi (saat) |
+| `PT_COOKIE_SECURE` | (boş) | `1`: çerez yalnızca HTTPS'te gönderilir |
+| `PT_AUTH` | (boş) | `1`: LDAP olmadan da giriş zorunlu (yalnızca yerel yönetici) |
 
 ## Yedekleme ve geri yükleme
 
@@ -128,8 +180,14 @@ Dikkat: Bu işlem uygulamada sonradan yapılmış değişikliklerin üzerine yaz
 | GET | `/api/events` | Canlı değişiklik akışı (SSE) |
 | GET | `/api/export.json` | Tam yedek |
 | GET | `/api/health` | Sağlık kontrolü |
+| POST | `/api/login`, `/api/logout` | Giriş / çıkış (JSON) |
+| GET / PUT / DELETE | `/api/admin/users`, `/api/admin/users/{kullanıcı}` | Yetki paneli (yalnızca Yönetici) |
 
 Koleksiyonlar: `products` (ürün ağacı), `requests` (talepler; alt parçalar `items` alanında), `config` (`lists` belgesi: faz, platform, sorumlu, üretici listeleri).
+
+## PostgreSQL'e geçiş (ileride)
+
+Şimdilik tüm veri tek SQLite dosyasında. Veriler belge (JSON) olarak tutulduğu için tablolar sade: `docs` (ürünler, talepler, listeler), `history` (değişiklik kaydı), `users` (roller), `sessions` (oturumlar). Şirket PostgreSQL sunucusu hazır olduğunda yalnızca `server.py` içindeki `Store` sınıfı ile `auth.py` içindeki SQL'ler PostgreSQL'e uyarlanacak; veri `/api/export.json` (veya `.db` dosyası) üzerinden taşınacak. Arayüzde değişiklik gerekmez.
 
 ## Kapasite
 
