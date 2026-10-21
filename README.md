@@ -43,35 +43,138 @@ prototip-takip/
 └─ baslat.bat           Windows'ta hızlı deneme
 ```
 
-## Kurulum
+## Kurulum (IT için, adım adım)
 
-### A) Docker (önerilen)
+Aşağıdaki adımlar Docker kurulu bir Linux sanal makine içindir (önerilen). Docker olmadan kurulum en altta.
+
+### 0. Gereksinimler
+
+| | |
+|---|---|
+| Sunucu | Küçük bir sanal makine yeterli (uygulama ~25 MB RAM kullanır, veri 1 MB'tan küçük) |
+| Yazılım | Docker + Docker Compose (ya da Docker olmadan Python 3.9+) |
+| Ağ (gelen) | 8080/TCP yalnızca iç ağdan; isteğe bağlı iç adres, ör. `prototip.sanel.local` |
+| Ağ (giden) | Sunucudan Active Directory'ye: `10.34.10.1:389` (ldaps kullanılacaksa `:636`) |
+| İnternet | Yalnızca imaj derlenirken `python:3.12-slim` indirmek için; uygulama çalışırken gerekmez |
+
+### 1. Kodu alın
+
+```bash
+git clone https://gitlab.sanel.com.tr/Berkay.Yilmaz/prototype-tracking-system.git
+cd prototype-tracking-system
+ls data          # yalnızca .keep olmalı; veritabanı ilk açılışta oluşur
+```
+
+### 2. Ayarları kontrol edin
+
+`docker-compose.yml` içinde AD adresi hazır gelir:
+
+```yaml
+PT_LDAP_URL: ldap://10.34.10.1:389      # şifreli bağlantı için: ldaps://10.34.10.1:636
+PT_LDAP_DOMAIN: sanelelk.local
+PT_DEFAULT_ROLE: viewer                 # ilk kez giren herkes "Görüntüleme" rolü alır
+```
+
+Yerel yönetici şifresini bu dosyaya **yazmayın** (git'e gider); 5. adımda komutla verilir.
+
+### 3. Başlatın
 
 ```bash
 docker compose up -d --build
-# http://<sunucu>:8080
+docker compose ps                      # STATUS: Up ... (healthy)
+docker logs prototip-takip
 ```
-Veri `./data` klasöründe kalır; konteyner silinse de kaybolmaz.
 
-### B) Windows sunucu (Docker olmadan)
+Logda şunlar görülmeli:
+
+```
+İlk kurulum: seed.json'dan 71 belge yüklendi.
+Giriş zorunlu. Şirket hesabı: ldap://10.34.10.1:389 (alan: sanelelk.local) | ilk girişte rol: viewer
+UYARI: Yerel yönetici şifresi yok. 'python server.py --set-admin-password' ile belirleyin.
+Prototip Takip çalışıyor: http://0.0.0.0:8080  (veri: /data)
+```
+
+(Yönetici uyarısı 5. adımdan sonra kaybolur.)
+
+### 4. Active Directory bağlantısını deneyin
+
+```bash
+docker compose exec prototip-takip python server.py --ldap-test berkay.yilmaz
+# Şifre sorar. Beklenen: "BAŞARILI. Görünen ad: Berkay Yılmaz"
+```
+
+Başarısız olursa → aşağıdaki **Sorun giderme** tablosu.
+
+### 5. Yerel yönetici şifresini belirleyin
+
+```bash
+docker compose exec prototip-takip python server.py --set-admin-password
+# Şifreyi iki kez sorar (en az 10 karakter). Şifreyi kurum şifre kasasına kaydedin.
+```
+
+### 6. Tarayıcıdan ilk giriş ve yetkiler
+
+1. `http://<sunucu-adresi>:8080` açın, kullanıcı adı `admin` ve 5. adımdaki şifreyle girin.
+2. **Yetkiler** sekmesinde *Kullanıcı adı* alanına `berkay.yilmaz` yazın, rol **Yönetici** seçip *Ekle / güncelle*.
+3. Bundan sonra yetkileri Ar-Ge (Berkay Yılmaz) dağıtır. Diğer şirket kullanıcıları kendi Windows kullanıcı adı ve şifresiyle girer; ilk girişte "Görüntüleme" rolü alır.
+
+### 7. Yedek ve iç adres
+
+- **Yedek:** sunucu her gün `data/backups/prototip-YYYY-AA-GG.db` dosyasını oluşturur (son 30 gün). Kurum yedeklemesine `data/backups/` klasörünü ekleyin. (Çalışan `data/prototip.db` dosyasını tek başına kopyalamayın; son değişiklikler yanındaki `-wal` dosyasında bekler.)
+- **İç adres / güvenlik duvarı:** 8080'i yalnızca iç ağa açın; isteğe bağlı DNS kaydı (ör. `prototip.sanel.local`).
+
+### Kontrol listesi
+
+- [ ] `docker compose ps` → healthy
+- [ ] `--ldap-test` → BAŞARILI
+- [ ] `admin` ile giriş yapıldı, `berkay.yilmaz` Yönetici yapıldı
+- [ ] Başka bir bilgisayardan şirket hesabıyla giriş yapılabiliyor
+- [ ] İki farklı bilgisayarda açıkken birinde yapılan değişiklik diğerinde anında görünüyor
+- [ ] `data/backups/` kurum yedeklemesine eklendi
+
+### Sorun giderme
+
+| Belirti | Neden / çözüm |
+|---|---|
+| `--ldap-test`: "Kimlik sunucusuna ulaşılamadı" | Sunucudan `10.34.10.1:389`'a erişim yok (güvenlik duvarı). Konteyner içinden deneyin: `docker compose exec prototip-takip python -c "import socket;socket.create_connection(('10.34.10.1',389),3);print('ok')"` |
+| "Kullanıcı adı veya şifre hatalı" (şifre doğru olduğu halde) | AD `kullanici@sanelelk.local` biçimini kabul etmiyor olabilir. `docker-compose.yml`'a `PT_LDAP_BIND_FORMAT: 'SANELELK\{user}'` ekleyip `docker compose up -d` |
+| "Şifreli bağlantı istiyor" | AD'de LDAP signing zorunlu. `PT_LDAP_URL: ldaps://10.34.10.1:636` kullanın |
+| "Sertifikası doğrulanamadı" (ldaps) | Kurum CA sertifikasını `data/sirket-ca.pem` olarak koyup `PT_LDAP_CA_FILE: /data/sirket-ca.pem` |
+| "Hesabınız kilitlenmiş / şifrenin süresi dolmuş" | AD hesabıyla ilgili; Windows'ta düzeltilmeli |
+| "Çok fazla hatalı deneme" | 5 hatalı denemeden sonra 5 dakika bekleme; kendiliğinden açılır |
+| Yönetici şifresi unutuldu | 5. adımdaki komutu tekrar çalıştırın (yeni şifre verilir) |
+| Sayfa açılıyor ama liste boş / eski veri | `data/` klasöründe repodan gelmiş eski bir veritabanı olabilir. Konteyneri durdurup `data/prototip.db*` dosyalarını silin ve tekrar başlatın (ilk kurulumda veri yoksa) |
+| Canlı güncelleme gecikiyor (vekil arkasında) | Vekilde `/api/events` için tamponlamayı kapatın (nginx: `proxy_buffering off;`) |
+
+### Güncelleme (yeni sürüm geldiğinde)
+
+```bash
+git pull
+docker compose up -d --build      # veri ./data'da kalır, kaybolmaz
+```
+
+### Docker olmadan: Windows sunucu
 
 1. Python 3.9+ kurun ("Add to PATH" işaretli).
 2. Klasörü örneğin `D:\prototip-takip` altına kopyalayın.
-3. Deneme: `baslat.bat` → tarayıcıda `http://localhost:8080`.
-4. Kalıcı çalışma için Windows hizmeti olarak kurun (örnek: NSSM):
+3. Deneme: `baslat.bat` (içindeki `PT_LDAP_URL` ve `PT_LDAP_DOMAIN` satırlarının başındaki `REM`'i kaldırın) → `http://localhost:8080`.
+4. Yönetici şifresi: `python server.py --set-admin-password`
+5. Kalıcı çalışma için Windows hizmeti (örnek: NSSM):
    ```
    nssm install PrototipTakip "C:\Program Files\Python312\python.exe" "D:\prototip-takip\server.py --port 8080 --data D:\prototip-takip\data"
    nssm set PrototipTakip AppDirectory D:\prototip-takip
+   nssm set PrototipTakip AppEnvironmentExtra PT_LDAP_URL=ldap://10.34.10.1:389 PT_LDAP_DOMAIN=sanelelk.local
    nssm start PrototipTakip
    ```
-5. Güvenlik duvarında 8080'i yalnızca iç ağa açın.
+6. Güvenlik duvarında 8080'i yalnızca iç ağa açın.
 
-### C) Linux (systemd)
+### Docker olmadan: Linux (systemd)
 
 ```ini
 # /etc/systemd/system/prototip-takip.service
 [Service]
 WorkingDirectory=/opt/prototip-takip
+Environment=PT_LDAP_URL=ldap://10.34.10.1:389 PT_LDAP_DOMAIN=sanelelk.local
 ExecStart=/usr/bin/python3 server.py --port 8080 --data /var/lib/prototip-takip
 Restart=always
 User=prototip
@@ -156,7 +259,7 @@ Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı,
 - Sunucu her gün `data/backups/prototip-YYYY-AA-GG.db` dosyasını oluşturur.
 - Anlık tam yedek: tarayıcıdan `/api/export.json` ya da `python server.py --export yedek.json`.
 - Geri yükleme: `python server.py --import yedek.json`. Bu komut önce mevcut verinin yedeğini alır, sonra veriyi değiştirir. Sunucuyu durdurup çalıştırın.
-- Kurum yedekleme sistemine `data/` klasörünü eklemek yeterli.
+- Kurum yedekleme sistemine `data/backups/` klasörünü eklemek yeterli (bu dosyalar çalışırken tutarlı alınmış kopyalardır).
 
 ## Excel'den yeniden veri yükleme
 
