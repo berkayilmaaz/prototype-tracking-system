@@ -10,7 +10,7 @@ Kullanım:
 Excel'in "List" sayfası okunur. Sütunlar:
     Müşteri | Proje | Platform | Faz | Termin | Alt Parça | Üretici | Ham Madde | Araç Set | Talep Miktarı | Sorumlu | Durum
 Hücre renkleri anlamlıdır:
-    sarı = Sanel üretecek, turuncu = fason, yeşil = bitti (Hazır), kırmızı "?" = üretici belirsiz.
+    sarı = Sanel üretecek, turuncu = alt tedarikçi, yeşil = bitti (Hazır), kırmızı "?" = üretici belirsiz.
 Ürün ağacı (alt parçalar ve araç seti başına adetler) seed/bom.json'dan alınır;
 orada olmayan yeni bir proje görülürse, Excel'deki alt parçalarıyla (adet 1) otomatik eklenir.
 """
@@ -132,11 +132,11 @@ def convert(xlsx_path, bom_path):
         elif color == "yellow":
             ptype = "Sanel"
         elif color == "orange":
-            ptype = "Fason"
+            ptype = "Alt Tedarikçi"
         elif maker == "Sanel":
             ptype = "Sanel"
         elif maker.startswith("OutSource") or maker in ("YSH", "Aksem"):
-            ptype = "Fason"
+            ptype = "Alt Tedarikçi"
         else:
             ptype = "Belirsiz"
         part = str(parca).strip() if parca else None

@@ -9,7 +9,7 @@
     {
      "part": "Gövde",
      "perSet": 9,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Black",
      "owner": "Erdi"
@@ -81,7 +81,7 @@
     {
      "part": "Gövde",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "owner": "Sefa"
@@ -89,7 +89,7 @@
     {
      "part": "Lens",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Sefa"
@@ -97,7 +97,7 @@
     {
      "part": "Divider",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "owner": "Sefa"
@@ -105,7 +105,7 @@
     {
      "part": "Klips",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Sefa"
@@ -137,7 +137,7 @@
     {
      "part": "Gövde",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Sefa"
@@ -145,7 +145,7 @@
     {
      "part": "Lens",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Sefa"
@@ -153,7 +153,7 @@
     {
      "part": "Divider",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Sefa"
@@ -161,7 +161,7 @@
     {
      "part": "Klips",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Sefa"
@@ -193,7 +193,7 @@
     {
      "part": "Gövde",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Erdi"
@@ -201,7 +201,7 @@
     {
      "part": "Lens",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Erdi"
@@ -209,7 +209,7 @@
     {
      "part": "Klips",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Erdi"
@@ -281,7 +281,7 @@
     {
      "part": "Gövde Üst",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -289,7 +289,7 @@
     {
      "part": "Gövde Alt",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -313,7 +313,7 @@
     {
      "part": "PCB Tutucu",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -337,7 +337,7 @@
     {
      "part": "Flex Tutucu",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -345,7 +345,7 @@
     {
      "part": "Braket",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -353,7 +353,7 @@
     {
      "part": "Braket Kapak",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -425,7 +425,7 @@
     {
      "part": "Gövde",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "MJF",
      "owner": "Erdi"
@@ -441,7 +441,7 @@
     {
      "part": "Switch",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Sanel",
      "material": "MJF",
      "owner": "Erdi"
@@ -449,7 +449,7 @@
     {
      "part": "Slider",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "owner": "Hamdi"
@@ -457,7 +457,7 @@
     {
      "part": "Yay",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "owner": "Hamdi"
@@ -1076,11 +1076,11 @@
    "spare": 0,
    "note": "",
    "createdAt": "2026-10-13T09:03:52Z",
-   "updatedAt": "2026-10-13T09:03:52Z",
+   "updatedAt": "2026-10-21T06:23:28Z",
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Black",
      "qty": 73,
@@ -1099,10 +1099,10 @@
      "qty": 21,
      "delivered": null,
      "owner": "Salih",
-     "status": "Açık",
+     "status": "Hazır",
      "note": "",
      "ord": 2,
-     "updatedAt": "2026-10-13T09:03:52Z"
+     "updatedAt": "2026-10-21T06:23:28Z"
     },
     "i03": {
      "part": "PCBA ID 04",
@@ -1112,10 +1112,10 @@
      "qty": 42,
      "delivered": null,
      "owner": "Salih",
-     "status": "Açık",
+     "status": "Hazır",
      "note": "",
      "ord": 3,
-     "updatedAt": "2026-10-13T09:03:52Z"
+     "updatedAt": "2026-10-21T06:23:28Z"
     },
     "i04": {
      "part": "Pipe 200mm",
@@ -1181,11 +1181,11 @@
    "spare": 0,
    "note": "",
    "createdAt": "2026-10-13T09:03:52Z",
-   "updatedAt": "2026-10-13T09:03:52Z",
+   "updatedAt": "2026-10-21T06:23:28Z",
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Black",
      "qty": 270,
@@ -1204,10 +1204,10 @@
      "qty": 90,
      "delivered": null,
      "owner": "Salih",
-     "status": "Açık",
+     "status": "Hazır",
      "note": "",
      "ord": 2,
-     "updatedAt": "2026-10-13T09:03:52Z"
+     "updatedAt": "2026-10-21T06:23:28Z"
     },
     "i03": {
      "part": "PCBA ID 04",
@@ -1217,10 +1217,10 @@
      "qty": 180,
      "delivered": null,
      "owner": "Salih",
-     "status": "Açık",
+     "status": "Hazır",
      "note": "",
      "ord": 3,
-     "updatedAt": "2026-10-13T09:03:52Z"
+     "updatedAt": "2026-10-21T06:23:28Z"
     },
     "i04": {
      "part": "Pipe 200mm",
@@ -1290,7 +1290,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC-ABS",
      "qty": 40,
@@ -1382,7 +1382,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC-ABS",
      "qty": 50,
@@ -1566,7 +1566,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "qty": 17,
@@ -1579,7 +1579,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "qty": 17,
@@ -1592,7 +1592,7 @@
     },
     "i03": {
      "part": "Klips",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "qty": 17,
@@ -1605,7 +1605,7 @@
     },
     "i04": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "qty": 17,
@@ -1645,7 +1645,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -1658,7 +1658,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -1684,7 +1684,7 @@
     },
     "i04": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -1724,7 +1724,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -1737,7 +1737,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -1776,7 +1776,7 @@
     },
     "i05": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -1816,7 +1816,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -1829,7 +1829,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -1868,7 +1868,7 @@
     },
     "i05": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -2026,7 +2026,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "qty": 17,
@@ -2039,7 +2039,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "qty": 17,
@@ -2052,7 +2052,7 @@
     },
     "i03": {
      "part": "Klips",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "qty": 17,
@@ -2065,7 +2065,7 @@
     },
     "i04": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "qty": 17,
@@ -2105,7 +2105,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -2118,7 +2118,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -2144,7 +2144,7 @@
     },
     "i04": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 26,
@@ -2184,7 +2184,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -2197,7 +2197,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -2236,7 +2236,7 @@
     },
     "i05": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": 4,
@@ -2276,7 +2276,7 @@
    "items": {
     "i01": {
      "part": "Divider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -2289,7 +2289,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -2341,7 +2341,7 @@
     },
     "i06": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "YSH",
      "material": "PC",
      "qty": null,
@@ -2469,11 +2469,11 @@
    "spare": 0,
    "note": "",
    "createdAt": "2026-10-13T09:03:52Z",
-   "updatedAt": "2026-10-13T09:03:52Z",
+   "updatedAt": "2026-10-21T06:23:28Z",
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "qty": 24,
@@ -2486,7 +2486,7 @@
     },
     "i02": {
      "part": "Klips",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "qty": 24,
@@ -2499,7 +2499,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "qty": 24,
@@ -2518,10 +2518,10 @@
      "qty": 24,
      "delivered": null,
      "owner": "Salih",
-     "status": "Açık",
+     "status": "Hazır",
      "note": "",
      "ord": 4,
-     "updatedAt": "2026-10-13T09:03:52Z"
+     "updatedAt": "2026-10-21T06:23:28Z"
     }
    }
   },
@@ -2539,7 +2539,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 52,
@@ -2565,7 +2565,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 52,
@@ -2605,7 +2605,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 4,
@@ -2644,7 +2644,7 @@
     },
     "i04": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 4,
@@ -2697,7 +2697,7 @@
     },
     "i02": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": null,
@@ -2736,7 +2736,7 @@
     },
     "i05": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": null,
@@ -2882,7 +2882,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 52,
@@ -2895,7 +2895,7 @@
     },
     "i02": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 52,
@@ -2935,7 +2935,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 6,
@@ -2961,7 +2961,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 6,
@@ -3237,7 +3237,7 @@
    "items": {
     "i01": {
      "part": "Gövde Üst",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3250,7 +3250,7 @@
     },
     "i02": {
      "part": "Gövde Alt",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3263,7 +3263,7 @@
     },
     "i03": {
      "part": "PCB Tutucu",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3289,7 +3289,7 @@
     },
     "i05": {
      "part": "Flex Tutucu",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3302,7 +3302,7 @@
     },
     "i06": {
      "part": "Braket",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3315,7 +3315,7 @@
     },
     "i07": {
      "part": "Braket Kapak",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "qty": 24,
@@ -3853,7 +3853,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 52,
@@ -3866,7 +3866,7 @@
     },
     "i02": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 52,
@@ -3906,7 +3906,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 6,
@@ -3932,7 +3932,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 6,
@@ -4077,7 +4077,7 @@
     },
     "i04": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 4,
@@ -4103,7 +4103,7 @@
     },
     "i06": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 4,
@@ -4143,7 +4143,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "MJF",
      "qty": 56,
@@ -4182,7 +4182,7 @@
     },
     "i04": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 56,
@@ -4195,7 +4195,7 @@
     },
     "i05": {
      "part": "Switch",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Sanel",
      "material": "MJF",
      "qty": 56,
@@ -4208,7 +4208,7 @@
     },
     "i06": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 56,
@@ -4248,7 +4248,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 208,
@@ -4274,7 +4274,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 208,
@@ -4287,7 +4287,7 @@
     },
     "i04": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 208,
@@ -4300,7 +4300,7 @@
     },
     "i05": {
      "part": "Switch",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 208,
@@ -4313,7 +4313,7 @@
     },
     "i06": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 208,
@@ -4353,7 +4353,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 6,
@@ -4379,7 +4379,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 6,
@@ -4392,7 +4392,7 @@
     },
     "i04": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 6,
@@ -4405,7 +4405,7 @@
     },
     "i05": {
      "part": "Switch",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 6,
@@ -4418,7 +4418,7 @@
     },
     "i06": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 6,
@@ -4458,7 +4458,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 140,
@@ -4484,7 +4484,7 @@
     },
     "i03": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 140,
@@ -4497,7 +4497,7 @@
     },
     "i04": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 140,
@@ -4510,7 +4510,7 @@
     },
     "i05": {
      "part": "Switch",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 140,
@@ -4523,7 +4523,7 @@
     },
     "i06": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 140,
@@ -4615,7 +4615,7 @@
     },
     "i05": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": null,
@@ -4641,7 +4641,7 @@
     },
     "i07": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": null,
@@ -5284,7 +5284,7 @@
    "items": {
     "i01": {
      "part": "Gövde",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC-ABS",
      "qty": 100,
@@ -5297,7 +5297,7 @@
     },
     "i02": {
      "part": "Lens",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 100,
@@ -5310,7 +5310,7 @@
     },
     "i03": {
      "part": "Slider",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "qty": 100,
@@ -5323,7 +5323,7 @@
     },
     "i04": {
      "part": "Switch",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Aksem",
      "material": "PC",
      "qty": 100,
@@ -5336,7 +5336,7 @@
     },
     "i05": {
      "part": "Yay",
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "qty": 100,
@@ -5422,8 +5422,8 @@
   ]
  },
  "source": {
-  "file": "new.xlsx",
+  "file": "Ar-Ge Prototip List 1.xlsx",
   "rows": 311,
-  "convertedAt": "2026-10-13T09:03:52Z"
+  "convertedAt": "2026-10-21T06:23:28Z"
  }
 }

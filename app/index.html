@@ -87,7 +87,7 @@ select.in{padding-right:6px}
 .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
 .row.h{min-height:32px;background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;z-index:2}
 .t-Sanel{background:var(--s-row)}.t-Sanel::before{background:var(--s-bar)}
-.t-Fason{background:var(--f-row)}.t-Fason::before{background:var(--f-bar)}
+.t-Alt{background:var(--f-row)}.t-Alt::before{background:var(--f-bar)}
 .t-Stok{background:var(--k-row)}.t-Stok::before{background:var(--k-bar)}
 .t-Belirsiz::before{background:var(--b-bar)}
 .row.done{background:var(--d-row)}.row.done::before{background:var(--d-bar)}
@@ -113,7 +113,7 @@ select.in{padding-right:6px}
 select.cell{appearance:none;-webkit-appearance:none;cursor:pointer}
 select.tp{width:auto;height:22px;font-size:11.5px;font-weight:600;padding:0 7px;border-radius:3px;border:0}
 select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
-.tp-Sanel{background:var(--s-chip);color:var(--s-ink)}.tp-Fason{background:var(--f-chip);color:var(--f-ink)}.tp-Stok{background:var(--k-chip);color:var(--k-ink)}.tp-Belirsiz{background:var(--b-chip);color:var(--b-ink)}
+.tp-Sanel{background:var(--s-chip);color:var(--s-ink)}.tp-Alt{background:var(--f-chip);color:var(--f-ink)}.tp-Stok{background:var(--k-chip);color:var(--k-ink)}.tp-Belirsiz{background:var(--b-chip);color:var(--b-ink)}
 .st{display:flex;align-items:center;gap:7px;width:100%;height:26px;border:1px solid var(--line-2);background:#FFFFFF;border-radius:3px;padding:0 8px;font-size:12.5px;font-weight:500;cursor:pointer;text-align:left}
 .st:hover:not(:disabled){border-color:var(--strip)}
 .st:disabled{cursor:default}
@@ -246,9 +246,12 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 /* ---------- Sabitler ---------- */
 const STAT=[["Açık","open"],["Data Bekleniyor","wait"],["Teklif Alınacak","wait"],["Sipariş Verilecek","wait"],["Sipariş Verildi","order"],["Üretimde","prod"],["Hazır","done"],["Gönderildi","done"],["İptal","cancel"]];
 const STATUSES=STAT.map(s=>s[0]);const DONE=["Hazır","Gönderildi"];
-const TYPES=["Sanel","Fason","Stok","Belirsiz"];
-const TYPE_BAR={Sanel:"var(--s-bar)",Fason:"var(--f-bar)",Stok:"var(--k-bar)",Belirsiz:"var(--b-bar)"};
-const TYPE_LBL={Sanel:"Sanel'de",Fason:"Fasonda",Stok:"Stoktan",Belirsiz:"Üretici belirsiz"};
+const TYPES=["Sanel","Alt Tedarikçi","Stok","Belirsiz"];
+/* Eski kayıtlarda "Fason" yazabilir; ekranda "Alt Tedarikçi" olarak gösterilir. CSS sınıfı boşluksuz olmalı. */
+const normT=t=>t==="Fason"?"Alt Tedarikçi":(t||"Belirsiz");
+const tcls=t=>({"Alt Tedarikçi":"Alt"})[normT(t)]||normT(t);
+const TYPE_BAR={Sanel:"var(--s-bar)","Alt Tedarikçi":"var(--f-bar)",Stok:"var(--k-bar)",Belirsiz:"var(--b-bar)"};
+const TYPE_LBL={Sanel:"Sanel'de","Alt Tedarikçi":"Alt tedarikçide",Stok:"Stoktan",Belirsiz:"Üretici belirsiz"};
 const PART_ORDER=["Gövde","Gövde Üst","Gövde Alt","Lens","Divider","Switch","Slider","Yay","Klips","PCBA","PCBA ID 02","PCBA ID 04","Pipe 200mm","Pipe 350mm","Pipe 400mm","Pipe 545mm","Kablo+Konnektör","Kablo","Konnektör","Terminal","Pin Header","Ara Kablo","Flex","Flex Tutucu","PCB Tutucu","Rubber Buton","Braket","Braket Kapak","Profil","Üst Kapak","Yan Kapak 1","Yan Kapak 2","Vida x8","Test Fikstürü"];
 const PHASE_SHORT={"Multimedia Test":"MM","Pre-EMC":"PE","Yellow Board (19.10)":"YB","DCV (Off-Tool)":"DCV","EMC":"EMC","DVP":"DVP","Iveco-Gallicchio Stampi":"IV","Eskişehir":"ESK","ECE R10":"R10","FMC1278":"FMC","Sancaktepe":"SNC","Müşteri Prototip":"MP","MBN60306":"MBN","Prototype Project NCP":"NCP","Araç Numunesi":"AN","R148":"R148","R10":"R10"};
 
@@ -284,7 +287,7 @@ function allItems(){
     for(const [iid,it] of Object.entries(r.items||{})){
       if(!it||it.deleted)continue;
       const due=it.due||r.due||null;
-      out.push({rid,iid,r,it,p,due,days:dayDiff(due),done:DONE.includes(it.status),cancel:it.status==="İptal",type:it.type||"Belirsiz"});
+      out.push({rid,iid,r,it,p,due,days:dayDiff(due),done:DONE.includes(it.status),cancel:it.status==="İptal",type:normT(it.type)});
     }
   }
   return out;
@@ -378,10 +381,10 @@ function summary(list){
   const base=Math.max(1,tot-cancel),pct=Math.round(done/base*100);const seg=(n,c)=>n?'<span style="width:'+(n/base*100)+'%;background:'+c+'"></span>':"";
   const tb=t=>by(t)||S.f.type===t?'<button type="button" data-type="'+t+'" aria-pressed="'+(S.f.type===t)+'" title="Yalnızca bunları göster"><span class="sq" style="background:'+TYPE_BAR[t]+'"></span>'+TYPE_LBL[t]+' <b>'+by(t)+'</b></button>':"";
   return '<div class="sum" id="sum"><span><b style="font-size:15px">'+tot+'</b> kalem</span><span style="display:flex;align-items:center;gap:6px"><span class="sq sq-done"></span><b>'+done+'</b> bitti</span>'+
-    tb("Sanel")+tb("Fason")+tb("Stok")+tb("Belirsiz")+
+    tb("Sanel")+tb("Alt Tedarikçi")+tb("Stok")+tb("Belirsiz")+
     (late?'<span style="color:var(--late);font-weight:600">Termini geçen <b>'+late+'</b></span>':'<span class="muted">Termini geçen yok</span>')+
     (soon?'<span style="color:var(--soon);font-weight:600">7 gün içinde <b>'+soon+'</b></span>':"")+
-    '<span class="grow"></span><span class="pbar" aria-hidden="true">'+seg(done,"var(--d-bar)")+seg(by("Sanel"),"var(--s-bar)")+seg(by("Fason"),"var(--f-bar)")+seg(by("Stok"),"var(--k-bar)")+seg(by("Belirsiz"),"var(--b-bar)")+'</span><b>%'+(tot?pct:0)+'</b></div>';
+    '<span class="grow"></span><span class="pbar" aria-hidden="true">'+seg(done,"var(--d-bar)")+seg(by("Sanel"),"var(--s-bar)")+seg(by("Alt Tedarikçi"),"var(--f-bar)")+seg(by("Stok"),"var(--k-bar)")+seg(by("Belirsiz"),"var(--b-bar)")+'</span><b>%'+(tot?pct:0)+'</b></div>';
 }
 function daysTag(d){if(d==null)return"";return '<span class="days '+(d<0?"late":d<=7?"soon":"ok")+'">'+(d<0?(-d)+" gün geçti":d===0?"bugün":d+" gün kaldı")+'</span>'}
 function viewList(){
@@ -416,13 +419,13 @@ function viewList(){
 }
 function rowHtml(x){
   const it=x.it,k='data-rid="'+esc(x.rid)+'" data-iid="'+esc(x.iid)+'"',d=D(),key=x.rid+"/"+x.iid;
-  const cls="row "+(x.cancel?"cancel":x.done?"done":"t-"+x.type)+(S.sel.has(key)?" sel":"");
+  const cls="row "+(x.cancel?"cancel":x.done?"done":"t-"+tcls(x.type))+(S.sel.has(key)?" sel":"");
   const dueBadge=it.due&&it.due!==x.r.due?'<span class="badge" title="Bu kaleme özel termin">Termin '+fmtD(it.due)+'</span>':"";
   const late=isLate(x)&&it.due&&it.due!==x.r.due?'<span class="badge">'+(-x.days)+' gün geçti</span>':"";
   return '<div class="'+cls+'">'+
     '<div><input type="checkbox" class="cb" data-sel="'+esc(key)+'"'+(S.sel.has(key)?" checked":"")+' aria-label="'+esc(it.part)+' seç" style="margin-left:4px"></div>'+
     '<div class="c-part"><input class="cell b" '+k+' data-f="part" value="'+esc(it.part)+'" list="dlParts" aria-label="Parça"'+d+'></div>'+
-    '<div><select class="cell tp tp-'+esc(x.type)+'" '+k+' data-f="type" aria-label="Tip"'+d+'>'+opts(TYPES,x.type)+'</select></div>'+
+    '<div><select class="cell tp tp-'+tcls(x.type)+'" '+k+' data-f="type" aria-label="Tip"'+d+'>'+opts(TYPES,x.type)+'</select></div>'+
     '<div><input class="cell" '+k+' data-f="maker" value="'+esc(it.maker)+'" list="dlMakers" placeholder="—" aria-label="Üretici"'+d+'></div>'+
     '<div><input class="cell" '+k+' data-f="material" value="'+esc(it.material)+'" placeholder="—" aria-label="Ham madde"'+d+'></div>'+
     '<div><input class="cell n" type="number" min="0" inputmode="numeric" '+k+' data-f="qty" value="'+(it.qty??"")+'" placeholder="—" aria-label="Adet"'+d+'></div>'+
@@ -488,11 +491,11 @@ function viewCharts(){
     '<div></div><div style="position:relative;height:0"><div class="today" style="left:'+X(tk)+';top:-'+(prodIds.length*32)+'px;height:'+(prodIds.length*32)+'px"><b>Bugün '+fmtD(tk).slice(0,5)+'</b></div></div></div></div>':'<p class="muted">Terminli talep yok.</p>';
 
   // İlerleme
-  const pr={};for(const x of list){const k=x.r.product;const o=pr[k]=pr[k]||{done:0,Sanel:0,Fason:0,Stok:0,Belirsiz:0,cancel:0};if(x.cancel)o.cancel++;else if(x.done)o.done++;else o[x.type]++}
+  const pr={};for(const x of list){const k=x.r.product;const o=pr[k]=pr[k]||{done:0,Sanel:0,"Alt Tedarikçi":0,Stok:0,Belirsiz:0,cancel:0};if(x.cancel)o.cancel++;else if(x.done)o.done++;else o[x.type]++}
   const prIds=Object.keys(pr).sort((a,b)=>(prodOf({product:a}).ord||0)-(prodOf({product:b}).ord||0));
-  const pmax=Math.max(1,...prIds.map(k=>{const o=pr[k];return o.done+o.Sanel+o.Fason+o.Stok+o.Belirsiz}));
+  const pmax=Math.max(1,...prIds.map(k=>{const o=pr[k];return o.done+o.Sanel+o["Alt Tedarikçi"]+o.Stok+o.Belirsiz}));
   const w=n=>(n/pmax*100).toFixed(1)+"%";
-  const progress=prIds.map(k=>{const o=pr[k],t=o.done+o.Sanel+o.Fason+o.Stok+o.Belirsiz;return '<button type="button" class="hb" data-cprod="'+esc(k)+'" title="Listede göster"><span class="nm">'+esc(prodOf({product:k}).name)+'</span><span class="tr"><span style="width:'+w(o.done)+';background:var(--d-bar)"></span><span style="width:'+w(o.Sanel)+';background:var(--s-bar)"></span><span style="width:'+w(o.Fason)+';background:var(--f-bar)"></span><span style="width:'+w(o.Stok)+';background:var(--k-bar)"></span><span style="width:'+w(o.Belirsiz)+';background:var(--b-bar)"></span></span><span class="v">'+o.done+' / '+t+'</span></button>'}).join("")||'<p class="muted">Kalem yok.</p>';
+  const progress=prIds.map(k=>{const o=pr[k],t=o.done+o.Sanel+o["Alt Tedarikçi"]+o.Stok+o.Belirsiz;return '<button type="button" class="hb" data-cprod="'+esc(k)+'" title="Listede göster"><span class="nm">'+esc(prodOf({product:k}).name)+'</span><span class="tr"><span style="width:'+w(o.done)+';background:var(--d-bar)"></span><span style="width:'+w(o.Sanel)+';background:var(--s-bar)"></span><span style="width:'+w(o["Alt Tedarikçi"])+';background:var(--f-bar)"></span><span style="width:'+w(o.Stok)+';background:var(--k-bar)"></span><span style="width:'+w(o.Belirsiz)+';background:var(--b-bar)"></span></span><span class="v">'+o.done+' / '+t+'</span></button>'}).join("")||'<p class="muted">Kalem yok.</p>';
   // Sorumlu
   const open=list.filter(isOpen);const ow={};for(const x of open){const k=x.it.owner||"(atanmamış)";ow[k]=(ow[k]||0)+1}
   const owIds=Object.keys(ow).sort((a,b)=>ow[b]-ow[a]);const omax=Math.max(1,...Object.values(ow));
@@ -506,7 +509,7 @@ function viewCharts(){
   return '<div class="charts">'+
     '<section class="panel" aria-label="Termin çizelgesi"><div class="ph"><h2>Termin çizelgesi</h2><span class="sub">Her işaret bir fazın termini'+(f.phase?" · seçili faz çerçeveli":"")+'</span><span class="grow"></span>'+L("var(--d-bar)","Bitti")+L("var(--late)","Termini geçti, eksik var")+L("var(--f-bar)","14 gün içinde")+'<span class="lg"><span class="sq" style="background:#FFFFFF;box-shadow:inset 0 0 0 2px #6B7580"></span>İleride</span></div>'+gantt+'</section>'+
     '<div class="c3">'+
-      '<section class="panel" aria-label="Ürün bazlı ilerleme"><div class="ph"><h2>Ürün bazlı ilerleme</h2><span class="sub">kalem</span></div><div style="display:flex;gap:12px;flex-wrap:wrap">'+L("var(--d-bar)","Bitti")+L("var(--s-bar)","Sanel'de")+L("var(--f-bar)","Fasonda")+L("var(--k-bar)","Stok")+L("var(--b-bar)","Belirsiz")+'</div><div style="display:flex;flex-direction:column;gap:3px">'+progress+'</div></section>'+
+      '<section class="panel" aria-label="Ürün bazlı ilerleme"><div class="ph"><h2>Ürün bazlı ilerleme</h2><span class="sub">kalem</span></div><div style="display:flex;gap:12px;flex-wrap:wrap">'+L("var(--d-bar)","Bitti")+L("var(--s-bar)","Sanel'de")+L("var(--f-bar)","Alt tedarikçide")+L("var(--k-bar)","Stok")+L("var(--b-bar)","Belirsiz")+'</div><div style="display:flex;flex-direction:column;gap:3px">'+progress+'</div></section>'+
       '<section class="panel" aria-label="Sorumlu iş yükü"><div class="ph"><h2>Sorumlu iş yükü</h2><span class="sub">açık kalem</span></div><div style="display:flex;flex-direction:column;gap:3px">'+owners+'</div>'+(unassigned?'<p style="margin:0;font-size:12.5px;color:var(--b-ink)">'+unassigned+' açık kalemin sorumlusu atanmamış.</p>':"")+'</section>'+
       '<section class="panel" aria-label="Üreticide bekleyen"><div class="ph"><h2>Üreticide bekleyen</h2><span class="sub">adet (kalem)</span></div><div style="display:flex;flex-direction:column;gap:3px">'+makers+'</div></section>'+
     '</div><p class="muted" style="margin:0;font-size:12.5px">Grafikler üstteki filtrelerle aynı veriyi kullanır. Bir çubuğa ya da işarete tıklayınca o kalemler Liste\'de açılır.</p></div>';
@@ -523,16 +526,16 @@ function viewProducts(){
   if(S.bomSel==="__lists")return '<div class="prod">'+left+listsPanel()+'</div>';
   if(!S.bomDraft||S.bomDraft._id!==S.bomSel){
     const src=S.bomSel==="__new"?{name:"",program:"",customer:S.f.customer||"Ford",parts:[{part:"Gövde",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Lens",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"PCBA",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Kablo+Konnektör",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""}]}:S.products[S.bomSel];
-    S.bomDraft=JSON.parse(JSON.stringify({_id:S.bomSel,_dirty:S.bomSel==="__new",name:src.name||"",program:src.program||"",customer:src.customer||"",parts:src.parts||[]}));
+    S.bomDraft=JSON.parse(JSON.stringify({_id:S.bomSel,_dirty:S.bomSel==="__new",name:src.name||"",program:src.program||"",customer:src.customer||"",parts:(src.parts||[]).map(x=>Object.assign({},x,{type:normT(x.type)}))}));
   }
   const d=S.bomDraft,dd=D();const used=Object.values(S.requests).filter(r=>!r.deleted&&r.product===S.bomSel).length;
   const right='<section class="panel" aria-label="Ürün ağacı"><div class="ph"><h2>'+(S.bomSel==="__new"?"Yeni ürün":esc(d.name))+'</h2>'+(S.bomSel!=="__new"?'<span class="sub">'+used+' talepte kullanılıyor</span>':"")+'</div>'+
     '<p class="hint">"Araç seti başına adet", Excel\'deki gibi 1 araç seti için gereken adettir (ör. Uppershelf 8, Stowage 2, Ambient gövde 9). Yeni talepte adet = araç seti × bu sayı + yedek. Üretici, malzeme ve sorumlu yeni taleplerde varsayılan olarak gelir.</p>'+
     '<div class="form"><label class="fl">Ürün adı<input class="in" id="bName" value="'+esc(d.name)+'" style="width:220px"'+dd+'></label><label class="fl">Müşteri<input class="in" id="bCust" list="dlCustomers" value="'+esc(d.customer)+'" style="width:170px"'+dd+'></label><label class="fl">Program<input class="in" id="bProg" list="dlPrograms" value="'+esc(d.program)+'" style="width:170px"'+dd+'></label></div>'+
     '<div style="border:1px solid var(--line);border-radius:4px;overflow-x:auto"><div class="bomrow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:32px"><div>Alt parça</div><div style="text-align:right">Araç seti başına</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div>Sorumlu</div><div></div></div>'+
-    (d.parts.length?d.parts.map((p,i)=>'<div class="bomrow t-'+esc(p.type||"Belirsiz")+'"><div><input class="cell b" data-bi="'+i+'" data-bf="part" value="'+esc(p.part)+'" list="dlParts" aria-label="Alt parça"'+dd+'></div>'+
+    (d.parts.length?d.parts.map((p,i)=>'<div class="bomrow t-'+tcls(p.type)+'"><div><input class="cell b" data-bi="'+i+'" data-bf="part" value="'+esc(p.part)+'" list="dlParts" aria-label="Alt parça"'+dd+'></div>'+
       '<div><input class="cell n" type="number" min="0" data-bi="'+i+'" data-bf="perSet" value="'+esc(p.perSet)+'" aria-label="Araç seti başına adet"'+dd+'></div>'+
-      '<div><select class="cell tp tp-'+esc(p.type||"Belirsiz")+'" data-bi="'+i+'" data-bf="type" aria-label="Tip"'+dd+'>'+opts(TYPES,p.type||"Belirsiz")+'</select></div>'+
+      '<div><select class="cell tp tp-'+tcls(p.type)+'" data-bi="'+i+'" data-bf="type" aria-label="Tip"'+dd+'>'+opts(TYPES,p.type||"Belirsiz")+'</select></div>'+
       '<div><input class="cell" data-bi="'+i+'" data-bf="maker" value="'+esc(p.maker)+'" list="dlMakers" placeholder="—" aria-label="Üretici"'+dd+'></div>'+
       '<div><input class="cell" data-bi="'+i+'" data-bf="material" value="'+esc(p.material)+'" placeholder="—" aria-label="Ham madde"'+dd+'></div>'+
       '<div><select class="cell" data-bi="'+i+'" data-bf="owner" aria-label="Sorumlu"'+dd+'>'+opts(S.cfg.people,p.owner,"—")+'</select></div>'+
@@ -613,7 +616,7 @@ function bind(){
       if(f==="part"&&!val.trim()){toast("Parça adı boş bırakılamaz.",true);t.value=S.requests[t.dataset.rid].items[t.dataset.iid].part;return}
       updItem(t.dataset.rid,t.dataset.iid,{[f]:val});if(t.tagName==="SELECT")t.blur();return}
     if(t.dataset.bf!==undefined){const i=+t.dataset.bi;let val=t.value;if(t.dataset.bf==="perSet")val=val===""?0:Number(val);S.bomDraft.parts[i][t.dataset.bf]=val;
-      if(t.dataset.bf==="type"){t.className="cell tp tp-"+val;t.closest(".bomrow").className="bomrow t-"+val}markBomDirty();return}
+      if(t.dataset.bf==="type"){t.className="cell tp tp-"+tcls(val);t.closest(".bomrow").className="bomrow t-"+tcls(val)}markBomDirty();return}
     if(["bName","bProg","bCust"].includes(t.id)){S.bomDraft[{bName:"name",bProg:"program",bCust:"customer"}[t.id]]=t.value.trim();markBomDirty();return}
   });
   v.addEventListener("focusout",()=>setTimeout(()=>{if(deferred&&!focusedInView())renderBody()},0));
@@ -665,7 +668,7 @@ function openNew(){
 }
 function bomRows(pid){
   const p=S.products[pid];if(!p)return[];
-  if(!NR.rows[pid])NR.rows[pid]=(p.parts||[]).map(x=>Object.assign({on:true,qtyEdited:false,qty:0},x));
+  if(!NR.rows[pid])NR.rows[pid]=(p.parts||[]).map(x=>Object.assign({on:true,qtyEdited:false,qty:0},x,{type:normT(x.type)}));
   for(const r of NR.rows[pid])if(!r.qtyEdited)r.qty=NR.mode==="sets"?(Number(NR.sets)||0)*(Number(r.perSet)||0)+(Number(NR.spare)||0):(Number(NR.direct)||0)+(Number(NR.spare)||0);
   return NR.rows[pid];
 }
@@ -676,10 +679,10 @@ function drawNew(){
   const prev=NR.prods.map(pid=>{const rows=bomRows(pid),p=S.products[pid];const on=rows.filter(r=>r.on).length;total+=on;
     return '<div class="pv"><div class="pvh"><b>'+esc(p.name)+'</b><span class="muted" style="font-size:12.5px">'+(NR.mode==="sets"?esc(NR.sets||0)+" araç seti":esc(NR.direct||0)+" adet")+' · '+on+' alt parça</span><span class="grow"></span>'+(rows.length?'<button type="button" class="link" data-nrall="'+esc(pid)+'">Tümünü seç / kaldır</button>':"")+'</div>'+
       (rows.length?'<div class="prow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:30px"><div></div><div>Parça</div><div>×Set</div><div style="text-align:right">Adet</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div>Sorumlu</div></div>'+
-      rows.map((r,i)=>'<div class="prow t-'+esc(r.type||"Belirsiz")+(r.on?"":" off")+'"><div><input type="checkbox" class="cb" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="on"'+(r.on?" checked":"")+' aria-label="'+esc(r.part)+' dahil" style="margin-left:6px"></div>'+
+      rows.map((r,i)=>'<div class="prow t-'+tcls(r.type)+(r.on?"":" off")+'"><div><input type="checkbox" class="cb" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="on"'+(r.on?" checked":"")+' aria-label="'+esc(r.part)+' dahil" style="margin-left:6px"></div>'+
         '<div style="font-weight:600">'+esc(r.part)+'</div><div class="num muted">'+(NR.mode==="sets"?"×"+esc(r.perSet):"—")+'</div>'+
         '<div><input class="cell n" type="number" min="0" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="qty" value="'+r.qty+'" aria-label="Adet"'+(r.qtyEdited?' style="font-weight:700"':"")+'></div>'+
-        '<div><select class="cell tp tp-'+esc(r.type||"Belirsiz")+'" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="type" aria-label="Tip">'+opts(TYPES,r.type||"Belirsiz")+'</select></div>'+
+        '<div><select class="cell tp tp-'+tcls(r.type)+'" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="type" aria-label="Tip">'+opts(TYPES,r.type||"Belirsiz")+'</select></div>'+
         '<div><input class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="maker" value="'+esc(r.maker)+'" list="dlMakers" aria-label="Üretici"></div>'+
         '<div><input class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="material" value="'+esc(r.material)+'" aria-label="Ham madde"></div>'+
         '<div><select class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="owner" aria-label="Sorumlu">'+opts(S.cfg.people,r.owner,"—")+'</select></div></div>').join(""):

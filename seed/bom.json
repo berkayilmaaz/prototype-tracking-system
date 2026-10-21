@@ -9,7 +9,7 @@
     {
      "part": "Gövde",
      "perSet": 9,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Black",
      "owner": "Erdi"
@@ -81,7 +81,7 @@
     {
      "part": "Gövde",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "owner": "Sefa"
@@ -89,7 +89,7 @@
     {
      "part": "Lens",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Sefa"
@@ -97,7 +97,7 @@
     {
      "part": "Divider",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Gray",
      "owner": "Sefa"
@@ -105,7 +105,7 @@
     {
      "part": "Klips",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Sefa"
@@ -137,7 +137,7 @@
     {
      "part": "Gövde",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Sefa"
@@ -145,7 +145,7 @@
     {
      "part": "Lens",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Sefa"
@@ -153,7 +153,7 @@
     {
      "part": "Divider",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Sefa"
@@ -161,7 +161,7 @@
     {
      "part": "Klips",
      "perSet": 1,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Sefa"
@@ -193,7 +193,7 @@
     {
      "part": "Gövde",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Space Gray",
      "owner": "Erdi"
@@ -201,7 +201,7 @@
     {
      "part": "Lens",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "3D Reçine - Clear",
      "owner": "Erdi"
@@ -209,7 +209,7 @@
     {
      "part": "Klips",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource-StarYay",
      "material": "AISI302",
      "owner": "Erdi"
@@ -281,7 +281,7 @@
     {
      "part": "Gövde Üst",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -289,7 +289,7 @@
     {
      "part": "Gövde Alt",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -313,7 +313,7 @@
     {
      "part": "PCB Tutucu",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -337,7 +337,7 @@
     {
      "part": "Flex Tutucu",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -345,7 +345,7 @@
     {
      "part": "Braket",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -353,7 +353,7 @@
     {
      "part": "Braket Kapak",
      "perSet": 2,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "",
      "material": "",
      "owner": ""
@@ -425,7 +425,7 @@
     {
      "part": "Gövde",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "MJF",
      "owner": "Erdi"
@@ -441,7 +441,7 @@
     {
      "part": "Switch",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "Sanel",
      "material": "MJF",
      "owner": "Erdi"
@@ -449,7 +449,7 @@
     {
      "part": "Slider",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Slider",
      "owner": "Hamdi"
@@ -457,7 +457,7 @@
     {
      "part": "Yay",
      "perSet": 8,
-     "type": "Fason",
+     "type": "Alt Tedarikçi",
      "maker": "OutSource",
      "material": "Yay",
      "owner": "Hamdi"
