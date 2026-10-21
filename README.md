@@ -8,7 +8,7 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 |---|---|
 | Çalışma ortamı | Python 3.9 veya üstü (yalnızca standart kütüphane, `pip install` gerekmez) ya da Docker |
 | Veritabanı | Tek dosya SQLite: `data/prototip.db` |
-| Port | 8080 (değiştirilebilir) |
+| Port | Docker/Portainer dış portu 1273; uygulama iç portu 8080 |
 | Dış bağlantı | Yok. Sayfa internetten hiçbir şey yüklemez |
 | Giriş | Şirket kullanıcı adı ve şifresiyle (Active Directory / LDAP) + bir yerel yönetici hesabı |
 | Yetki | Kullanıcı bazında rol: Görüntüleme, Düzenleme, Yönetici (yetki verebilir), Engelli |
@@ -47,13 +47,49 @@ prototip-takip/
 
 Aşağıdaki adımlar Docker kurulu bir Linux sanal makine içindir (önerilen). Docker olmadan kurulum en altta.
 
+### Portainer ile yayınlama
+
+`docker-compose.yml`, Portainer Stack üzerinden Git deposundan yayınlanacak şekilde hazırlanmıştır:
+
+- Sunucu portu: `1273` (konteyner içinde `8080`)
+- Kalıcı veri: `prototip-takip-data` adlı Docker volume
+- LDAP ve yönetici bilgileri: Portainer ortam değişkenleri
+- Gerçek `.env` dosyası Git tarafından yok sayılır; örnek değerler `.env.example` içindedir.
+
+Portainer'da **Stacks → Add stack → Repository** yoluyla bu depoyu seçin ve Compose yolu olarak
+`docker-compose.yml` girin. Ardından **Environment variables** bölümünde en az şu üç değişkeni tanımlayın:
+
+```dotenv
+PT_LDAP_URL=ldaps://ldap.example.local:636
+PT_LDAP_DOMAIN=example.local
+PT_ADMIN_PASSWORD=en-az-10-karakter-guclu-bir-sifre
+```
+
+Diğer kullanılabilir değerleri `.env.example` dosyasından ekleyebilirsiniz. Yayınlama tamamlandığında uygulama:
+
+```text
+http://<portainer-sunucusu>:1273
+```
+
+adresinden açılır. İlk çalıştırmada `PT_ADMIN_PASSWORD`, `PT_ADMIN_USER` (varsayılan `admin`) hesabını
+oluşturur. Güvenlik nedeniyle sonraki yeniden başlatmalarda mevcut yönetici şifresini otomatik olarak
+değiştirmez. Şifreyi sonradan değiştirmek için Portainer konsolunda şunu çalıştırın:
+
+```bash
+python server.py --set-admin-password
+```
+
+Stack silinip yeniden oluşturulsa bile `prototip-takip-data` volume'u silinmediği sürece veriler korunur.
+Portainer'da stack/volume silerken volume'u ayrıca silmeyin. HTTPS ters vekili kullanılacaksa
+`PT_COOKIE_SECURE=1` ayarlayın.
+
 ### 0. Gereksinimler
 
 | | |
 |---|---|
 | Sunucu | Küçük bir sanal makine yeterli (uygulama ~25 MB RAM kullanır, veri 1 MB'tan küçük) |
 | Yazılım | Docker + Docker Compose (ya da Docker olmadan Python 3.9+) |
-| Ağ (gelen) | 8080/TCP yalnızca iç ağdan; isteğe bağlı iç adres, ör. `prototip.sanel.local` |
+| Ağ (gelen) | 1273/TCP yalnızca iç ağdan; isteğe bağlı iç adres, ör. `prototip.sanel.local` |
 | Ağ (giden) | Sunucudan Active Directory'ye: `10.34.10.1:389` (ldaps kullanılacaksa `:636`) |
 | İnternet | Yalnızca imaj derlenirken `python:3.12-slim` indirmek için; uygulama çalışırken gerekmez |
 
@@ -67,15 +103,15 @@ ls data          # yalnızca .keep olmalı; veritabanı ilk açılışta oluşur
 
 ### 2. Ayarları kontrol edin
 
-`docker-compose.yml` içinde AD adresi hazır gelir:
+Önce `.env.example` dosyasını `.env` olarak kopyalayıp gerçek LDAP ve yönetici değerlerini girin:
 
-```yaml
-PT_LDAP_URL: ldap://10.34.10.1:389      # şifreli bağlantı için: ldaps://10.34.10.1:636
-PT_LDAP_DOMAIN: sanelelk.local
-PT_DEFAULT_ROLE: viewer                 # ilk kez giren herkes "Görüntüleme" rolü alır
+```bash
+cp .env.example .env
+# .env dosyasını düzenleyin
 ```
 
-Yerel yönetici şifresini bu dosyaya **yazmayın** (git'e gider); 5. adımda komutla verilir.
+`.env` Git tarafından yok sayılır. Dosyanın erişim izinlerini yalnızca servis yöneticisinin okuyabileceği
+şekilde sınırlandırın.
 
 ### 3. Başlatın
 
@@ -88,13 +124,11 @@ docker logs prototip-takip
 Logda şunlar görülmeli:
 
 ```
+Yerel yönetici 'admin' oluşturuldu (PT_ADMIN_PASSWORD).
 İlk kurulum: seed.json'dan 71 belge yüklendi.
-Giriş zorunlu. Şirket hesabı: ldap://10.34.10.1:389 (alan: sanelelk.local) | ilk girişte rol: viewer
-UYARI: Yerel yönetici şifresi yok. 'python server.py --set-admin-password' ile belirleyin.
+Giriş zorunlu. Şirket hesabı: ldaps://ldap.example.local:636 (alan: example.local) | ilk girişte rol: viewer
 Prototip Takip çalışıyor: http://0.0.0.0:8080  (veri: /data)
 ```
-
-(Yönetici uyarısı 5. adımdan sonra kaybolur.)
 
 ### 4. Active Directory bağlantısını deneyin
 
@@ -107,6 +141,9 @@ Başarısız olursa → aşağıdaki **Sorun giderme** tablosu.
 
 ### 5. Yerel yönetici şifresini belirleyin
 
+`PT_ADMIN_PASSWORD` ilk çalıştırmada yönetici hesabını otomatik oluşturur. Değişken kullanılmadığı eski
+kurulumlarda veya şifreyi sonradan değiştirmek istediğinizde:
+
 ```bash
 docker compose exec prototip-takip python server.py --set-admin-password
 # Şifreyi iki kez sorar (en az 10 karakter). Şifreyi kurum şifre kasasına kaydedin.
@@ -114,14 +151,14 @@ docker compose exec prototip-takip python server.py --set-admin-password
 
 ### 6. Tarayıcıdan ilk giriş ve yetkiler
 
-1. `http://<sunucu-adresi>:8080` açın, kullanıcı adı `admin` ve 5. adımdaki şifreyle girin.
+1. `http://<sunucu-adresi>:1273` açın, kullanıcı adı `admin` ve `.env`/Portainer'daki şifreyle girin.
 2. **Yetkiler** sekmesinde *Kullanıcı adı* alanına `berkay.yilmaz` yazın, rol **Yönetici** seçip *Ekle / güncelle*.
 3. Bundan sonra yetkileri Ar-Ge (Berkay Yılmaz) dağıtır. Diğer şirket kullanıcıları kendi Windows kullanıcı adı ve şifresiyle girer; ilk girişte "Görüntüleme" rolü alır.
 
 ### 7. Yedek ve iç adres
 
 - **Yedek:** sunucu her gün `data/backups/prototip-YYYY-AA-GG.db` dosyasını oluşturur (son 30 gün). Kurum yedeklemesine `data/backups/` klasörünü ekleyin. (Çalışan `data/prototip.db` dosyasını tek başına kopyalamayın; son değişiklikler yanındaki `-wal` dosyasında bekler.)
-- **İç adres / güvenlik duvarı:** 8080'i yalnızca iç ağa açın; isteğe bağlı DNS kaydı (ör. `prototip.sanel.local`).
+- **İç adres / güvenlik duvarı:** 1273'ü yalnızca iç ağa açın; isteğe bağlı DNS kaydı (ör. `prototip.sanel.local`).
 
 ### Kontrol listesi
 

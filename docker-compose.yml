@@ -1,23 +1,34 @@
 services:
   prototip-takip:
     build: .
+    image: prototip-takip:latest
     container_name: prototip-takip
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "1273:8080"
     volumes:
-      - ./data:/data
+      - prototip-data:/data
     environment:
-      TZ: Europe/Istanbul
-      # Şirket hesabıyla giriş (Active Directory). Ayarlıyken giriş zorunludur.
-      PT_LDAP_URL: ldap://10.34.10.1:389          # şifreli bağlantı için: ldaps://10.34.10.1:636
-      PT_LDAP_DOMAIN: sanelelk.local
-      PT_DEFAULT_ROLE: viewer                     # ilk kez giren kullanıcının rolü: viewer / editor / none
-      # Yerel yönetici şifresini buraya YAZMAYIN (git'e gider). Kurulumdan sonra bir kez çalıştırın:
-      #   docker compose exec prototip-takip python server.py --set-admin-password
-      # AD bağlantısını denemek için:
-      #   docker compose exec prototip-takip python server.py --ldap-test kullanici.adi
-      # Uygulama HTTPS (IIS/nginx) arkasındaysa:
-      # PT_COOKIE_SECURE: "1"
-      # ldaps sertifikası kurum içi bir CA ile imzalıysa, CA dosyasını /data altına koyup:
-      # PT_LDAP_CA_FILE: /data/sirket-ca.pem
+      TZ: "${TZ:-Europe/Istanbul}"
+      PT_LDAP_URL: "${PT_LDAP_URL:?PT_LDAP_URL tanımlanmalı}"
+      PT_LDAP_DOMAIN: "${PT_LDAP_DOMAIN:?PT_LDAP_DOMAIN tanımlanmalı}"
+      PT_LDAP_BIND_FORMAT: "${PT_LDAP_BIND_FORMAT:-{user}@{domain}}"
+      PT_LDAP_BASE_DN: "${PT_LDAP_BASE_DN:-}"
+      PT_LDAP_CA_FILE: "${PT_LDAP_CA_FILE:-}"
+      PT_LDAP_TLS_VERIFY: "${PT_LDAP_TLS_VERIFY:-1}"
+      PT_DEFAULT_ROLE: "${PT_DEFAULT_ROLE:-viewer}"
+      PT_ADMIN_USER: "${PT_ADMIN_USER:-admin}"
+      PT_ADMIN_PASSWORD: "${PT_ADMIN_PASSWORD:?PT_ADMIN_PASSWORD tanımlanmalı}"
+      PT_SESSION_HOURS: "${PT_SESSION_HOURS:-168}"
+      PT_COOKIE_SECURE: "${PT_COOKIE_SECURE:-0}"
+      PT_BACKUP_KEEP: "${PT_BACKUP_KEEP:-30}"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  prototip-data:
+    name: prototip-takip-data
