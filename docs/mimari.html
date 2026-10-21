@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototip Takip Mimarisi</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--paper:#f5f5f5;--ink:#2d3142;--muted:#4f5d75;--accent:#eb6c36;--rule:rgba(45,49,66,0.12);
+--sans:'Geist',system-ui,sans-serif;--serif:'Instrument Serif',serif;--mono:'Geist Mono',ui-monospace,monospace}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);padding:3rem 2rem}
+.frame{max-width:1200px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+h1{font-family:var(--serif);font-size:2rem;font-weight:400;letter-spacing:-.02em;margin-bottom:.5rem}
+.sub{color:var(--muted);margin-bottom:1.5rem;max-width:760px;line-height:1.5}
+.scroll{overflow-x:auto}
+svg{width:100%;min-width:900px;display:block}
+.cards{display:grid;grid-template-columns:1.1fr 1fr .9fr;gap:16px;margin:2rem 0 3rem}
+.card{background:#fff;border:1px solid var(--rule);border-radius:6px;padding:1.25rem}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ink)}.dot.c{background:var(--accent)}.dot.m{background:var(--muted)}
+.card ul{padding-left:1rem;font-size:13px;line-height:1.6;color:var(--muted)}
+code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+h2{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:2rem 0 .75rem}
+figure{margin-bottom:2rem}
+figure img{width:100%;border:1px solid var(--rule);border-radius:6px;display:block}
+figcaption{font-size:13px;color:var(--muted);margin-top:.5rem}
+footer{font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--rule);padding-top:1rem;margin-top:2rem}
+@media (max-width:760px){.cards{grid-template-columns:1fr}body{padding:2rem 16px}}
+</style>
+</head>
+<body>
+<div class="frame">
+<p class="eyebrow">Mimari · Sanel Ar-Ge</p>
+<h1>Prototip Takip — sistem şeması</h1>
+<div class="scroll">
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pt-arch-title pt-arch-desc">
+<title id="pt-arch-title">Prototip Takip sistem mimarisi</title>
+<desc id="pt-arch-desc">Tarayıcıdaki tek dosyalık arayüz HTTP ile server.py'ye bağlanır; sunucu verileri SQLite'a yazar, günlük yedek alır, ilk kurulumda Excel'den üretilen seed dosyalarını yükler ve değişiklikleri SSE ile tüm tarayıcılara yayınlar.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f5f5f5"/>
+
+<!-- ZONE: sunucu -->
+<rect x="460" y="148" width="500" height="292" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+<rect x="472" y="152" width="300" height="12" rx="2" fill="#f5f5f5"/>
+<text x="622" y="161" fill="rgba(45,49,66,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">ŞİRKET İÇİ SUNUCU · DOCKER veya baslat.bat / NSSM</text>
+
+<!-- ARROWS -->
+<!-- Excel -> seed -->
+<line x1="680" y1="76" x2="760" y2="76" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="692" y="56" width="56" height="12" rx="2" fill="#f5f5f5"/>
+<text x="720" y="65" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">DÖNÜŞTÜR</text>
+<!-- seed -> sqlite -->
+<line x1="848" y1="112" x2="848" y2="180" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+<rect x="860" y="128" width="68" height="12" rx="2" fill="#f5f5f5"/>
+<text x="894" y="137" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">İLK KURULUM</text>
+<!-- browser -> proxy -->
+<line x1="200" y1="228" x2="256" y2="228" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="208" y="208" width="40" height="12" rx="2" fill="#f5f5f5"/>
+<text x="228" y="217" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">HTTP</text>
+<!-- proxy -> server -->
+<line x1="396" y1="228" x2="480" y2="228" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="408" y="208" width="60" height="12" rx="2" fill="#f5f5f5"/>
+<text x="438" y="217" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">REST :8080</text>
+<!-- server -> sqlite -->
+<line x1="680" y1="228" x2="760" y2="228" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="692" y="208" width="56" height="12" rx="2" fill="#f5f5f5"/>
+<text x="720" y="217" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">OKU / YAZ</text>
+<!-- sqlite -> backup -->
+<line x1="848" y1="276" x2="848" y2="336" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+<rect x="860" y="300" width="44" height="12" rx="2" fill="#f5f5f5"/>
+<text x="882" y="309" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">GÜNLÜK</text>
+<!-- SSE: server -> browsers -->
+<path d="M 580,300 V 352 Q 580,360 572,360 H 128 Q 120,360 120,352 V 304" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+<rect x="264" y="340" width="96" height="12" rx="2" fill="#f5f5f5"/>
+<text x="312" y="349" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SSE /api/events</text>
+
+<!-- NODES -->
+<!-- Excel (external) -->
+<rect x="480" y="40" width="200" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="480" y="40" width="200" height="72" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+<rect x="488" y="46" width="32" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.30)" stroke-width="0.8"/>
+<text x="504" y="55" fill="rgba(45,49,66,0.6)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">XLSX</text>
+<text x="580" y="80" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Eski Excel listesi</text>
+<text x="580" y="96" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">tools/excel_to_seed.py</text>
+
+<!-- seed (input) -->
+<rect x="760" y="40" width="180" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="760" y="40" width="180" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+<rect x="768" y="46" width="32" height="12" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+<text x="784" y="55" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SEED</text>
+<text x="850" y="80" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">seed.json · bom.json</text>
+<text x="850" y="96" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">talepler + ürün ağacı</text>
+
+<!-- Browser (input/user) -->
+<rect x="40" y="180" width="160" height="120" rx="6" fill="#f5f5f5"/>
+<rect x="40" y="180" width="160" height="120" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+<rect x="48" y="186" width="24" height="12" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+<text x="60" y="195" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">UI</text>
+<text x="120" y="228" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Tarayıcı</text>
+<text x="120" y="244" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">app/index.html</text>
+<text x="120" y="260" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Liste·Grafik·Ürünler</text>
+<text x="120" y="280" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">15–20 kullanıcı</text>
+
+<!-- Proxy (optional) -->
+<rect x="256" y="188" width="140" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="256" y="188" width="140" height="80" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+<rect x="264" y="194" width="44" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.20)" stroke-width="0.8"/>
+<text x="286" y="203" fill="rgba(45,49,66,0.5)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">İLERİDE</text>
+<text x="326" y="232" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">IIS / nginx</text>
+<text x="326" y="248" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">AD girişi</text>
+<text x="326" y="260" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">PT_USER_HEADER</text>
+
+<!-- Server (focal) -->
+<rect x="480" y="180" width="200" height="120" rx="6" fill="#f5f5f5"/>
+<rect x="480" y="180" width="200" height="120" rx="6" fill="rgba(235,108,54,0.10)" stroke="#eb6c36" stroke-width="1.2"/>
+<rect x="488" y="186" width="28" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.50)" stroke-width="0.8"/>
+<text x="502" y="195" fill="#eb6c36" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">API</text>
+<text x="580" y="228" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">server.py</text>
+<text x="580" y="244" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">statik dosya + REST + SSE</text>
+<text x="580" y="260" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">yalnız Python stdlib</text>
+<text x="580" y="280" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">PT_PORT · PT_DATA · PT_READONLY</text>
+
+<!-- SQLite (store) -->
+<rect x="760" y="180" width="180" height="96" rx="6" fill="#f5f5f5"/>
+<rect x="760" y="180" width="180" height="96" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<rect x="768" y="186" width="24" height="12" rx="2" fill="transparent" stroke="rgba(79,93,117,0.40)" stroke-width="0.8"/>
+<text x="780" y="195" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DB</text>
+<text x="850" y="228" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">data/prototip.db</text>
+<text x="850" y="244" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">SQLite · WAL</text>
+<text x="850" y="260" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">docs + history</text>
+
+<!-- Backup (store) -->
+<rect x="760" y="336" width="180" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="760" y="336" width="180" height="72" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="850" y="368" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">data/backups/</text>
+<text x="850" y="384" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">son 30 gün · .db</text>
+
+<!-- LEGEND -->
+<line x1="40" y1="484" x2="960" y2="484" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+<text x="40" y="508" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEJANT</text>
+<rect x="120" y="500" width="16" height="12" rx="2" fill="rgba(235,108,54,0.10)" stroke="#eb6c36"/>
+<text x="144" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Uygulamanın kalbi</text>
+<rect x="268" y="500" width="16" height="12" rx="2" fill="rgba(45,49,66,0.05)" stroke="#4f5d75"/>
+<text x="292" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Veri / yedek</text>
+<rect x="396" y="500" width="16" height="12" rx="2" fill="rgba(79,93,117,0.10)" stroke="#7a8399"/>
+<text x="420" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Kullanıcı / girdi</text>
+<rect x="540" y="500" width="16" height="12" rx="2" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-dasharray="4,3"/>
+<text x="564" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Henüz yok (ileride)</text>
+<line x1="696" y1="506" x2="724" y2="506" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+<text x="732" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Canlı yayın</text>
+<line x1="824" y1="506" x2="852" y2="506" stroke="#4f5d75" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+<text x="860" y="509" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif">Arka plan işi</text>
+</svg>
+</div>
+</div>
+</body>
+</html>

@@ -14,6 +14,18 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 | Yedek | Günlük otomatik (`data/backups/`, son 30 gün) + istenince JSON dışa aktarma |
 | Kayıt geçmişi | Her değişiklik kim/ne zaman bilgisiyle `history` tablosuna yazılır |
 
+## Sistem şeması
+
+![Prototip Takip sistem şeması](docs/mimari.png)
+
+- **Tarayıcı** sayfayı (`app/index.html`) sunucudan alır; bütün okuma/yazma `REST /api/...` ile yapılır.
+- **server.py** değişikliği SQLite'a yazar, `history` tablosuna kim/ne zaman bilgisini ekler ve aynı olayı **SSE** (`/api/events`) ile açık olan tüm sekmelere gönderir; başka kullanıcılar sayfayı yenilemeden görür.
+- **İlk kurulumda** veritabanı boşsa `seed/seed.json` yüklenir (Excel'den `tools/excel_to_seed.py` ile üretilir).
+- **Yedek:** her gün `data/backups/` altına tutarlı bir `.db` kopyası alınır.
+- **İleride:** IIS/nginx + Windows/AD girişi önüne konursa kullanıcı adı `PT_USER_HEADER` başlığıyla gelir (kesik çizgili kutu).
+
+Şemanın kaynağı `docs/mimari.html` (tarayıcıda açılır) ve `docs/mimari.svg`.
+
 ## Klasör yapısı
 
 ```
@@ -23,6 +35,7 @@ prototip-takip/
 ├─ seed/seed.json       İlk kurulum verisi (güncel Excel'den üretildi)
 ├─ seed/bom.json        Ürün ağacı ve açılır liste tanımları
 ├─ tools/excel_to_seed.py   Excel → seed.json dönüştürücü (openpyxl gerekir)
+├─ docs/                Sistem şeması (png, svg, html)
 ├─ data/                Veritabanı ve yedekler (ilk çalıştırmada oluşur)
 ├─ Dockerfile, docker-compose.yml
 └─ baslat.bat           Windows'ta hızlı deneme
