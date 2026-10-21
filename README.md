@@ -1,4 +1,4 @@
-# Sanel Ar-Ge Prototip Takip — kurulum notu (IT)
+# Sanel Ar-Ge Prototip Takip 
 
 Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") tarayıcıdan, birden fazla kişinin aynı anda kullanabileceği bir web uygulaması. Kullanıcılar talepleri, alt parçaları, durumları ve terminleri tarayıcıdan günceller; değişiklikler açık olan diğer ekranlara anında yansır.
 
