@@ -8,8 +8,9 @@ Ek kütüphane gerektirmez (yalnızca Python standart kütüphanesi).
     Şifre hiçbir yerde saklanmaz.
   * Bir "yerel yönetici" (local admin) hesabı vardır. Şifresi bu sunucuda (PBKDF2 özetiyle)
     saklanır; AD'ye ulaşılamasa da giriş yapabilir.
-  * Roller: viewer (görüntüleme), editor (düzenleme), admin (düzenleme + yetki verme),
-    none (giriş engelli). Yönetici rolündeki herkes başkalarına rol verebilir.
+  * Roller: viewer (görüntüleme), engineer (proje mühendisi: talep açar, yönetici onaylar),
+    editor (düzenleme), admin (düzenleme + talep onayı + yetki verme), none (giriş engelli).
+    Yönetici rolündeki herkes başkalarına rol verebilir.
   * Oturum: rastgele bir anahtar tarayıcıya HttpOnly çerez olarak verilir; veritabanında
     yalnızca anahtarın SHA-256 özeti tutulur.
 """
@@ -25,8 +26,10 @@ import threading
 import time
 from urllib.parse import urlparse
 
-ROLES = ("viewer", "editor", "admin", "none")
-ROLE_TR = {"viewer": "Görüntüleme", "editor": "Düzenleme", "admin": "Yönetici", "none": "Engelli"}
+ROLES = ("viewer", "engineer", "editor", "admin", "none")
+ROLE_TR = {"viewer": "Görüntüleme", "engineer": "Proje Mühendisi", "editor": "Düzenleme", "admin": "Yönetici",
+           "none": "Engelli"}
+RANK = {"viewer": 1, "engineer": 2, "editor": 3, "admin": 4}
 USER_RE = re.compile(r"^[a-z0-9._\-]{1,64}$")
 COOKIE = "pt_session"
 
@@ -296,7 +299,7 @@ class Throttle:
 class Auth:
     def __init__(self, conn, lock, ldap=None, default_role="viewer", admin_user="admin", session_hours=168):
         if default_role not in ROLES:
-            raise ValueError("PT_DEFAULT_ROLE viewer, editor ya da none olmalı")
+            raise ValueError("PT_DEFAULT_ROLE viewer, engineer, editor ya da none olmalı")
         self.conn, self.lock, self.ldap = conn, lock, ldap
         self.default_role, self.admin_user = default_role, admin_user
         self.session_hours = session_hours

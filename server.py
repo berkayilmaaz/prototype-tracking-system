@@ -197,6 +197,85 @@ def deep_merge(base, patch):
     return out
 
 
+def _state_of(doc):
+    """Talebin onay durumu. 'approval' alanı olmayan (yönetici/düzenleyicinin açtığı ya da eski) talepler onaylı sayılır."""
+    return ((doc or {}).get("approval") or {}).get("state") or "approved"
+
+
+def approval_policy(me, op, col, existing, data):
+    """Proje mühendisi talep akışı kuralları. -> (yazılacak veri, None) ya da (None, red nedeni)
+
+    - Ürünler ve listeler: Düzenleme ve üstü.
+    - Proje Mühendisi: yeni talebi yalnızca 'onay bekliyor' olarak açar; sadece kendi açtığı ve henüz
+      onaylanmamış talebi düzenler/geri çeker. Reddedilen talebi düzenlerse tekrar onaya gider.
+    - Düzenleme: onaylı talepleri düzenler; onay bekleyenlere dokunamaz, onay veremez.
+    - Yönetici: her şey; onay/ret kararı adı ve zamanıyla kaydedilir.
+    """
+    role, user = me["role"], me["user"]
+    rank = authmod.RANK.get(role, 0)
+    if col != "requests":
+        if rank < authmod.RANK["editor"]:
+            return None, "Düzenleme yetkiniz yok."
+        return data, None
+    t = now()
+    old = _state_of(existing) if existing else None
+    old_appr = (existing or {}).get("approval") or {}
+    owner = old_appr.get("requestedBy")
+    new = None if op == "delete" else (data if op == "set" else deep_merge(existing or {}, data))
+    if op == "update" and existing is None:
+        return data, None  # store.update zaten 404 döner
+
+    if role == "admin":
+        if new is not None and (existing is None or _state_of(new) != old):
+            a = dict(new.get("approval") or {})
+            st = _state_of(new)
+            if st in ("approved", "rejected") and new.get("approval"):
+                a.update(decidedBy=user, decidedByName=me["display"], decidedAt=t)
+                if st == "approved":
+                    a["reason"] = ""
+            elif st == "pending" and existing is None:
+                a.update(requestedBy=user, requestedByName=me["display"], requestedAt=t)
+            if a:
+                data = dict(data)
+                data["approval"] = a if op == "set" else {**(data.get("approval") or {}), **a}
+        return data, None
+
+    if role == "engineer":
+        if existing is None:
+            if op != "set":
+                return None, "Talep bulunamadı."
+            data = dict(data)
+            data["approval"] = {"state": "pending", "requestedBy": user, "requestedByName": me["display"],
+                                "requestedAt": t}
+            return data, None
+        if old == "approved" or owner != user:
+            return None, ("Bu talebi değiştiremezsiniz: Proje Mühendisi yalnızca kendi açtığı ve henüz "
+                          "onaylanmamış talepleri düzenleyebilir.")
+        if op == "delete":
+            return data, None
+        a = {"state": "pending", "requestedBy": owner, "requestedByName": old_appr.get("requestedByName", user),
+             "requestedAt": old_appr.get("requestedAt", t)}
+        if old == "rejected":  # düzeltip tekrar gönderdi
+            a.update(resubmittedAt=t, lastReason=old_appr.get("reason", ""), reason="", decidedBy=None,
+                     decidedByName=None, decidedAt=None)
+        data = dict(data)
+        data["approval"] = a if op == "set" else {**(data.get("approval") or {}), **a}
+        return data, None
+
+    if role == "editor":
+        if existing is None:
+            if op == "set" and data.get("approval") and _state_of(data) != "approved":
+                return None, "Talebi onaya göndermek Proje Mühendisi içindir; Düzenleme rolü talebi doğrudan açar."
+            return data, None
+        if old != "approved":
+            return None, "Onay bekleyen talebi yalnızca talebi açan kişi ve yönetici değiştirebilir."
+        if new is not None and _state_of(new) != "approved":
+            return None, "Talep onayı ve reddi yalnızca yöneticidedir."
+        return data, None
+
+    return None, "Yetkiniz yok."
+
+
 def broadcast(event):
     msg = json.dumps(event, ensure_ascii=False)
     with SUB_LOCK:
@@ -230,6 +309,8 @@ class Handler(BaseHTTPRequestHandler):
     readonly = False
     user_header = ""
     auth: "authmod.Auth" = None   # None ise giriş kapalı (eski davranış: herkes düzenleyebilir)
+    backup_dir: Path = None
+    backup_keep = 30
     cookie_secure = False
 
     def log_message(self, fmt, *args):
@@ -280,9 +361,9 @@ class Handler(BaseHTTPRequestHandler):
         if not me:
             self._err(401, "unauthenticated", "Oturum açmanız gerekiyor.")
             return None
-        rank = {"viewer": 1, "editor": 2, "admin": 3}
-        if rank.get(me["role"], 0) < rank[role]:
-            msg = {"editor": "Düzenleme yetkiniz yok.", "admin": "Bu işlem için yönetici yetkisi gerekiyor."}
+        if authmod.RANK.get(me["role"], 0) < authmod.RANK[role]:
+            msg = {"engineer": "Talep oluşturma yetkiniz yok.", "editor": "Düzenleme yetkiniz yok.",
+                   "admin": "Bu işlem için yönetici yetkisi gerekiyor."}
             self._err(403, "invalid_argument", msg.get(role, "Yetkiniz yok."))
             return None
         return me
@@ -323,7 +404,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(200, {
                 "user": me["user"] if (self.auth or self.user_header) else None,
                 "display": me["display"], "role": me["role"], "auth": bool(self.auth),
-                "sso": bool(self.user_header), "readonly": self.readonly or me["role"] == "viewer",
+                "sso": bool(self.user_header),
+                "readonly": self.readonly or me["role"] in ("viewer", "engineer"),
+                "canRequest": not self.readonly and me["role"] in ("engineer", "editor", "admin"),
+                "canApprove": bool(self.auth) and not self.readonly and me["role"] == "admin",
                 "canManage": bool(self.auth) and me["role"] == "admin"})
         if path.startswith("/api/") and not self._need("viewer"):
             return
@@ -334,6 +418,10 @@ class Handler(BaseHTTPRequestHandler):
                 return
             return self._json(200, {"users": self.auth.list_users(), "defaultRole": self.auth.default_role,
                                     "adminUser": self.auth.admin_user, "roles": authmod.ROLE_TR})
+        if path.startswith("/api/admin/backup"):
+            if self.auth and not self._need("admin"):
+                return
+            return self._backups(path)
         if path == "/api/export.json":
             st = self.store.state()
             body = json.dumps({"products": st["products"], "requests": st["requests"], "config": st["config"],
@@ -352,6 +440,45 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             return
         return self._static(path)
+
+    BACKUP_RE = re.compile(r"^prototip-[A-Za-z0-9_.\-]{1,80}\.db$")
+
+    def _send_file(self, data, name, ctype="application/octet-stream"):
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Disposition", f'attachment; filename="{name}"')
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(data)
+
+    def _backups(self, path):
+        """Yönetim → Yedekler: anlık .db yedeği, günlük yedek listesi ve indirme (yalnızca Yönetici)."""
+        folder = self.backup_dir
+        if path == "/api/admin/backup.db":   # şu anki verinin tutarlı kopyası (SQLite backup API)
+            import tempfile
+            with tempfile.TemporaryDirectory() as tmp:
+                dest = self.store.backup(Path(tmp), "anlik")
+                data = dest.read_bytes()
+            log("Yedek indirildi (anlık):", (self._ident() or {}).get("user"))
+            return self._send_file(data, f"prototip-anlik-{dt.datetime.now().strftime('%Y%m%d-%H%M')}.db")
+        if path == "/api/admin/backups":
+            files = []
+            if folder.exists():
+                for f in sorted(folder.glob("prototip-*.db"), key=lambda x: x.stat().st_mtime, reverse=True):
+                    st = f.stat()
+                    files.append({"name": f.name, "size": st.st_size,
+                                  "mtime": dt.datetime.fromtimestamp(st.st_mtime, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
+            return self._json(200, {"backups": files[:60], "keep": self.backup_keep})
+        m = re.match(r"^/api/admin/backups/([^/]+)$", path)
+        if m:
+            name = unquote(m.group(1))
+            f = folder / name
+            if not self.BACKUP_RE.match(name) or not f.is_file() or f.resolve().parent != folder.resolve():
+                return self._err(404, "not_found", "Yedek bulunamadı")
+            log("Yedek indirildi:", name, (self._ident() or {}).get("user"))
+            return self._send_file(f.read_bytes(), name)
+        return self._err(404, "not_found", "Bulunamadı")
 
     def _events(self):
         q = queue.Queue(maxsize=500)
@@ -403,17 +530,22 @@ class Handler(BaseHTTPRequestHandler):
             return self._err(400, "invalid_argument", "Geçersiz adres")
         if self.readonly:
             return self._err(403, "invalid_argument", "Bu sunucu yalnızca okuma modunda")
-        me = self._need("editor")
+        me = self._need("engineer")
         if not me:
             return
         col, id_ = t
         by = me["user"]
         try:
+          data = None if op == "delete" else self._body()   # gövde kilitten önce okunur
+          with DB_LOCK:   # kontrol + yazma arasında başka biri onay durumunu değiştiremesin
+            existing, _ = self.store.get(col, id_)
+            data, why = approval_policy(me, op, col, existing, data)
+            if why:
+                return self._err(403, "invalid_argument", why)
             if op == "delete":
                 seq = self.store.delete(col, id_, by)
                 broadcast({"col": col, "id": id_, "doc": None, "rev": seq})
                 return self._json(200, {"ok": True})
-            data = self._body()
             if op == "set":
                 doc, seq = self.store.set(col, id_, data, by)
             else:
@@ -577,6 +709,7 @@ def main():
             log(f"İlk kurulum: seed.json'dan {n} belge yüklendi.")
 
     Handler.store = store
+    Handler.backup_dir = backups
     Handler.readonly = os.environ.get("PT_READONLY", "") == "1"
     Handler.user_header = os.environ.get("PT_USER_HEADER", "").strip()
     Handler.auth = auth if auth_on else None
@@ -591,6 +724,7 @@ def main():
     else:
         log("Giriş kapalı: adrese erişen herkes düzenleyebilir (PT_LDAP_URL ayarlanınca giriş zorunlu olur).")
     keep = int(os.environ.get("PT_BACKUP_KEEP", "30"))
+    Handler.backup_keep = keep
     threading.Thread(target=backup_loop, args=(store, backups, keep), daemon=True).start()
 
     httpd = ThreadingHTTPServer((args.host, args.port), Handler)
