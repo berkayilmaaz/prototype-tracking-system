@@ -1447,7 +1447,7 @@ function showLogin(){
   setSync("Giriş yapılmadı");$("#modal").innerHTML="";$("#bulk")&&($("#bulk").hidden=true);
   $("#view").innerHTML='<form class="login" id="loginForm" autocomplete="on"><h2>Prototip Takip</h2>'+
     '<p class="hint" style="margin:0">Şirket kullanıcı adınız ve şifrenizle (Windows girişi) giriş yapın.</p>'+
-    '<label class="fl">Kullanıcı adı<input class="in" id="lgU" name="username" autocomplete="username" placeholder="ör. berkay.yilmaz" required autofocus></label>'+
+    '<label class="fl">Kullanıcı adı<input class="in" id="lgU" name="username" autocomplete="username" placeholder="Sanel kullanıcı adınız" required autofocus></label>'+
     '<label class="fl">Şifre<input class="in" id="lgP" name="password" type="password" autocomplete="current-password" required></label>'+
     '<div id="lgE"></div><button class="btn dark" type="submit" id="lgB">Giriş yap</button></form>';
   $("#loginForm").addEventListener("submit",async e=>{
@@ -1470,7 +1470,7 @@ function viewAdmin(){
       '<td>'+(fixed?"":'<button type="button" class="btn'+(ADM.confirm===x.user?" danger":"")+'" data-urm="'+esc(x.user)+'">'+(ADM.confirm===x.user?"Emin misiniz?":"Kaldır")+'</button>')+'</td></tr>'}).join("");
   return '<section class="panel"><div class="ph"><h2>Yetkiler</h2><span class="sub">Şirket hesabıyla ilk kez giren herkes <b>'+esc(ROLE_TR[u?u.defaultRole:"viewer"]||"")+'</b> rolüyle eklenir. Yöneticiler başkalarına rol verebilir.</span></div>'+
     (ADM.err?'<div class="warn">'+esc(ADM.err)+'</div>':"")+
-    '<form class="form" id="uAdd" style="margin:0;align-items:flex-end"><label class="fl">Kullanıcı adı<input class="in" id="uAddU" placeholder="ör. ahmet.kaya" style="width:220px" required></label>'+
+    '<form class="form" id="uAdd" style="margin:0;align-items:flex-end"><label class="fl">Kullanıcı adı<input class="in" id="uAddU" placeholder="Sanel kullanıcı adı" style="width:220px" required></label>'+
     '<label class="fl">Rol<select class="in" id="uAddR">'+opts("editor")+'</select></label><button class="btn dark" type="submit">Ekle / güncelle</button></form>'+
     '<p class="hint" style="margin:0"><b>Görüntüleme:</b> Özet, Teslimatlar ve Ürünler\'i görür. <b>Proje Mühendisi:</b> talep oluşturur (yeni faz, fazsız teslimat, yeni ürün dahil); talep yönetici onayından sonra Teslimatlar\'a girer. <b>Düzenleme:</b> talep, parça ve durum değiştirir. <b>Yönetici:</b> düzenler, talepleri onaylar/reddeder ve bu sayfadan yetki verir. <b>Engelli:</b> giriş yapamaz.</p>'+
     '<div style="overflow-x:auto"><table class="utbl"><thead><tr><th>Kullanıcı</th><th>Rol</th><th>Son giriş</th><th>Son değiştiren</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
