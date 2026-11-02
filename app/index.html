@@ -82,7 +82,7 @@ select.in{padding-right:6px}
 /* Tablo */
 .tbl{border:1px solid var(--line);border-radius:4px;overflow-x:auto;margin-bottom:28px}
 .grid{min-width:1180px}
-.row{display:grid;grid-template-columns:34px minmax(150px,1.3fr) 96px minmax(120px,1fr) minmax(140px,1.2fr) 64px 64px 110px 176px minmax(160px,1.6fr) 30px;align-items:center;min-height:34px;border-bottom:1px solid var(--line);position:relative}
+.row{display:grid;grid-template-columns:34px minmax(150px,1.3fr) 96px minmax(120px,1fr) minmax(140px,1.2fr) 76px 64px 110px 176px minmax(160px,1.6fr) 30px;align-items:center;min-height:34px;border-bottom:1px solid var(--line);position:relative}
 .row>div{padding:0 6px;min-width:0}
 .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
 .row.h{min-height:32px;background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;z-index:2}
@@ -137,6 +137,13 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .bulk .btn{height:30px;border:0}
 .bulk .ghost{background:none;color:var(--strip-mute);border:0;cursor:pointer}
 
+/* Panel */
+.panel{border:1px solid var(--line);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ph{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.ph h2{margin:0;font:700 17px var(--f-cond)}
+.ph .sub{font-size:12.5px;color:var(--muted)}
+.lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2)}
+
 /* Grafik */
 .charts{display:flex;flex-direction:column;gap:20px;padding-block:18px 32px}
 .panel{border:1px solid var(--line);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -157,8 +164,8 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .ml{position:absolute;top:0;transform:translateX(-50%);font:600 10px var(--f-mono);color:var(--ink-2);white-space:nowrap;pointer-events:none}
 .axis{position:relative;height:22px;border-bottom:1px solid #D5D9DE}
 .axis span{position:absolute;bottom:3px;font:11px var(--f-mono);color:var(--muted);padding-left:4px;border-left:1px solid #D5D9DE;height:16px}
-.today{position:absolute;top:0;bottom:0;border-left:2px dashed var(--strip);pointer-events:none}
-.today b{position:absolute;top:-22px;left:0;transform:translateX(-50%);font:600 10.5px var(--f-mono);background:var(--strip);color:#FFFFFF;padding:2px 6px;border-radius:2px;white-space:nowrap}
+.gtoday{position:absolute;top:0;bottom:0;border-left:2px dashed var(--strip);pointer-events:none}
+.gtoday b{position:absolute;top:-22px;left:0;transform:translateX(-50%);font:600 10.5px var(--f-mono);background:var(--strip);color:#FFFFFF;padding:2px 6px;border-radius:2px;white-space:nowrap}
 .hb{display:grid;grid-template-columns:120px minmax(0,1fr) 78px;align-items:center;gap:10px;height:26px;font-size:13px;border:0;background:none;width:100%;padding:0;text-align:left;cursor:pointer;border-radius:3px}
 .hb:hover{background:var(--head)}
 .hb .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -175,7 +182,7 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .plist button[aria-current="true"]{background:var(--strip);color:#FFFFFF;font-weight:600}
 .plist button small{font:11.5px var(--f-mono);opacity:.7}
 .form{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
-.bomrow{display:grid;grid-template-columns:minmax(150px,1.3fr) 110px 110px minmax(120px,1fr) minmax(130px,1fr) 120px 34px;align-items:center;min-height:34px;border-bottom:1px solid var(--line);position:relative;min-width:780px}
+.bomrow{display:grid;grid-template-columns:minmax(170px,1.3fr) 140px 80px 110px minmax(110px,1fr) minmax(120px,1fr) 84px 120px 34px;align-items:center;min-height:34px;border-bottom:1px solid var(--line);position:relative;min-width:1000px}
 .bomrow>div{padding:0 6px}
 .bomrow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
 .hint{font-size:12.5px;color:var(--muted);max-width:75ch;margin:0 0 12px}
@@ -219,6 +226,15 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .utbl td.m{color:var(--muted);font-size:12px;white-space:nowrap}
 .utbl select{height:30px}
 .rtag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:12px;font-weight:600;background:#EEF1F4}
+.c-part .sk{display:block;font:11px/1.2 var(--f-mono,ui-monospace,monospace);color:var(--muted);padding:0 6px 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.codes{font:11.5px var(--f-mono,ui-monospace,monospace);color:var(--muted);white-space:nowrap}
+.plan{width:100%;border-collapse:collapse;font-size:13px}.plan th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line-2)}.plan td{padding:5px 8px;border-bottom:1px solid var(--line)}.plan .in{height:30px}
+.appr{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.appr.pend{background:#FFF3D6;color:#7A4B00}.appr.rej{background:#FDECEC;color:#8A1822}
+.g.pend .gh{background:#FFFBEF}.g.rej .gh{background:#FFF6F6}
+.btn.ok{background:#1F7A3D;border-color:#1F7A3D;color:#FFFFFF;font-weight:600;height:28px}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px}
+.pendbtn{border:0;background:#F5B841;color:#2B1C00;height:30px;padding:0 10px;border-radius:4px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
 .warn{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#FDECEC;color:#8A1822;border-radius:3px;padding:8px 10px;font-size:13px}
 
 .empty{padding:40px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line-2);border-radius:4px;margin-block:10px 28px}
@@ -228,6 +244,141 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .toast.err{background:var(--late)}
 @media (max-width:640px){.strip .sep,.sync,.lbl-new,.who{display:none}.btn-new{padding:0 10px}.strip img{height:18px}.strip-in{gap:12px}.nav button{padding:0 9px}.fl.q{flex:1 1 100%}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ---------- v2: Özet, Teslimatlar, Onaylar, Ürün detayı, Yönetim ---------- */
+body{background:#F3F4F6}
+.nbadge{background:#F5B841;color:#2B1C00;font-size:11.5px;font-weight:700;border-radius:10px;padding:1px 7px;margin-left:6px}
+.nbadge:empty{display:none}
+.ov{display:flex;flex-direction:column;gap:18px;padding:20px 0 36px}
+.ovh{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.ovh .dd{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.ovh h1{margin:2px 0 0;font:700 24px var(--f-body)}
+.seg2{display:flex;border:1px solid var(--line-2);border-radius:4px;overflow:hidden;background:#fff}
+.seg2 button{border:0;border-left:1px solid var(--line-2);background:#fff;padding:7px 13px;font:500 13px var(--f-body);cursor:pointer}
+.seg2 button:first-child{border-left:0}.seg2 button[aria-pressed=true]{background:var(--strip);color:#fff;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:#fff;border:1px solid var(--line);border-top:4px solid var(--c,#8A939D);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;text-align:left;cursor:pointer;font:inherit;color:inherit;min-width:0}
+.kpi:hover{border-color:var(--line-2)}
+.kpi .k{font-size:12px;color:var(--muted);font-weight:600}.kpi .v{font-size:25px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .s{font-size:12.5px;color:var(--ink-2)}
+.kpi.warn2{background:#FFFBEF;border-color:#F1DFAE}.kpi.warn2 .k,.kpi.warn2 .v,.kpi.warn2 .s{color:#7A4B00}
+.cols{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.cols>.cm{flex:999 1 640px;min-width:0}.cols>.cs{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px}
+.card h2{margin:0;font:700 16px var(--f-body)}
+.calh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.calh h2{font-size:19px;min-width:150px}
+.ib{width:32px;height:32px;border:1px solid var(--line-2);background:#fff;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.leg{display:flex;gap:12px;font-size:12px;color:var(--ink-2);flex-wrap:wrap}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.cal>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:96px;padding:5px 6px;min-width:0;background:#fff}
+.cal>.dow{min-height:0;background:var(--head);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:6px}
+.cal>.wk{background:#FAFAFB}.cal>.today{background:#FFF4F2}
+.cal .n{font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.cal>.out .n{color:#A3AAB2}.cal>.today .n{color:var(--late);font-weight:700}
+.cal .n small{font-size:10px;font-weight:700;color:var(--late)}
+.ev{display:flex;flex-direction:column;width:100%;text-align:left;border:0;border-radius:3px;color:#fff;font:11.5px/1.25 var(--f-body);padding:3px 6px;margin-top:4px;cursor:pointer;min-width:0}
+.ev b{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ev span{opacity:.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.evmore{border:0;background:none;color:#1F5FAD;font:600 11.5px var(--f-body);padding:2px 0;cursor:pointer}
+.dblk{flex:none;width:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 0;border-radius:6px;background:#F0F2F5;color:var(--ink)}
+.dblk b{font-size:19px;line-height:1}.dblk span{font-size:10.5px;font-weight:700;letter-spacing:.06em}
+.dblk.late{background:var(--late);color:#fff}.dblk.soon{background:#FFF1E2;color:#8A3F00}.dblk.done{background:var(--d-chip);color:var(--d-ink)}.dblk.none{background:#fff;border:1px dashed #8A939D;color:var(--ink-2)}
+.lp{flex:none;font:700 11.5px var(--f-mono);padding:2px 7px;border-radius:3px;background:#F0F2F5;color:var(--ink-2);white-space:nowrap}
+.lp.late{background:#FDECEC;color:#8A1822}.lp.soon{background:#FFF1E2;color:#8A3F00}.lp.done{background:var(--d-chip);color:var(--d-ink)}.lp.none{background:#fff;border:1px dashed #8A939D}
+.ctag{font-size:11px;font-weight:700;color:#fff;border-radius:3px;padding:1px 6px;white-space:nowrap}
+.mbar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden;display:block;min-width:40px}.mbar>i{display:block;height:6px;background:var(--d-bar)}
+.up{display:flex;gap:12px;align-items:center;padding:10px 0;border:0;border-top:1px solid #EEF0F2;width:100%;background:none;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.up .md{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.up .l1{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.up .l1 b{font-size:14px}.up .l2{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.up .l3{display:flex;align-items:center;gap:8px;font:11.5px var(--f-mono);color:var(--ink-2)}
+.chipb{border:1px dashed #8A939D;background:#fff;border-radius:4px;padding:6px 10px;font:500 12.5px var(--f-body);cursor:pointer}
+.chipb em{font-style:normal;color:#1F5FAD;font-weight:600}
+.miss{display:flex;justify-content:space-between;width:100%;border:0;font:13px var(--f-body);padding:8px 10px;background:#F5F6F7;border-radius:4px;cursor:pointer;text-align:left}
+.miss.red{background:#FDECEC}.miss.red b{color:#8A1822}
+.tsl{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;padding:16px 0 36px}
+.rail{flex:1 1 240px;max-width:290px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 0}
+.rail h4{margin:0;padding:10px 14px 4px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rail button.ri{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:none;padding:8px 14px;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.rail button.ri[aria-current=true]{background:#EEF3FA;box-shadow:inset 3px 0 0 #1F5FAD}
+.rail .nm{display:flex;flex-direction:column;min-width:0}.rail .nm b{font-size:13.5px}.rail .nm small{font-size:11.5px;color:var(--muted)}
+.rail .rf{border-top:1px solid #EEF0F2;margin-top:6px;padding:8px 14px 4px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.tmain{flex:999 1 700px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.phh{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.phh .t{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.phh h1{margin:0;font:700 24px var(--f-body)}
+.phh .t .s{font-size:13.5px;color:var(--ink-2)}
+.dcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.dcard{display:flex;flex-direction:column;gap:1px;text-align:left;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;background:#fff;cursor:pointer;font:inherit;color:inherit}
+.dcard[aria-pressed=true]{border:2px solid #1F5FAD;background:#F4F8FD;padding:9px 11px}
+.dcard .dt{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}.dcard .dt b{font-size:22px;line-height:1}.dcard .dt span{font-size:11.5px;font-weight:700;letter-spacing:.06em}
+.dcard .sn{font-weight:700;font-size:13.5px}.dcard small{font-size:12px;color:var(--ink-2)}.dcard .mbar{margin-top:7px;flex:none}
+.dlv{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.dlvh{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.dlvh .tt{display:flex;flex-direction:column;gap:2px;min-width:0}.dlvh .tt b{font-size:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.dlvh .tt span{font-size:12.5px;color:var(--ink-2)}
+.dlvb{overflow-x:auto}
+.prq{display:grid;grid-template-columns:28px minmax(200px,1.4fr) 160px 76px minmax(150px,1fr) 118px minmax(120px,auto);align-items:center;gap:0 8px;padding:7px 16px;border-top:1px solid #EEF0F2;font-size:13.5px;min-width:900px}
+.prq.h{background:var(--head);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-top:0}
+.prq .cx{width:24px;height:24px;border:0;background:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
+.prq .pn{border:0;background:none;padding:0;text-align:left;cursor:pointer;font:600 13.5px var(--f-body);color:var(--ink)}
+.prq .pn:hover{text-decoration:underline}
+.prq .acts2{display:flex;gap:12px;justify-content:flex-end}
+.rst{justify-self:start;font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px;background:#F0F2F5;color:var(--ink-2);white-space:nowrap}
+.rst.ok{background:var(--d-chip);color:var(--d-ink)}.rst.part{background:#E3F4E7;color:#1C5E33}.rst.bad{background:#FDECEC;color:#8A1822}
+.pexp{background:#FAFBFC;border-top:1px solid #EEF0F2;padding:0 0 6px 36px;min-width:900px}
+.pexp .row{background:transparent}
+.ona{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;padding:4px 0 36px}
+.onl{flex:1 1 340px;max-width:430px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.onl .bar{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);background:var(--head);font-size:12.5px}
+.oni{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-bottom:1px solid #EEF0F2;cursor:pointer;width:100%;border-left:0;border-right:0;border-top:0;background:#fff;text-align:left;font:inherit;color:inherit}
+.oni[aria-current=true]{background:#EEF3FA;box-shadow:inset 3px 0 0 #1F5FAD}
+.oni .md{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ond{flex:999 1 620px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.ond h2{margin:2px 0;font:700 21px var(--f-body)}
+.callout{background:#FFF8E6;border:1px solid #F1DFAE;border-radius:6px;padding:11px 14px;font-size:13.5px;color:#5C3B00}
+.callout.red{background:#FDECEC;border-color:#F3C1C4;color:#7A1520}
+.box2{flex:1 1 280px;min-width:0;border:1px solid var(--line);border-radius:6px;padding:11px 14px}
+.box2 .lbl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px}
+.ptbl{border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.ptr{display:grid;grid-template-columns:minmax(200px,1.4fr) 140px 130px 100px;align-items:center;padding:7px 14px;border-top:1px solid #EEF0F2;font-size:13.5px;min-width:580px}
+.ptr.h{background:var(--head);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-top:0}
+.btn.lg{height:40px;padding:0 18px;font-size:14px}
+.codes3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.codes3{grid-template-columns:1fr}}
+.ccard{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:6px;padding:10px 12px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.ccard .ch{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2)}
+.ccard .cv{display:flex;align-items:center;gap:8px}
+.ccard input{flex:1;min-width:0;border:1px solid transparent;border-radius:4px;padding:4px 6px;font:600 18px var(--f-mono);letter-spacing:.02em;background:transparent;color:var(--ink)}
+.ccard input:hover:not(:disabled),.ccard input:focus{border-color:var(--line-2);background:#fff}
+.phs{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.phc{display:flex;flex-direction:column;padding:9px 10px;border:1px solid var(--line);border-top:3px solid var(--c);border-radius:6px;background:#fff;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.phc .cu{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--c)}.phc b{font-size:13px;margin-top:3px}.phc small{font-size:11.5px;color:var(--ink-2)}
+.phc .q{font:600 19px var(--f-mono);margin-top:5px}.phc .lp{margin-top:5px;align-self:flex-start}
+.ysub{flex:1 1 220px;max-width:260px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 0;display:flex;flex-direction:column}
+.ysub button{border:0;background:none;text-align:left;padding:10px 16px;cursor:pointer;font:inherit}
+.ysub button[aria-current=true]{background:#EEF3FA;box-shadow:inset 3px 0 0 #1F5FAD;font-weight:600}
+.bkt{display:grid;grid-template-columns:minmax(240px,1.5fr) 110px 170px 90px;align-items:center;padding:9px 18px;border-top:1px solid #EEF0F2;font-size:13.5px}
+.bkt.h{background:var(--head);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-top:0}
+.kind3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.kind3{grid-template-columns:1fr}}
+.kcard{display:flex;flex-direction:column;gap:4px;text-align:left;padding:12px;border:1px solid var(--line-2);border-radius:6px;background:#fff;cursor:pointer;font:inherit;color:inherit}
+.kcard b{font-size:14px}.kcard span{font-size:12px;color:var(--ink-2)}
+.kcard[aria-checked=true]{border:2px solid #1F5FAD;background:#F4F8FD;padding:11px}
+.kpane{background:#F5F6F7;border-radius:6px;padding:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.newp{border:2px solid #1F5FAD;border-radius:6px;padding:12px;background:#F7FAFE;display:flex;flex-direction:column;gap:10px}
+.newtag{font-size:10.5px;font-weight:700;color:#1F5FAD;background:#E5EEF9;border-radius:3px;padding:1px 6px;margin-left:6px}
+.panel,.plist,.tbl{background:#fff}
+.filters{border-bottom:0;padding-block:16px 4px}
+a.btn{text-decoration:none;color:inherit}a.btn.dark{color:#fff}
+.card .sum{padding-block:9px}
+.oni input[type=checkbox]{margin-top:3px}
+.onl .seg2 b{font-family:var(--f-mono);margin-left:3px}
+.pexp .grid{min-width:1160px}
+.cal .ev:focus-visible,.dcard:focus-visible,.kpi:focus-visible{outline:2px solid var(--strip);outline-offset:1px}
+@media (max-width:760px){.cal>div{min-height:64px;padding:3px}.ev span{display:none}.rail{max-width:none}}
+.rtag.tp-Sanel{background:var(--s-chip);color:var(--s-ink)}.rtag.tp-Alt{background:var(--f-chip);color:var(--f-ink)}.rtag.tp-Stok{background:var(--k-chip);color:var(--k-ink)}.rtag.tp-Belirsiz{background:var(--b-chip);color:var(--b-ink)}
+html{background:#F3F4F6}
+.plist button small{white-space:nowrap;margin-left:8px}
+@media (max-width:760px){.strip-in{gap:10px}.strip img{flex:none}.nav{overflow-x:auto;min-width:0;flex:1 1 auto;scrollbar-width:none}.nav button{padding:0 8px;white-space:nowrap}.strip .grow{display:none}.btn-new,.pendbtn{flex:none}.ovh h1{font-size:20px}.kpi .v{font-size:21px}}
+@media (max-width:760px){.cal .n small{display:none}}
+.dlvh .tt .ctag{color:#fff;font-size:11px}
 </style>
 
 <header class="strip">
@@ -235,12 +386,15 @@ select.tp:hover:not(:disabled){box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
     <img src="data:image/png;base64,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" alt="Sanel">
     <span class="sep" aria-hidden="true"></span>
     <nav class="nav" role="tablist" aria-label="Bölümler" id="nav">
-      <button type="button" role="tab" data-tab="liste">Liste</button>
+      <button type="button" role="tab" data-tab="liste">Teslimatlar</button>
+      <button type="button" role="tab" data-tab="ozet">Özet</button>
       <button type="button" role="tab" data-tab="grafik">Grafik</button>
       <button type="button" role="tab" data-tab="urunler">Ürünler</button>
-      <button type="button" role="tab" data-tab="yetki" id="navAdmin" hidden>Yetkiler</button>
+      <button type="button" role="tab" data-tab="onay">Onaylar<span class="nbadge" id="navOnayN"></span></button>
+      <button type="button" role="tab" data-tab="yonetim" id="navYon" hidden>Yönetim</button>
     </nav>
     <span class="grow"></span>
+    <button type="button" class="pendbtn" id="pendBtn" hidden></button>
     <span class="sync" id="sync">Bağlanıyor…</span>
     <button type="button" class="who" id="who" hidden title="Değişiklikler bu adla kaydedilir"></button>
     <button type="button" class="who" id="logout" hidden>Çıkış</button>
@@ -286,23 +440,33 @@ const trLower=s=>String(s||"").toLocaleLowerCase("tr");
 
 /* ---------- Durum ---------- */
 const S={db:null,user:null,me:null,canWrite:true,loaded:{p:false,r:false},downloads:null,
-  products:{},requests:{},cfg:{phases:[],platforms:[],people:[],makers:[],customers:[],programs:[]},
-  tab:LS.get("tab","liste"),
-  f:Object.assign({customer:"Ford",phase:"Yellow Board (19.10)",product:"",status:"open",owner:"",type:"",q:""},LS.get("f",{})),
-  sel:new Set(),closed:new Set(LS.get("closed",[])),bomSel:null,bomDraft:null,names:{}};
+  products:{},requests:{},cfg:{phases:[],platforms:[],people:[],makers:[],customers:[],programs:[],plan:[]},
+  tab:(t=>({yetki:"yonetim"})[t]||t)(LS.get("tab","liste")),
+  f:Object.assign({customer:"",phase:"",dk:"",product:"",status:"open",owner:"",type:"",q:""},LS.get("f",{})),
+  sel:new Set(),open:new Set(LS.get("open",[])),bomSel:null,bomDraft:null,names:{},
+  oz:{cust:LS.get("ozc","")},on:{tab:"pending",sel:null,chk:new Set()},ysub:LS.get("ysub",""),calM:null,calOpen:null,pq:""};
 const saveF=()=>LS.set("f",S.f);
 let loginShown=false;
 
 /* ---------- Veri türetme ---------- */
-const prodOf=r=>S.products[r.product]||{name:r.product||"?",program:"",customer:"",ord:99,parts:[]};
-function allItems(){
+/* Mühendisin önerdiği yeni ürün, onaylanana kadar talebin içinde (proposedProduct) durur */
+const prodOf=r=>S.products[r.product]||(r.proposedProduct?Object.assign({program:"",customer:"",ord:99,parts:[]},r.proposedProduct):{name:r.product||"?",program:"",customer:"",ord:99,parts:[]});
+/* Talebin müşterisi talepte tutulur (aynı ürün Ford'a da Iveco'ya da gidebilir); eski kayıtlarda ürününkine düşer */
+const custOf=r=>r.customer||prodOf(r).customer||"—";
+/* Onay akışı: approval alanı olmayan talepler onaylıdır */
+const apprOf=r=>(r&&r.approval&&r.approval.state)||"approved";
+const isMine=r=>!!(r&&r.approval&&S.me&&r.approval.requestedBy===S.me);
+const canEditReq=r=>S.canApprove||(apprOf(r)==="approved"?canEdit():(isMine(r)&&!!S.canRequest));
+const canRequest=()=>!!S.db&&(S.canRequest!==undefined?S.canRequest:canEdit());
+const planLabel=x=>[x.customer,x.phase,x.platform&&x.platform!==x.customer?x.platform:""].filter(Boolean).join(" · ")+(x.due?" · "+fmtD(x.due):"");
+function allItems(withPending){
   const out=[];
   for(const [rid,r] of Object.entries(S.requests)){
-    if(r.deleted)continue;const p=prodOf(r);
+    if(r.deleted)continue;const ap=apprOf(r);if(ap!=="approved"&&!withPending)continue;const p=prodOf(r);
     for(const [iid,it] of Object.entries(r.items||{})){
       if(!it||it.deleted)continue;
       const due=it.due||r.due||null;
-      out.push({rid,iid,r,it,p,due,days:dayDiff(due),done:DONE.includes(it.status),cancel:it.status==="İptal",type:normT(it.type)});
+      out.push({rid,iid,r,it,p,due,days:dayDiff(due),done:DONE.includes(it.status),cancel:it.status==="İptal",type:normT(it.type),appr:ap});
     }
   }
   return out;
@@ -312,8 +476,9 @@ const isLate=x=>isOpen(x)&&x.days!=null&&x.days<0;
 const isSoon=x=>isOpen(x)&&x.days!=null&&x.days>=0&&x.days<=7;
 function reqPass(r,f,skip){
   skip=skip||{};const p=prodOf(r);
-  if(f.customer&&(p.customer||"—")!==f.customer)return false;
-  if(!skip.phase&&f.phase&&r.phase!==f.phase)return false;
+  if(f.customer&&custOf(r)!==f.customer)return false;
+  if(!skip.phase&&f.phase){if(f.phase==="__adhoc"){if(!r.adhoc)return false}else if(r.adhoc||r.phase!==f.phase)return false}
+  if(!skip.dk&&f.dk&&dkey(r)!==f.dk)return false;
   if(!skip.product&&f.product&&r.product!==f.product)return false;
   return true;
 }
@@ -327,7 +492,7 @@ function passes(x,f,skip){
     if(f.status==="late"&&!isLate(x))return false;
     if(f.status==="done"&&!x.done)return false;
   }
-  if(f.q){const h=trLower([x.it.part,x.p.name,x.it.maker,x.it.material,x.it.note,x.r.phase,x.it.owner].join(" "));if(!h.includes(trLower(f.q)))return false}
+  if(f.q){const h=trLower([x.it.part,x.p.name,x.it.maker,x.it.material,x.it.stock,x.it.note,x.r.phase,x.r.label,x.it.owner].join(" "));if(!h.includes(trLower(f.q)))return false}
   return true;
 }
 
@@ -359,29 +524,34 @@ function opts(list,val,blank){const l=[...list];if(val&&!l.includes(val))l.push(
 
 /* ---------- Filtre çubuğu ---------- */
 function renderFilters(){
+  const fl=$("#filters");fl.hidden=S.tab!=="liste"&&S.tab!=="grafik";if(fl.hidden)return;const gr=S.tab==="grafik";
   const ae=document.activeElement;if(ae&&ae.closest&&ae.closest("#filters")&&ae.tagName==="INPUT")return;
-  const f=S.f;const reqs=Object.values(S.requests).filter(r=>!r.deleted);
-  const customers=[...new Set(Object.values(S.products).map(p=>p.customer||"—"))].sort((a,b)=>a==="—"?1:b==="—"?-1:a.localeCompare(b,"tr"));
-  const phases=[...new Set(reqs.filter(r=>reqPass(r,f,{phase:1,product:1})).sort((a,b)=>(a.due||"9").localeCompare(b.due||"9")).map(r=>r.phase))].filter(Boolean);
-  if(f.phase&&!phases.includes(f.phase))phases.unshift(f.phase);
-  const prods=Object.entries(S.products).filter(([,p])=>!f.customer||(p.customer||"—")===f.customer).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
+  const f=S.f;const reqs=Object.values(S.requests).filter(r=>!r.deleted&&apprOf(r)==="approved");
+  // Eski sürümden tarayıcıda kalmış, artık olmayan filtre değerlerini temizle
+  {let ch=false;
+    if(reqs.length){
+      if(f.customer&&!reqs.some(r=>custOf(r)===f.customer)){f.customer="";ch=true}
+      if(f.phase&&f.phase!=="__adhoc"&&!reqs.some(r=>!r.adhoc&&r.phase===f.phase)){f.phase="";ch=true}
+      if(f.dk&&!reqs.some(r=>dkey(r)===f.dk)){f.dk="";ch=true}}
+    if(f.product&&!S.products[f.product]){f.product="";ch=true}
+    if(!["open","late","done","all"].includes(f.status)){f.status="open";ch=true}
+    if(ch)saveF()}
+  const scope=reqs.filter(r=>reqPass(r,f,S.tab==="grafik"?{product:1,phase:1,dk:1}:{product:1}));
+  const prods=Object.entries(S.products).filter(([id])=>id===f.product||scope.some(r=>r.product===id)).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
   const owners=[...new Set([...S.cfg.people,...allItems().map(x=>x.it.owner).filter(Boolean)])].sort((a,b)=>a.localeCompare(b,"tr"));
-  const showStatus=S.tab==="liste";
-  $("#filters").hidden=S.tab==="urunler"||S.tab==="yetki";
-  $("#filters").innerHTML=
-   '<label class="fl">Müşteri<select class="in" id="fCust" style="min-width:140px"><option value="">Tümü</option>'+customers.map(c=>'<option value="'+esc(c)+'"'+(f.customer===c?" selected":"")+'>'+esc(c==="—"?"Belirtilmemiş":c)+'</option>').join("")+'</select></label>'+
-   '<label class="fl">Faz<select class="in" id="fPhase" style="min-width:190px"><option value="">Tümü</option>'+phases.map(p=>'<option'+(f.phase===p?" selected":"")+'>'+esc(p)+'</option>').join("")+'</select></label>'+
-   '<label class="fl">Ürün<select class="in" id="fProd" style="min-width:160px"><option value="">Tümü</option>'+prods.map(([id,p])=>'<option value="'+esc(id)+'"'+(f.product===id?" selected":"")+'>'+esc(p.name)+'</option>').join("")+'</select></label>'+
-   (showStatus?'<div class="fl">Durum<div class="seg">'+[["open","Bekleyen"],["late","Geciken"],["done","Biten"],["all","Tümü"]].map(([k,l])=>'<button type="button" data-st="'+k+'" aria-pressed="'+(f.status===k)+'">'+l+'</button>').join("")+'</div></div>':"")+
+  const custs=[...new Set(reqs.map(custOf))].sort(custSort);
+  fl.innerHTML=(gr?'<label class="fl">Müşteri<select class="in" id="fCust" style="min-width:130px"><option value="">Tümü</option>'+custs.map(c=>'<option'+(f.customer===c?" selected":"")+'>'+esc(c)+'</option>').join("")+'</select></label>':"")+
+   '<label class="fl">Ürün<select class="in" id="fProd" style="min-width:170px"><option value="">Tümü</option>'+prods.map(([id,p])=>'<option value="'+esc(id)+'"'+(f.product===id?" selected":"")+'>'+esc(p.name)+'</option>').join("")+'</select></label>'+
+   (gr?"":'<div class="fl">Kalemler<div class="seg">'+[["open","Bekleyen"],["late","Geciken"],["done","Biten"],["all","Tümü"]].map(([k,l])=>'<button type="button" data-st="'+k+'" aria-pressed="'+(f.status===k)+'">'+l+'</button>').join("")+'</div></div>')+
    '<label class="fl">Sorumlu<select class="in" id="fOwn" style="min-width:110px"><option value="">Herkes</option>'+owners.concat(["(atanmamış)"]).map(o=>'<option'+(f.owner===o?" selected":"")+'>'+esc(o)+'</option>').join("")+'</select></label>'+
-   '<label class="fl q" style="flex:1;min-width:180px">Ara<input class="in" id="fQ" type="search" placeholder="Parça, malzeme, üretici, not…" value="'+esc(f.q)+'"></label>'+
+   '<label class="fl q" style="flex:1;min-width:180px">Ara<input class="in" id="fQ" type="search" placeholder="Parça, stok kodu, malzeme, üretici, not…" value="'+esc(f.q)+'"></label>'+
    ((f.product||f.owner||f.type||f.q)?'<button type="button" class="link" id="fClear" style="margin-bottom:8px">Filtreleri temizle</button>':"")+
    (S.downloads?'<button type="button" class="btn" id="btnCsv"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1.5v8M3.5 6 7 9.5 10.5 6M2 12.5h10"/></svg>Excel\'e aktar</button>':"");
 }
 function bindFilters(){
   const el=$("#filters");
   el.addEventListener("change",e=>{const t=e.target;
-    if(t.id==="fCust"){S.f.customer=t.value;S.f.product=""}else if(t.id==="fPhase")S.f.phase=t.value;else if(t.id==="fProd")S.f.product=t.value;else if(t.id==="fOwn")S.f.owner=t.value;else return;
+    if(t.id==="fCust"){S.f.customer=t.value;S.f.product="";S.f.phase="";S.f.dk=""}else if(t.id==="fPhase")S.f.phase=t.value;else if(t.id==="fProd")S.f.product=t.value;else if(t.id==="fOwn")S.f.owner=t.value;else return;
     saveF();S.sel.clear();render()});
   el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
     if(b.dataset.st){S.f.status=b.dataset.st}else if(b.id==="fClear"){S.f.product="";S.f.owner="";S.f.type="";S.f.q=""}else if(b.id==="btnCsv"){exportCsv();return}else return;
@@ -402,44 +572,17 @@ function summary(list){
     '<span class="grow"></span><span class="pbar" aria-hidden="true">'+seg(done,"var(--d-bar)")+seg(by("Sanel"),"var(--s-bar)")+seg(by("Alt Tedarikçi"),"var(--f-bar)")+seg(by("Stok"),"var(--k-bar)")+seg(by("Belirsiz"),"var(--b-bar)")+'</span><b>%'+(tot?pct:0)+'</b></div>';
 }
 function daysTag(d){if(d==null)return"";return '<span class="days '+(d<0?"late":d<=7?"soon":"ok")+'">'+(d<0?(-d)+" gün geçti":d===0?"bugün":d+" gün kaldı")+'</span>'}
-function viewList(){
-  const f=S.f;const all=allItems();
-  const list=all.filter(x=>passes(x,f));
-  const forSum=all.filter(x=>passes(x,f,{status:1,type:1}));
-  const byReq={};for(const x of list)(byReq[x.rid]=byReq[x.rid]||[]).push(x);
-  const totByReq={};for(const x of all)(totByReq[x.rid]=totByReq[x.rid]||[]).push(x);
-  // Alt parçası olmayan talepler (ör. STI) ek filtre yokken gösterilir
-  const noFilter=!f.type&&!f.owner&&!f.q&&(f.status==="open"||f.status==="all");
-  const rids=Object.keys(S.requests).filter(rid=>{const r=S.requests[rid];if(r.deleted||!reqPass(r,f))return false;return byReq[rid]||(noFilter&&!(totByReq[rid]||[]).length)})
-    .sort((a,b)=>{const A=S.requests[a],B=S.requests[b];return (A.due||"9999").localeCompare(B.due||"9999")||(prodOf(A).ord||0)-(prodOf(B).ord||0)});
-  let html=summary(forSum);
-  if(!rids.length)return html+emptyState();
-  html+='<div class="tbl"><div class="grid"><div class="row h"><div><input type="checkbox" class="cb" id="selAll" aria-label="Görünen tüm kalemleri seç"'+(list.length&&list.every(x=>S.sel.has(x.rid+"/"+x.iid))?" checked":"")+'></div><div>Parça</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div style="text-align:right">Adet</div><div style="text-align:right">Teslim</div><div>Sorumlu</div><div>Durum</div><div>Not</div><div></div></div>';
-  for(const rid of rids){
-    const r=S.requests[rid],p=prodOf(r),xs=(byReq[rid]||[]).sort((a,b)=>(a.it.ord||0)-(b.it.ord||0)),tot=totByReq[rid]||[];
-    const done=tot.filter(x=>x.done).length,base=tot.filter(x=>!x.cancel).length,hidden=tot.length-xs.length,anyOpen=tot.some(isOpen)||!tot.length;
-    const qty=r.sets?r.sets+" araç seti":r.direct?r.direct+" adet":"";
-    const meta=[p.customer||"Müşteri belirtilmemiş",p.program,r.phase,r.platform!==r.phase?r.platform:"",qty,"Termin "+fmtD(r.due)].filter(Boolean).map(esc).join(" · ");
-    html+='<div class="g'+(S.closed.has(rid)?" closed":"")+'" data-g="'+esc(rid)+'"><div class="gh" data-toggle="'+esc(rid)+'" aria-expanded="'+!S.closed.has(rid)+'">'+
-      '<svg class="caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 5l4 4 4-4"/></svg>'+
-      '<h3>'+esc(p.name)+'</h3><span class="meta">'+meta+'</span>'+(anyOpen?daysTag(dayDiff(r.due)):"")+
-      '<span class="acts"><span class="num" style="font-size:12px;color:var(--ink-2)">'+done+' / '+base+' bitti</span>'+
-      (canEdit()?'<button type="button" class="link" data-add="'+esc(rid)+'">+ Parça</button><button type="button" class="link" data-edit="'+esc(rid)+'">Düzenle</button>':"")+'</span></div><div class="gb">';
-    for(const x of xs)html+=rowHtml(x);
-    if(!tot.length)html+='<div class="gnote">Bu talepte alt parça tanımlı değil.'+(canEdit()?' <button type="button" class="link" data-add="'+esc(rid)+'">Parça ekle</button>':"")+'</div>';
-    else if(hidden>0)html+='<div class="gnote">'+hidden+' kalem filtre nedeniyle gizli'+(f.status==="open"?" (bitenler)":"")+'.</div>';
-    html+='</div></div>';
-  }
-  return html+'</div></div>'+datalists();
-}
+function pendCount(){return Object.values(S.requests).filter(r=>!r.deleted&&apprOf(r)!=="approved").length}
+const pendOnly=()=>Object.values(S.requests).filter(r=>!r.deleted&&apprOf(r)==="pending").length;
+const myRejected=()=>Object.values(S.requests).filter(r=>!r.deleted&&apprOf(r)==="rejected"&&isMine(r)).length;
 function rowHtml(x){
-  const it=x.it,k='data-rid="'+esc(x.rid)+'" data-iid="'+esc(x.iid)+'"',d=D(),key=x.rid+"/"+x.iid;
+  const ce=canEditReq(x.r),it=x.it,k='data-rid="'+esc(x.rid)+'" data-iid="'+esc(x.iid)+'"',d=ce?"":" disabled",key=x.rid+"/"+x.iid;
   const cls="row "+(x.cancel?"cancel":x.done?"done":"t-"+tcls(x.type))+(S.sel.has(key)?" sel":"");
   const dueBadge=it.due&&it.due!==x.r.due?'<span class="badge" title="Bu kaleme özel termin">Termin '+fmtD(it.due)+'</span>':"";
   const late=isLate(x)&&it.due&&it.due!==x.r.due?'<span class="badge">'+(-x.days)+' gün geçti</span>':"";
   return '<div class="'+cls+'">'+
     '<div><input type="checkbox" class="cb" data-sel="'+esc(key)+'"'+(S.sel.has(key)?" checked":"")+' aria-label="'+esc(it.part)+' seç" style="margin-left:4px"></div>'+
-    '<div class="c-part"><input class="cell b" '+k+' data-f="part" value="'+esc(it.part)+'" list="dlParts" aria-label="Parça"'+d+'></div>'+
+    '<div class="c-part"><input class="cell b" '+k+' data-f="part" value="'+esc(it.part)+'" list="dlParts" aria-label="Parça"'+d+'>'+(it.stock?'<span class="sk" title="Stok kodu">'+esc(it.stock)+'</span>':"")+'</div>'+
     '<div><select class="cell tp tp-'+tcls(x.type)+'" '+k+' data-f="type" aria-label="Tip"'+d+'>'+opts(TYPES,x.type)+'</select></div>'+
     '<div><input class="cell" '+k+' data-f="maker" value="'+esc(it.maker)+'" list="dlMakers" placeholder="—" aria-label="Üretici"'+d+'></div>'+
     '<div><input class="cell" '+k+' data-f="material" value="'+esc(it.material)+'" placeholder="—" aria-label="Ham madde"'+d+'></div>'+
@@ -447,17 +590,17 @@ function rowHtml(x){
     '<div><input class="cell n" type="number" min="0" inputmode="numeric" '+k+' data-f="delivered" value="'+(it.delivered??"")+'" placeholder="0" aria-label="Teslim edilen"'+d+'></div>'+
     '<div><select class="cell" '+k+' data-f="owner" aria-label="Sorumlu"'+d+'>'+opts(S.cfg.people,it.owner,"—")+'</select></div>'+
     '<div><button type="button" class="st" data-stbtn="'+esc(key)+'" aria-haspopup="menu" aria-label="Durum: '+esc(it.status)+'"'+d+'><span class="'+sqOf(it.status)+'"></span><span class="l">'+esc(it.status||"Açık")+'</span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#626B75" stroke-width="1.5" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5"/></svg></button></div>'+
-    '<div style="display:flex;align-items:center">'+dueBadge+late+'<input class="cell muted" '+k+' data-f="note" value="'+esc(it.note)+'" placeholder="'+(canEdit()?"Not ekle":"")+'" aria-label="Not" title="'+esc(it.note)+'" data-by="'+esc(it.by||"")+'"'+d+'></div>'+
-    '<div>'+(canEdit()?'<button type="button" class="rm" data-rm="'+esc(key)+'" aria-label="'+esc(it.part)+' sil" title="Kalemi sil">✕</button>':"")+'</div></div>';
+    '<div style="display:flex;align-items:center">'+dueBadge+late+'<input class="cell muted" '+k+' data-f="note" value="'+esc(it.note)+'" placeholder="'+(ce?"Not ekle":"")+'" aria-label="Not" title="'+esc(it.note)+'" data-by="'+esc(it.by||"")+'"'+d+'></div>'+
+    '<div>'+(ce?'<button type="button" class="rm" data-rm="'+esc(key)+'" aria-label="'+esc(it.part)+' sil" title="Kalemi sil">✕</button>':"")+'</div></div>';
 }
 function emptyState(){
   if(!Object.keys(S.requests).length)return '<div class="empty"><h3>Henüz talep yok</h3>"Yeni talep" ile ilk talebi oluşturun; alt parçalar ürün ağacından otomatik gelir.</div>';
-  return '<div class="empty"><h3>Bu filtrelerle eşleşen kalem yok</h3>Durum için "Tümü"nü seçin ya da faz/ürün filtresini genişletin.</div>';
+  return '<div class="empty"><h3>Bu filtrelerle eşleşen kalem yok</h3>Kalemler için "Tümü"nü seçin, soldan başka bir faz seçin ya da filtreleri temizleyin.</div>';
 }
 function datalists(){
   const parts=[...new Set([...PART_ORDER,...Object.values(S.products).flatMap(p=>(p.parts||[]).map(x=>x.part))])];
   return '<datalist id="dlParts">'+parts.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlMakers">'+S.cfg.makers.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist>'+
-    '<datalist id="dlPrograms">'+S.cfg.programs.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlCustomers">'+S.cfg.customers.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlPhases">'+S.cfg.phases.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist>';
+    '<datalist id="dlPrograms">'+S.cfg.programs.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlCustomers">'+S.cfg.customers.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlPhases">'+S.cfg.phases.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist><datalist id="dlPlatforms">'+S.cfg.platforms.map(p=>'<option value="'+esc(p)+'">').join("")+'</datalist>';
 }
 
 /* ---------- Durum menüsü ---------- */
@@ -472,10 +615,279 @@ function openMenu(btn){
 }
 function closeMenu(){if(menuFor){menuFor=null;$("#menu").innerHTML=""}}
 
+/* ---------- v2: ortak yardımcılar ---------- */
+const CUST_COLOR={Ford:"#1F5FAD",Iveco:"#0F7B6C",Sanel:"#6E7680"};
+const cColor=c=>CUST_COLOR[c]||"#5B6470";
+const MON=["OCA","ŞUB","MAR","NİS","MAY","HAZ","TEM","AĞU","EYL","EKİ","KAS","ARA"];
+const MONL=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const DOWL=["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+const CUST_ORDER=["Ford","Iveco","Sanel"];
+const custSort=(a,b)=>(CUST_ORDER.indexOf(a)+1||9)-(CUST_ORDER.indexOf(b)+1||9)||String(a).localeCompare(String(b),"tr");
+const phaseOrd=p=>{const i=S.cfg.phases.indexOf(p);return i<0?999:i};
+const longD=iso=>{if(!iso)return "Termin belirsiz";const d=new Date(iso+"T00:00:00");return DOWL[d.getDay()]+", "+d.getDate()+" "+MONL[d.getMonth()]+" "+d.getFullYear()};
+const shortD=iso=>iso?(+iso.slice(8,10))+" "+MON[+iso.slice(5,7)-1]:"—";
+/* Fazsız teslimat: faza bağlı olmayan, yalnızca tarihi olan talep (adhoc) */
+const phaseName=r=>r.adhoc?(r.label||"Fazsız teslimat"):(r.phase||"—");
+/* Teslimat anahtarı: aynı müşteri · faz · teslim yeri · termin = tek teslimat */
+const dkey=r=>[custOf(r),r.adhoc?"__adhoc":r.phase||"",r.platform||"",r.due||"",r.adhoc?r.label||"":""].join("|");
+function tone(due,allDone){if(allDone)return "done";if(!due)return "none";const d=dayDiff(due);return d<0?"late":d<=7?"soon":"ok"}
+function leftTxt(due,allDone){if(allDone)return "Hazır";if(!due)return "Termin yok";const d=dayDiff(due);return d<0?(-d)+" gün geçti":d===0?"Bugün":d===1?"Yarın":d+" gün kaldı"}
+const ctag=c=>'<span class="ctag" style="background:'+cColor(c)+'">'+esc(c)+'</span>';
+const lpill=(due,done)=>'<span class="lp '+tone(due,done)+'">'+esc(leftTxt(due,done))+'</span>';
+const dblk=(due,done)=>'<span class="dblk '+tone(due,done)+'" aria-hidden="true">'+(due?'<b>'+(+due.slice(8,10))+'</b><span>'+MON[+due.slice(5,7)-1]+'</span>':'<b>?</b><span>TARİH</span>')+'</span>';
+const mbar=p=>'<span class="mbar" aria-hidden="true"><i style="width:'+Math.round(p)+'%"></i></span>';
+const qtyOf=r=>r.sets?r.sets:r.direct?r.direct:0;
+const codeFor=(p,c)=>{const pc=p.codes||{};return c==="Iveco"?pc.iveco:c==="Ford"?pc.ford:pc.sanel};
+const slug=s=>trLower(s).replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function planIdFor(x){const pl=S.cfg.plan||[];let id=slug(x.customer+"-"+x.phase+"-"+(x.platform||x.customer));if(pl.some(p=>p.id===id))id+="-"+(x.due||"tarihsiz");const b=id;let k=2;while(pl.some(p=>p.id===id))id=b+"-"+k++;return id}
+const planMatch=x=>(S.cfg.plan||[]).find(p=>p.customer===x.customer&&p.phase===x.phase&&(p.platform||p.customer)===(x.platform||x.customer)&&(p.due||null)===(x.due||null));
+function slugId(name){let id=slug(name)||uid("p");if(S.products[id])id+="-"+Math.random().toString(36).slice(2,5);return id}
+const canYon=()=>canEdit()||!!S.canManage;
+function setTab(t){S.tab=t;LS.set("tab",t);S.sel.clear();closeMenu();window.scrollTo(0,0);render()}
+function itemsIndex(withPending){const by={};for(const x of allItems(withPending))(by[x.rid]=by[x.rid]||[]).push(x);return by}
+function reqStats(xs){xs=xs||[];const base=xs.filter(x=>!x.cancel),done=base.filter(x=>x.done).length,open=base.filter(x=>!x.done);
+  return{n:base.length,done,open:open.length,late:open.filter(isLate).length,unk:open.filter(x=>x.type==="Belirsiz").length,pct:base.length?done/base.length*100:0,all:base.length>0&&done===base.length}}
+const approvedRids=()=>Object.keys(S.requests).filter(id=>{const r=S.requests[id];return !r.deleted&&apprOf(r)==="approved"});
+function deliveriesOf(rids,by){
+  const g={};
+  for(const rid of rids){const r=S.requests[rid],k=dkey(r);
+    const d=g[k]=g[k]||{key:k,customer:custOf(r),phase:r.adhoc?"__adhoc":r.phase,adhoc:!!r.adhoc,name:phaseName(r),platform:r.platform||"",due:r.due||null,rids:[],xs:[]};
+    d.rids.push(rid);d.xs.push(...(by[rid]||[]))}
+  return Object.values(g).map(d=>Object.assign(d,reqStats(d.xs),{qty:d.rids.reduce((s,id)=>s+qtyOf(S.requests[id]),0)}))
+    .sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")||custSort(a.customer,b.customer)||phaseOrd(a.phase)-phaseOrd(b.phase)||a.platform.localeCompare(b.platform,"tr"));
+}
+function goDlv(k){const r=Object.values(S.requests).find(r=>!r.deleted&&dkey(r)===k);if(!r)return;
+  Object.assign(S.f,{customer:custOf(r),phase:r.adhoc?"__adhoc":r.phase,dk:k,status:"all",product:"",owner:"",type:"",q:""});saveF();setTab("liste")}
+function copyText(t){const ok=()=>toast("Kopyalandı: "+t);
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(ok,()=>fb());else fb();
+  function fb(){const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast("Kopyalanamadı",true)}a.remove()}}
+
+/* ---------- Özet: KPI + aylık takvim + yaklaşan teslimatlar ---------- */
+function evHtml(d){const col=cColor(d.customer),p=Math.round(d.pct),late=!d.all&&d.due<todayISO();
+  return '<button type="button" class="ev" data-gok="'+esc(d.key)+'" title="'+esc(d.customer+" · "+d.name+(d.platform?" · "+d.platform:"")+" · "+fmtD(d.due)+" · "+d.done+"/"+d.n+" kalem hazır")+'" style="background:linear-gradient(90deg,'+col+' '+p+'%,'+col+'CC '+p+'%)'+(late?";box-shadow:inset 0 0 0 2px #C62828":"")+'"><b>'+esc(d.name)+(d.platform&&d.platform!==d.customer?" · "+esc(d.platform):"")+'</b><span>'+d.rids.length+' ürün · %'+p+'</span></button>'}
+function viewOzet(){
+  const c=S.oz.cust,t=todayISO(),by=itemsIndex(),allA=approvedRids();
+  const custs=[...new Set(allA.map(id=>custOf(S.requests[id])))].sort(custSort);
+  const rids=allA.filter(id=>!c||custOf(S.requests[id])===c);
+  const dl=deliveriesOf(rids,by);
+  const late=dl.filter(d=>!d.all&&d.due&&d.due<=t),lateItems=late.reduce((s,d)=>s+d.open,0);
+  const soon=dl.filter(d=>!d.all&&d.due&&d.due>t&&dayDiff(d.due)<=21);
+  const xs=rids.flatMap(id=>by[id]||[]),st=reqStats(xs),openXs=xs.filter(isOpen);
+  const pend=Object.values(S.requests).filter(r=>!r.deleted&&apprOf(r)==="pending"&&(!c||custOf(r)===c)).length;
+  // Termini belirsiz: tarihi olmayan plan satırları + tarihsiz teslimatlar (aynı faz iki kez sayılmaz)
+  const und=[];const seen=new Set();
+  for(const d of dl)if(!d.due){seen.add(d.customer+"|"+d.phase+"|"+d.platform);und.push({label:d.customer+" · "+d.name+(d.platform&&d.platform!==d.customer?" · "+d.platform:""),key:d.key})}
+  for(const x of S.cfg.plan||[])if(!x.due&&(!c||x.customer===c)&&!seen.has(x.customer+"|"+x.phase+"|"+(x.platform||"")))und.push({label:x.customer+" · "+x.phase+(x.platform&&x.platform!==x.customer?" · "+x.platform:""),key:""});
+  const kpi=(k,label,v,sub,col,cls)=>'<button type="button" class="kpi'+(cls?" "+cls:"")+'" data-kpi="'+k+'" style="--c:'+col+'"><span class="k">'+label+'</span><span class="v num">'+v+'</span><span class="s">'+sub+'</span></button>';
+  const kpis='<div class="kpis">'+
+    kpi("late","Geciken / bugün teslim",late.length,late.length?lateItems+" açık kalem":"Geciken teslimat yok",late.length?"#C62828":"#2E9E55")+
+    kpi("soon","Önümüzdeki 3 hafta",soon.length,soon.reduce((s,d)=>s+d.rids.length,0)+" ürün · "+soon.reduce((s,d)=>s+d.open,0)+" açık kalem","#B25A10")+
+    kpi("prog","Genel ilerleme","%"+Math.round(st.pct),st.done+" / "+st.n+" kalem hazır","#2E9E55")+
+    kpi("pend","Onay bekliyor",pend,pend?"Proje mühendislerinden":"Bekleyen talep yok","#F5B841",pend?"warn2":"")+
+    kpi("und","Termini belirsiz",und.length,und.length?"faz · tarih girilmeli":"Tüm fazların tarihi var","#8A939D")+'</div>';
+  // takvim
+  const m=S.calM||t.slice(0,7),[Y,M]=m.split("-").map(Number);
+  const off=(new Date(Y,M-1,1).getDay()+6)%7,daysIn=new Date(Y,M,0).getDate(),weeks=Math.ceil((off+daysIn)/7);
+  const byDay={};for(const d of dl)if(d.due)(byDay[d.due]=byDay[d.due]||[]).push(d);
+  const inMonth=dl.filter(d=>d.due&&d.due.slice(0,7)===m);
+  let cal='<div class="cal" role="grid" aria-label="'+MONL[M-1]+' '+Y+' teslimat takvimi">'+["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"].map(x=>'<div class="dow">'+x+'</div>').join("");
+  for(let i=0;i<weeks*7;i++){const dt=new Date(Y,M-1,1-off+i),iso=dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate());
+    const evs=byDay[iso]||[],cls=[dt.getMonth()!==M-1?"out":"",i%7>=5?"wk":"",iso===t?"today":""].filter(Boolean).join(" "),open=S.calOpen===iso;
+    cal+='<div'+(cls?' class="'+cls+'"':"")+'><div class="n">'+dt.getDate()+(iso===t?'<small>BUGÜN</small>':"")+'</div>'+(open?evs:evs.slice(0,3)).map(evHtml).join("")+
+      (evs.length>3?'<button type="button" class="evmore" data-calmore="'+iso+'">'+(open?"daha az":"+"+(evs.length-3)+" daha")+'</button>':"")+'</div>'}
+  cal+='</div>';
+  const calh='<div class="calh"><h2>'+MONL[M-1]+' '+Y+'</h2><button type="button" class="ib" data-calnav="-1" aria-label="Önceki ay">‹</button><button type="button" class="ib" data-calnav="1" aria-label="Sonraki ay">›</button>'+(m!==t.slice(0,7)?'<button type="button" class="btn sm" data-calnav="0">Bugüne dön</button>':"")+
+    '<span class="muted" style="font-size:12.5px">'+inMonth.length+' teslimat · '+inMonth.reduce((s,d)=>s+d.rids.length,0)+' ürün</span><span class="grow"></span><div class="leg">'+custs.filter(x=>!c||x===c).map(x=>'<span><i style="background:'+cColor(x)+'"></i>'+esc(x)+'</span>').join("")+'<span><i style="background:#fff;box-shadow:inset 0 0 0 2px #C62828"></i>Gecikmiş</span><span class="muted">Koyu kısım: hazır olan oran</span></div></div>';
+  // yan sütun
+  const up=dl.filter(d=>!d.all&&d.due).slice(0,8);
+  const upHtml=up.length?up.map(d=>'<button type="button" class="up" data-gok="'+esc(d.key)+'">'+dblk(d.due,d.all)+'<span class="md"><span class="l1"><b>'+esc(d.name)+'</b>'+ctag(d.customer)+lpill(d.due,d.all)+'</span><span class="l2">'+esc([d.platform&&d.platform!==d.customer?d.platform:"",d.rids.map(id=>prodOf(S.requests[id]).name).join(", ")].filter(Boolean).join(" · "))+'</span><span class="l3">'+mbar(d.pct)+d.done+' / '+d.n+' kalem</span></span></button>').join(""):'<p class="muted" style="margin:10px 0 0">Açık teslimat yok.</p>';
+  const undHtml=und.length?'<section class="card"><h2>Termini belirsiz</h2><p class="hint" style="margin:4px 0 10px">Tarihi girilmemiş fazlar takvimde görünmez.</p><div class="chips">'+und.map(u=>'<button type="button" class="chipb" '+(canYon()?'data-gplan':'data-gok="'+esc(u.key)+'"')+'>'+esc(u.label)+(canYon()?' — <em>tarih gir</em>':"")+'</button>').join("")+'</div></section>':"";
+  const prodIds=new Set(rids.map(id=>S.requests[id].product));
+  const noStock=Object.entries(S.products).filter(([id])=>!c||prodIds.has(id)).reduce((s,[,p])=>s+(p.parts||[]).filter(x=>!x.stock).length,0);
+  const unk=openXs.filter(x=>x.type==="Belirsiz").length,noOwn=openXs.filter(x=>!x.it.owner).length;
+  const miss=(k,l,n)=>'<button type="button" class="miss'+(n?" red":"")+'" data-miss="'+k+'"><span>'+l+'</span><b class="num">'+n+'</b></button>';
+  return '<div class="ov"><div class="ovh"><div><div class="dd">'+esc(longD(t))+'</div><h1>Prototip durumu</h1></div><span class="grow"></span><div class="seg2" role="group" aria-label="Müşteri">'+[["","Tümü"]].concat(custs.map(x=>[x,x])).map(([k,l])=>'<button type="button" data-ozc="'+esc(k)+'" aria-pressed="'+(c===k)+'">'+esc(l)+'</button>').join("")+'</div></div>'+
+    kpis+'<div class="cols"><section class="cm card" aria-label="Takvim">'+calh+cal+'</section><div class="cs"><section class="card"><h2>Yaklaşan teslimatlar</h2>'+upHtml+'</section>'+undHtml+
+    '<section class="card"><h2>Eksik bilgiler</h2><div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">'+miss("type","Üretim tipi belirsiz açık kalem",unk)+miss("owner","Sorumlusu atanmamış açık kalem",noOwn)+miss("stock","Stok kodu girilmemiş parça (ürün ağacı)",noStock)+'</div></section></div></div></div>';
+}
+
+/* ---------- Teslimatlar: faz rayı → teslimat kartları → ürün satırları ---------- */
+function prqHtml(rid,tot,xs,narrow){
+  const r=S.requests[rid],p=prodOf(r),st=reqStats(tot),ce=canEditReq(r),open=narrow||S.open.has(rid);
+  const rs=!tot.length?'<span class="rst">Parça yok</span>':st.all?'<span class="rst ok">Hazır</span>':st.unk?'<span class="rst bad" title="'+st.unk+' kalemin üretim tipi belirsiz">Bilgi eksik</span>':st.done?'<span class="rst part">Kısmen hazır</span>':'<span class="rst">Açık</span>';
+  const q=r.sets?r.sets:r.direct?r.direct+" ×":"—";
+  let h='<div class="prq"><button type="button" class="cx" data-rx="'+esc(rid)+'" aria-expanded="'+open+'" aria-label="'+esc(p.name)+' alt parçaları"><svg class="caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="transform:rotate('+(open?0:-90)+'deg)"><path d="M3 5l4 4 4-4"/></svg></button>'+
+    '<div><button type="button" class="pn" data-pdet="'+esc(r.product)+'" title="Ürün detayı">'+esc(p.name)+'</button>'+(r.note?'<div class="muted" style="font-size:12px">'+esc(r.note)+'</div>':"")+'</div>'+
+    '<div class="codes">'+esc(codeFor(p,custOf(r))||"—")+'</div><div class="num" style="text-align:right">'+q+(r.spare?'<small class="muted"> +'+r.spare+'</small>':"")+'</div>'+
+    '<div style="display:flex;align-items:center;gap:8px">'+mbar(st.pct)+'<span class="num" style="font-size:12px;color:var(--ink-2)">'+st.done+'/'+st.n+'</span></div><div>'+rs+'</div>'+
+    '<div class="acts2">'+(ce?'<button type="button" class="link" data-add="'+esc(rid)+'">+ Parça</button><button type="button" class="link" data-edit="'+esc(rid)+'">Düzenle</button>':"")+'</div></div>';
+  if(open){const ys=xs.slice().sort((a,b)=>(a.it.ord||0)-(b.it.ord||0)),hidden=tot.length-ys.length;
+    h+='<div class="pexp"><div class="grid">'+(ys.length?'<div class="row h"><div></div><div>Parça</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div style="text-align:right">Adet</div><div style="text-align:right">Teslim</div><div>Sorumlu</div><div>Durum</div><div>Not</div><div></div></div>'+ys.map(rowHtml).join(""):"")+
+      (!tot.length?'<div class="gnote">Bu talepte alt parça tanımlı değil.'+(ce?' <button type="button" class="link" data-add="'+esc(rid)+'">Parça ekle</button>':"")+'</div>':hidden>0?'<div class="gnote">'+hidden+' kalem filtre nedeniyle gizli'+(S.f.status==="open"?" (bitenler)":"")+'.</div>':"")+'</div></div>'}
+  return h;
+}
+function viewTeslimat(){
+  const f=S.f,by=itemsIndex(),all=approvedRids();
+  // ray: müşteri → faz
+  const groups={};for(const id of all){const r=S.requests[id],c=custOf(r),ph=r.adhoc?"__adhoc":r.phase;((groups[c]=groups[c]||{})[ph]=groups[c][ph]||[]).push(id)}
+  const allDl=deliveriesOf(all,by);
+  const railItem=(c,ph,label,ids)=>{const dl=deliveriesOf(ids,by),nx=dl.find(d=>!d.all),cur=f.customer===c&&f.phase===ph;
+    return '<button type="button" class="ri" data-rail="1" data-rc="'+esc(c)+'" data-rp="'+esc(ph)+'" aria-current="'+cur+'"><span class="nm"><b>'+esc(label)+'</b><small>'+(dl.length>1?dl.length+" teslimat · ":"")+ids.length+' ürün</small></span>'+
+      (nx?'<span class="lp '+tone(nx.due,false)+'">'+(nx.due?shortD(nx.due):"Tarih yok")+'</span>':'<span class="lp done">Hazır</span>')+'</button>'};
+  const custs=Object.keys(groups).sort(custSort);
+  let rail='<nav class="rail" aria-label="Fazlar"><button type="button" class="ri" data-rail="1" data-rc="" data-rp="" aria-current="'+(!f.customer&&!f.phase)+'"><span class="nm"><b>Tüm teslimatlar</b><small>'+allDl.length+' teslimat · '+all.length+' ürün</small></span></button>';
+  for(const c of custs){const phs=Object.keys(groups[c]).filter(p=>p!=="__adhoc").sort((a,b)=>phaseOrd(a)-phaseOrd(b)||a.localeCompare(b,"tr"));if(!phs.length)continue;
+    rail+='<h4><span style="color:'+cColor(c)+'">●</span> '+esc(c)+'</h4>'+phs.map(p=>railItem(c,p,p,groups[c][p])).join("")}
+  const ad=custs.filter(c=>groups[c].__adhoc);
+  if(ad.length)rail+='<h4>Fazsız teslimatlar</h4>'+ad.map(c=>railItem(c,"__adhoc",c,groups[c].__adhoc)).join("");
+  if(canRequest())rail+='<div class="rf"><button type="button" class="link" data-newkind="newphase">+ Yeni faz ya da teslim yeri</button><button type="button" class="link" data-newkind="adhoc">+ Fazsız teslimat (sadece tarih)</button></div>';
+  rail+='</nav>';
+  // seçili kapsam
+  const phaseSel=!!f.phase&&f.phase!=="__adhoc";
+  const scope=all.filter(id=>reqPass(S.requests[id],f,{dk:1}));
+  const scopeDl=deliveriesOf(scope,by),sst=reqStats(scope.flatMap(id=>by[id]||[]));
+  const title=f.phase==="__adhoc"?"Fazsız teslimatlar":f.phase||(f.customer?"Tüm teslimatlar":"Tüm teslimatlar");
+  const dkPlan=()=>{const r=Object.values(S.requests).find(r=>!r.deleted&&r.planId&&dkey(r)===(f.dk||(scopeDl[0]&&scopeDl[0].key)));return r?r.planId:""};
+  let head='<section class="phh"><div class="t"><h1>'+esc(title)+'</h1>'+(f.customer?ctag(f.customer):"")+'<span class="s">'+scopeDl.length+' teslimat · '+scope.length+' ürün · '+sst.n+' kalem</span><span class="grow"></span>'+
+    (canRequest()&&phaseSel?'<button type="button" class="btn" data-newkind="plan" data-nfplan="'+esc(dkPlan())+'">+ Bu teslimata ürün ekle</button>':"")+'</div>'+
+    '<div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-2);max-width:520px">'+mbar(sst.pct)+'<span class="num" style="white-space:nowrap">%'+Math.round(sst.pct)+' hazır · '+sst.done+' / '+sst.n+' kalem</span></div>';
+  if(phaseSel&&scopeDl.length>1){const TC={late:"#C62828",soon:"#8A3F00",done:"#1C5E33"};
+    head+='<div class="dcards" role="group" aria-label="Teslim yerleri">'+scopeDl.map(d=>'<button type="button" class="dcard" data-dk="'+esc(d.key)+'" aria-pressed="'+(f.dk===d.key)+'"><span class="dt" style="color:'+(TC[tone(d.due,d.all)]||"inherit")+'">'+(d.due?'<b>'+(+d.due.slice(8,10))+'</b><span>'+MON[+d.due.slice(5,7)-1]+'</span>':'<b>?</b><span>TARİH YOK</span>')+'</span><span class="sn">'+esc(d.platform||d.customer)+'</span><small>'+d.rids.length+' ürün · '+esc(leftTxt(d.due,d.all))+'</small>'+mbar(d.pct)+'</button>').join("")+'</div>'+
+      (f.dk?'<div><button type="button" class="link" data-dk="">Tüm teslim yerlerini göster</button></div>':"")}
+  head+='</section>';
+  // filtreler
+  const reqsSel=all.filter(id=>reqPass(S.requests[id],f)),xsAll=reqsSel.flatMap(id=>by[id]||[]);
+  const forSum=xsAll.filter(x=>passes(x,f,{status:1,type:1})),list=xsAll.filter(x=>passes(x,f));
+  const vis={};for(const x of list)(vis[x.rid]=vis[x.rid]||[]).push(x);
+  const noFilter=!f.type&&!f.owner&&!f.q&&(f.status==="open"||f.status==="all");
+  const shown=reqsSel.filter(id=>vis[id]||(noFilter&&!(by[id]||[]).length)),narrow=!!(f.type||f.owner||f.q);
+  let body=head+'<div class="card" style="padding:0 16px">'+summary(forSum)+'</div>';
+  const dls=deliveriesOf(shown,by);
+  if(!dls.length)body+=emptyState();
+  for(const d of dls){
+    const ttl=phaseSel?esc(d.platform||d.customer):esc(d.name)+(d.platform&&d.platform!==d.customer?" · "+esc(d.platform):"")+ctag(d.customer);
+    body+='<section class="dlv" aria-label="'+esc(d.customer+" "+d.name+" "+d.platform)+'"><div class="dlvh">'+dblk(d.due,d.all)+'<div class="tt"><b>'+ttl+'</b><span>'+esc(longD(d.due))+' · '+d.rids.length+' ürün'+(d.qty?' · '+d.qty+' adet':"")+'</span></div>'+lpill(d.due,d.all)+'<span class="grow"></span><span class="num" style="font-size:12.5px;color:var(--ink-2)">'+d.done+' / '+d.n+' kalem hazır</span></div>'+
+      '<div class="dlvb"><div class="prq h"><div></div><div>Ürün</div><div>'+esc(d.customer)+' kodu</div><div style="text-align:right">Adet</div><div>İlerleme</div><div>Durum</div><div></div></div>'+
+      d.rids.slice().sort((a,b)=>(prodOf(S.requests[a]).ord||0)-(prodOf(S.requests[b]).ord||0)).map(rid=>prqHtml(rid,by[rid]||[],vis[rid]||[],narrow)).join("")+'</div></section>';
+  }
+  return '<div class="tsl">'+rail+'<div class="tmain">'+body+'</div></div>'+datalists();
+}
+
+/* ---------- Onaylar: yöneticinin gelen kutusu ---------- */
+function onLists(){
+  const all=Object.entries(S.requests).filter(([,r])=>!r.deleted&&r.approval),A=r=>r.approval||{};
+  const lim=new Date(Date.now()-30*864e5).toISOString();
+  return{pending:all.filter(([,r])=>apprOf(r)==="pending").sort((a,b)=>(A(a[1]).resubmittedAt||A(a[1]).requestedAt||"").localeCompare(A(b[1]).resubmittedAt||A(b[1]).requestedAt||"")),
+    rejected:all.filter(([,r])=>apprOf(r)==="rejected").sort((a,b)=>(A(b[1]).decidedAt||"").localeCompare(A(a[1]).decidedAt||"")),
+    recent:all.filter(([,r])=>apprOf(r)==="approved"&&(A(r).decidedAt||"")>=lim).sort((a,b)=>(A(b[1]).decidedAt||"").localeCompare(A(a[1]).decidedAt||""))};
+}
+function viewOnay(){
+  const L=onLists(),tab=S.on.tab,list=L[tab],adm=!!S.canApprove;
+  if(!list.some(([id])=>id===S.on.sel))S.on.sel=list.length?list[0][0]:null;
+  for(const id of [...S.on.chk])if(!L.pending.some(([x])=>x===id))S.on.chk.delete(id);
+  const tags=r=>(r.proposedProduct?'<span class="newtag">YENİ ÜRÜN</span>':"")+(r.proposedPlan?'<span class="newtag">YENİ FAZ</span>':"")+(r.adhoc?'<span class="newtag">FAZSIZ</span>':"");
+  const bar=adm&&tab==="pending"&&list.length?'<div class="bar"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="onAll"'+(list.every(([id])=>S.on.chk.has(id))?" checked":"")+'> Tümünü seç</label><span class="grow"></span><button type="button" class="btn ok" id="onBulk"'+(S.on.chk.size?"":" disabled")+'>Seçilenleri onayla ('+S.on.chk.size+')</button></div>':"";
+  const items=list.map(([id,r])=>{const A=r.approval||{};
+    return '<div class="oni" role="button" tabindex="0" data-onsel="'+esc(id)+'" aria-current="'+(S.on.sel===id)+'">'+(adm&&tab==="pending"?'<input type="checkbox" data-onchk="'+esc(id)+'"'+(S.on.chk.has(id)?" checked":"")+' aria-label="'+esc(prodOf(r).name)+' seç">':"")+
+      '<span class="md"><span style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><b>'+esc(prodOf(r).name)+'</b>'+ctag(custOf(r))+tags(r)+'</span>'+
+      '<span style="font-size:12.5px;color:var(--ink-2)">'+esc([phaseName(r),r.platform&&r.platform!==custOf(r)?r.platform:"",qtyOf(r)?qtyOf(r)+" adet":""].filter(Boolean).join(" · "))+'</span>'+
+      '<span style="font-size:12px;color:var(--muted)">'+esc((A.requestedByName||A.requestedBy||"")+" · "+fmtDT(tab==="pending"?(A.resubmittedAt||A.requestedAt):A.decidedAt))+(A.resubmittedAt&&tab==="pending"?" · tekrar gönderildi":"")+'</span></span>'+lpill(r.due,false)+'</div>'}).join("")||
+    '<p class="muted" style="padding:16px;margin:0">'+{pending:"Onay bekleyen talep yok.",rejected:"Reddedilen talep yok.",recent:"Son 30 günde onaylanan talep yok."}[tab]+'</p>';
+  let det='<div class="ond"><p class="muted" style="margin:0">'+(list.length?"Soldan bir talep seçin.":"Burada gösterilecek talep yok. Proje mühendisleri \"Yeni talep\" ile talep açınca buraya düşer.")+'</p></div>';
+  const id=S.on.sel,r=id&&S.requests[id];
+  if(r){const A=r.approval||{},p=prodOf(r),c=custOf(r),ap=apprOf(r),ce=canEditReq(r);
+    const its=Object.entries(r.items||{}).filter(([,it])=>it&&!it.deleted).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
+    const others=Object.values(S.requests).filter(o=>o!==r&&!o.deleted&&o.product===r.product&&apprOf(o)==="approved").sort((a,b)=>(a.due||"9").localeCompare(b.due||"9"));
+    const same=r.proposedPlan?Object.entries(S.requests).filter(([oid,o])=>oid!==id&&!o.deleted&&apprOf(o)==="pending"&&o.proposedPlan&&o.proposedPlan.phase===r.proposedPlan.phase&&o.proposedPlan.customer===r.proposedPlan.customer).map(([,o])=>prodOf(o).name):[];
+    const st=ap==="pending"?'<span class="appr pend">Onay bekliyor</span>':ap==="rejected"?'<span class="appr rej">Reddedildi</span>':'<span class="appr" style="background:var(--d-chip);color:var(--d-ink)">Onaylandı · '+esc((A.decidedByName||"")+" "+fmtDT(A.decidedAt))+'</span>';
+    const pp=r.proposedProduct,ppc=pp?[["Ford",pp.codes&&pp.codes.ford],["Iveco",pp.codes&&pp.codes.iveco],["Sanel",pp.codes&&pp.codes.sanel]].filter(x=>x[1]).map(x=>x[0]+" "+x[1]).join(", "):"";
+    det='<div class="ond"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)">'+st+'<span>Talep eden: <b>'+esc(A.requestedByName||A.requestedBy||"—")+'</b> · '+esc(fmtDT(A.requestedAt))+'</span>'+(A.resubmittedAt?'<span>· düzeltilip tekrar gönderildi '+esc(fmtDT(A.resubmittedAt))+'</span>':"")+'</div>'+
+      '<div><h2>'+esc(p.name)+tags(r)+'</h2><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13.5px">'+ctag(c)+'<span>'+esc([phaseName(r),r.platform?"teslim yeri "+r.platform:"",r.sets?r.sets+" adet ürün":r.direct?"her parçadan "+r.direct+" adet":"",r.spare?"+"+r.spare+" yedek":""].filter(Boolean).join(" · "))+'</span>'+(codeFor(p,c)?'<span class="codes">'+esc(codeFor(p,c))+'</span>':"")+'</div></div>'+
+      '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+dblk(r.due,false)+'<div><div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted)">İSTENEN TERMİN</div><div style="font-size:17px;font-weight:700">'+esc(longD(r.due))+'</div></div>'+lpill(r.due,false)+'</div>'+
+      (r.proposedPlan?'<div class="callout"><b>Plana yeni teslimat ekliyor:</b> '+esc(planLabel(r.proposedPlan))+'. Onaylarsanız faz planına eklenir.'+(same.length?'<br>Aynı faz için bekleyen diğer talepler: '+esc(same.join(", ")):"")+'</div>':"")+
+      (pp?'<div class="callout"><b>Yeni ürün önerisi:</b> '+esc(pp.name)+(ppc?" ("+esc(ppc)+")":"")+' · '+(pp.parts||[]).length+' alt parça. Onaylarsanız Ürünler listesine eklenir.</div>':"")+
+      (r.adhoc?'<div class="callout" style="background:#F5F6F7;border-color:var(--line);color:var(--ink-2)">Faza bağlı değil; yalnızca tarih verilmiş tek seferlik teslimat.</div>':"")+
+      (ap==="rejected"?'<div class="callout red"><b>Ret nedeni:</b> '+esc(A.reason||"—")+' <span style="opacity:.8">· '+esc((A.decidedByName||"")+" "+fmtDT(A.decidedAt))+'</span></div>':"")+
+      (A.lastReason&&ap==="pending"?'<div class="callout red"><b>Önceki ret nedeni:</b> '+esc(A.lastReason)+'</div>':"")+
+      '<div style="display:flex;gap:12px;flex-wrap:wrap"><div class="box2"><div class="lbl">Talep notu</div>'+(r.note?esc(r.note):'<span class="muted">Not yok</span>')+'</div><div class="box2"><div class="lbl">Bu ürünün diğer teslimatları</div>'+
+        (others.length?'<div class="chips">'+others.slice(0,8).map(o=>'<button type="button" class="chipb" data-gok="'+esc(dkey(o))+'">'+esc(custOf(o)+" · "+phaseName(o)+" · "+(o.due?fmtD(o.due):"tarih yok"))+'</button>').join("")+'</div>':'<span class="muted">Yok</span>')+'</div></div>'+
+      '<div class="ptbl"><div class="ptr h"><div>Parça</div><div>Tip</div><div>Üretici</div><div style="text-align:right">Adet</div></div>'+(its.length?its.map(([iid,it])=>'<div class="ptr"><div><b>'+esc(it.part)+'</b>'+(it.stock?'<div class="codes">'+esc(it.stock)+'</div>':"")+'</div><div><span class="rtag tp-'+tcls(it.type)+'">'+esc(normT(it.type))+'</span></div><div>'+esc(it.maker||"—")+'</div><div style="text-align:right">'+
+        (ce?'<input class="in num" type="number" min="0" style="width:84px;text-align:right" data-rid="'+esc(id)+'" data-iid="'+esc(iid)+'" data-f="qty" value="'+(it.qty??"")+'" aria-label="'+esc(it.part)+' adet">':'<span class="num">'+esc(it.qty??"—")+'</span>')+'</div></div>').join(""):'<div class="ptr"><div class="muted">Alt parça tanımlı değil</div></div>')+'</div>'+
+      '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'+(adm&&ap==="pending"?'<button type="button" class="btn ok lg" data-approve="'+esc(id)+'">Onayla</button><button type="button" class="btn danger lg" data-reject="'+esc(id)+'">Reddet…</button>':"")+
+        (adm&&ap==="rejected"?'<button type="button" class="btn ok lg" data-approve="'+esc(id)+'">Yine de onayla</button>':"")+
+        (ce&&ap!=="approved"?'<button type="button" class="btn lg" data-edit="'+esc(id)+'">'+(ap==="rejected"&&isMine(r)?"Düzelt ve tekrar gönder":isMine(r)?"Düzenle / geri çek":"Düzenle")+'</button>':"")+
+        (ap==="approved"?'<button type="button" class="btn lg" data-gok="'+esc(dkey(r))+'">Teslimatta göster</button>':"")+
+        (ap==="pending"&&!adm?'<span class="muted" style="font-size:12.5px">Yönetici onaylayınca Teslimatlar\'a ve Özet\'e girer.</span>':"")+'</div></div>';
+  }
+  const tabs='<div class="seg2" role="group" aria-label="Onay listesi">'+[["pending","Bekleyen"],["rejected","Reddedilen"],["recent","Son onaylanan"]].map(([k,l])=>'<button type="button" data-ontab="'+k+'" aria-pressed="'+(tab===k)+'">'+l+' <b class="num">'+L[k].length+'</b></button>').join("")+'</div>';
+  return '<div class="ovh" style="padding:20px 0 14px"><div><div class="dd">Proje mühendisi talepleri</div><h1>Onaylar</h1></div><span class="grow"></span>'+tabs+'</div><div class="ona"><div class="onl">'+bar+items+'</div>'+det+'</div>';
+}
+async function bulkApprove(){const ids=[...S.on.chk];if(!ids.length)return;S.on.chk.clear();for(const id of ids)await approveReq(id);toast(ids.length+" talep onaylandı")}
+
+/* ---------- Yönetim: yedekler, kullanıcılar, faz planı, listeler ---------- */
+function ysubs(){const a=[];if(S.canManage||!S.auth)a.push(["yedek","Yedekler"]);if(S.canManage)a.push(["kullanici","Kullanıcılar ve yetkiler"]);if(canEdit()||S.canManage)a.push(["plan","Faz planı"],["liste","Listeler"]);return a}
+function viewYonetim(){
+  const subs=ysubs();if(!subs.some(([k])=>k===S.ysub))S.ysub=subs[0][0];
+  const c=S.ysub==="yedek"?backupPanel():S.ysub==="kullanici"?viewAdmin():S.ysub==="plan"?planPanel():listsPanel();
+  return '<div class="tsl"><nav class="ysub" aria-label="Yönetim">'+subs.map(([k,l])=>'<button type="button" data-ysub="'+k+'" aria-current="'+(S.ysub===k)+'">'+l+'</button>').join("")+'</nav><div class="tmain" id="ycont">'+c+'</div></div>'+datalists();
+}
+function setYcont(sub,fn){const c=$("#ycont");if(c&&S.tab==="yonetim"&&S.ysub===sub)c.innerHTML=fn()}
+const BK={list:null,err:"",busy:false};
+function backupPanel(){
+  const sz=n=>n>1048576?(n/1048576).toFixed(1).replace(".",",")+" MB":Math.max(1,Math.round(n/1024))+" KB";
+  const rows=BK.err?'<div class="warn" style="margin:12px 18px">'+esc(BK.err)+'</div>':!BK.list?'<p class="muted" style="padding:12px 18px;margin:0">Yükleniyor…</p>':!BK.list.backups.length?'<p class="muted" style="padding:12px 18px;margin:0">Henüz otomatik yedek yok; sunucu her gün bir yedek alır.</p>':
+    BK.list.backups.map(b=>'<div class="bkt"><div class="num">'+esc(b.name)+'</div><div class="num">'+sz(b.size)+'</div><div>'+esc(fmtDT(b.mtime))+'</div><div><a class="link" href="api/admin/backups/'+encodeURIComponent(b.name)+'" download>İndir</a></div></div>').join("");
+  return '<section class="card" style="padding:18px 20px;display:flex;flex-direction:column;gap:12px"><h2 style="font-size:19px">Veritabanı yedeği</h2>'+
+    '<p class="hint" style="margin:0">Tek dosyalık SQLite yedeği; tüm ürünleri, talepleri, faz planını, listeleri ve kullanıcı rollerini içerir. Yerel yönetici şifresinin özeti (hash) de dosyadadır; yedeği güvenli bir yerde saklayın.</p>'+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn dark lg" id="bkNow" href="api/admin/backup.db" download><svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 1.5v8M3.5 6 7 9.5 10.5 6M2 12.5h10"/></svg>Şimdi yedek indir (.db)</a><a class="btn lg" href="api/export.json" download>Veriyi JSON olarak indir</a></div>'+
+    '<p class="hint" style="margin:0">Geri yükleme (IT): konteyneri durdurun, indirilen dosyayı <code>data/prototip.db</code> yerine koyun, konteyneri başlatın.</p></section>'+
+    '<section class="card" style="padding:0;overflow:hidden"><div style="display:flex;align-items:center;gap:10px;padding:14px 18px;flex-wrap:wrap"><h2>Otomatik günlük yedekler</h2><span class="muted" style="font-size:12.5px">Son '+(BK.list?BK.list.keep:30)+' gün saklanır</span><span class="grow"></span><button type="button" class="btn sm" id="bkRefresh">Yenile</button></div>'+
+    '<div style="overflow-x:auto"><div class="bkt h"><div>Dosya</div><div>Boyut</div><div>Tarih</div><div></div></div>'+rows+'</div></section>';
+}
+async function loadBackups(){if(BK.busy)return;BK.busy=true;try{BK.list=await api("GET","api/admin/backups");BK.err=""}catch(e){BK.err=e.message}BK.busy=false;setYcont("yedek",backupPanel)}
+
+/* ---------- v2 olayları ---------- */
+function bindV2(){
+  const v=$("#view");
+  const goList=patch=>{Object.assign(S.f,{customer:S.oz.cust,phase:"",dk:"",product:"",owner:"",type:"",q:""},patch);saveF();setTab("liste")};
+  v.addEventListener("click",e=>{
+    const b=e.target.closest("[data-ozc],[data-calnav],[data-calmore],[data-gok],[data-kpi],[data-gplan],[data-miss],[data-rail],[data-dk],[data-rx],[data-pdet],[data-newkind],[data-newfor],[data-ontab],[data-onsel],[data-gopend],[data-ysub],[data-copy],#onBulk,#bkRefresh");
+    if(!b)return;const ds=b.dataset;
+    if(ds.ozc!==undefined){S.oz.cust=ds.ozc;LS.set("ozc",ds.ozc);renderBody();return}
+    if(ds.calnav!==undefined){const n=+ds.calnav;if(!n)S.calM=null;else{const [y,m]=(S.calM||todayISO().slice(0,7)).split("-").map(Number),d=new Date(y,m-1+n,1);S.calM=d.getFullYear()+"-"+pad(d.getMonth()+1)}S.calOpen=null;renderBody();return}
+    if(ds.calmore){S.calOpen=S.calOpen===ds.calmore?null:ds.calmore;renderBody();return}
+    if(ds.gok!==undefined){if(ds.gok)goDlv(ds.gok);return}
+    if(ds.kpi){const k=ds.kpi;if(k==="late")goList({status:"late"});else if(k==="soon")goList({status:"open"});else if(k==="prog")goList({status:"all"});else if(k==="pend"){S.on.tab="pending";setTab("onay")}else if(k==="und"&&canYon()){S.ysub="plan";setTab("yonetim")}return}
+    if(ds.gplan!==undefined){S.ysub="plan";setTab("yonetim");return}
+    if(ds.miss){if(ds.miss==="type")goList({type:"Belirsiz",status:"open"});else if(ds.miss==="owner")goList({owner:"(atanmamış)",status:"open"});else setTab("urunler");return}
+    if(ds.rail){Object.assign(S.f,{customer:ds.rc,phase:ds.rp,dk:""});saveF();S.sel.clear();render();return}
+    if(ds.dk!==undefined){S.f.dk=S.f.dk===ds.dk?"":ds.dk;saveF();S.sel.clear();render();return}
+    if(ds.rx){S.open.has(ds.rx)?S.open.delete(ds.rx):S.open.add(ds.rx);LS.set("open",[...S.open].slice(-300));renderBody();return}
+    if(ds.pdet){S.bomSel=ds.pdet;S.bomDraft=null;setTab("urunler");return}
+    if(ds.newkind){openNew({kind:ds.newkind,planId:ds.nfplan||"",customer:S.f.customer||""});return}
+    if(ds.newfor){openNew({prod:ds.newfor});return}
+    if(ds.ontab){S.on.tab=ds.ontab;S.on.sel=null;S.on.chk.clear();renderBody();return}
+    if(ds.onsel){if(e.target.closest("input"))return;S.on.sel=ds.onsel;renderBody();return}
+    if(ds.gopend){S.on.tab="pending";S.on.sel=ds.gopend;setTab("onay");return}
+    if(ds.ysub){S.ysub=ds.ysub;LS.set("ysub",ds.ysub);renderBody();return}
+    if(ds.copy!==undefined){copyText(ds.copy);return}
+    if(b.id==="onBulk"){bulkApprove();return}
+    if(b.id==="bkRefresh"){BK.list=null;setYcont("yedek",backupPanel);loadBackups();return}
+  });
+  v.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches(".oni")){e.preventDefault();e.target.click()}});
+  v.addEventListener("change",e=>{const t=e.target;
+    if(t.dataset.onchk){t.checked?S.on.chk.add(t.dataset.onchk):S.on.chk.delete(t.dataset.onchk);renderBody();return}
+    if(t.id==="onAll"){const L=onLists().pending;L.forEach(([id])=>t.checked?S.on.chk.add(id):S.on.chk.delete(id));renderBody();return}
+  });
+  v.addEventListener("input",e=>{if(e.target.id!=="pSearch")return;S.pq=e.target.value;applyPSearch()});
+}
+function applyPSearch(){const q=trLower((S.pq||"").trim());
+  document.querySelectorAll("#view .plist [data-pgrp]").forEach(g=>{let any=false;g.querySelectorAll("button[data-name]").forEach(b=>{const on=!q||b.dataset.name.includes(q);b.hidden=!on;any=any||on});g.hidden=!any})}
+
 /* ---------- Grafik ---------- */
 function viewCharts(){
-  const f=S.f;const all=allItems();const list=all.filter(x=>passes(x,f,{status:1}));
-  const reqs=Object.entries(S.requests).filter(([,r])=>!r.deleted&&reqPass(r,f,{phase:1}));
+  const f=S.f;const all=allItems();const list=all.filter(x=>passes(x,f,{status:1,phase:1,dk:1}));
+  const reqs=Object.entries(S.requests).filter(([,r])=>!r.deleted&&apprOf(r)==="approved"&&reqPass(r,f,{phase:1,dk:1}));
   // Gantt: ürün başına faz terminleri
   const byProd={};for(const [rid,r] of reqs){if(!r.due)continue;(byProd[r.product]=byProd[r.product]||[]).push([rid,r])}
   const tk=todayISO(),dates=[tk];for(const v of Object.values(byProd))for(const [,r] of v)dates.push(r.due);
@@ -494,16 +906,16 @@ function viewCharts(){
       const grp=byDate[d];const xs=grp.flatMap(([rid])=>itemsByReq[rid]||[]);
       const open=xs.filter(isOpen).length,dd=dayDiff(d);
       const st=xs.length&&!open?"done":(dd<0?"late":dd<=14?"soon":"next");
-      const lbl=[...new Set(grp.map(([,r])=>PHASE_SHORT[r.phase]||r.phase.slice(0,4)))].join("·");
-      const tip=grp.map(([,r])=>r.phase+(r.platform&&r.platform!==r.phase?" ("+r.platform+")":"")).join(", ")+" · "+fmtD(d)+" · "+(xs.length?(xs.length-open)+"/"+xs.length+" bitti":"alt parça yok");
+      const lbl=[...new Set(grp.map(([,r])=>r.adhoc?(r.label||"Fazsız").slice(0,6):PHASE_SHORT[r.phase]||r.phase.slice(0,4)))].join("·");
+      const tip=grp.map(([,r])=>custOf(r)+" · "+phaseName(r)+(r.platform&&r.platform!==r.phase?" ("+r.platform+")":"")).join(", ")+" · "+fmtD(d)+" · "+(xs.length?(xs.length-open)+"/"+xs.length+" bitti":"alt parça yok");
       const hl=f.phase&&grp.some(([,r])=>r.phase===f.phase);
-      ms+='<button type="button" class="ms ms-'+st+'" style="left:'+X(d)+(hl?";box-shadow:0 0 0 3px rgba(31,42,54,.35)":"")+'" data-gp="'+esc(pid)+'" data-gph="'+esc(grp[0][1].phase)+'" title="'+esc(tip)+'" aria-label="'+esc(prodOf({product:pid}).name+": "+tip)+'"></button><span class="ml" style="left:'+X(d)+'">'+esc(lbl)+'</span>';
+      ms+='<button type="button" class="ms ms-'+st+'" style="left:'+X(d)+(hl?";box-shadow:0 0 0 3px rgba(31,42,54,.35)":"")+'" data-gp="'+esc(pid)+'" data-gph="'+esc(grp[0][1].adhoc?"__adhoc":grp[0][1].phase)+'" data-gc="'+esc(custOf(grp[0][1]))+'" title="'+esc(tip)+'" aria-label="'+esc(prodOf({product:pid}).name+": "+tip)+'"></button><span class="ml" style="left:'+X(d)+'">'+esc(lbl)+'</span>';
     }
     const p=prodOf({product:pid});
     gRows+='<div class="gl" data-gprod="'+esc(pid)+'" title="'+esc(p.name)+'">'+esc(p.name)+'<small>'+esc(p.customer||"")+'</small></div><div class="gt"><div class="gline" style="left:'+X(ds[0])+';width:calc('+X(ds[ds.length-1])+' - '+X(ds[0])+')"></div>'+ms+'</div>';
   }
   const gantt=prodIds.length?'<div class="gantt"><div class="gantt-in"><div></div><div class="axis">'+months.join("")+'</div>'+gRows+
-    '<div></div><div style="position:relative;height:0"><div class="today" style="left:'+X(tk)+';top:-'+(prodIds.length*32)+'px;height:'+(prodIds.length*32)+'px"><b>Bugün '+fmtD(tk).slice(0,5)+'</b></div></div></div></div>':'<p class="muted">Terminli talep yok.</p>';
+    '<div></div><div style="position:relative;height:0"><div class="gtoday" style="left:'+X(tk)+';top:-'+(prodIds.length*32)+'px;height:'+(prodIds.length*32)+'px"><b>Bugün '+fmtD(tk).slice(0,5)+'</b></div></div></div></div>':'<p class="muted">Terminli talep yok.</p>';
 
   // İlerleme
   const pr={};for(const x of list){const k=x.r.product;const o=pr[k]=pr[k]||{done:0,Sanel:0,"Alt Tedarikçi":0,Stok:0,Belirsiz:0,cancel:0};if(x.cancel)o.cancel++;else if(x.done)o.done++;else o[x.type]++}
@@ -527,54 +939,100 @@ function viewCharts(){
       '<section class="panel" aria-label="Ürün bazlı ilerleme"><div class="ph"><h2>Ürün bazlı ilerleme</h2><span class="sub">kalem</span></div><div style="display:flex;gap:12px;flex-wrap:wrap">'+L("var(--d-bar)","Bitti")+L("var(--s-bar)","Sanel'de")+L("var(--f-bar)","Alt tedarikçide")+L("var(--k-bar)","Stok")+L("var(--b-bar)","Belirsiz")+'</div><div style="display:flex;flex-direction:column;gap:3px">'+progress+'</div></section>'+
       '<section class="panel" aria-label="Sorumlu iş yükü"><div class="ph"><h2>Sorumlu iş yükü</h2><span class="sub">açık kalem</span></div><div style="display:flex;flex-direction:column;gap:3px">'+owners+'</div>'+(unassigned?'<p style="margin:0;font-size:12.5px;color:var(--b-ink)">'+unassigned+' açık kalemin sorumlusu atanmamış.</p>':"")+'</section>'+
       '<section class="panel" aria-label="Üreticide bekleyen"><div class="ph"><h2>Üreticide bekleyen</h2><span class="sub">adet (kalem)</span></div><div style="display:flex;flex-direction:column;gap:3px">'+makers+'</div></section>'+
-    '</div><p class="muted" style="margin:0;font-size:12.5px">Grafikler üstteki filtrelerle aynı veriyi kullanır. Bir çubuğa ya da işarete tıklayınca o kalemler Liste\'de açılır.</p></div>';
+    '</div><p class="muted" style="margin:0;font-size:12.5px">Grafikler üstteki filtrelerle aynı veriyi kullanır. Bir çubuğa ya da işarete tıklayınca o kalemler Teslimatlar\'da açılır.</p></div>';
 }
 
 /* ---------- Ürünler ---------- */
 function viewProducts(){
   const prods=Object.entries(S.products).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
-  if(!S.bomSel||(S.bomSel!=="__new"&&S.bomSel!=="__lists"&&!S.products[S.bomSel]))S.bomSel=prods.length?prods[0][0]:"__new";
+  if(!S.bomSel||(S.bomSel!=="__new"&&!S.products[S.bomSel]))S.bomSel=prods.length?prods[0][0]:"__new";
   const groups={};for(const [id,p] of prods){const g=(p.customer||"Müşteri belirtilmemiş")+" · "+(p.program||"—");(groups[g]=groups[g]||[]).push([id,p])}
-  const left='<nav class="plist" aria-label="Ürünler">'+Object.entries(groups).map(([g,ps])=>'<h4>'+esc(g)+'</h4>'+ps.map(([id,p])=>'<button type="button" data-bom="'+esc(id)+'" aria-current="'+(S.bomSel===id)+'">'+esc(p.name)+'<small>'+(p.parts||[]).length+' parça</small></button>').join("")).join("")+
-    '<h4>Ayarlar</h4><button type="button" data-bom="__lists" aria-current="'+(S.bomSel==="__lists")+'">Listeler (faz, sorumlu, üretici…)</button>'+
-    (canEdit()?'<div style="padding:8px"><button type="button" class="btn dark" data-bom="__new" style="width:100%;justify-content:center">+ Yeni ürün</button></div>':"")+'</nav>';
-  if(S.bomSel==="__lists")return '<div class="prod">'+left+listsPanel()+'</div>';
+  const left='<nav class="plist" aria-label="Ürünler">'+(canEdit()?'<div style="padding:6px 6px 0"><button type="button" class="btn dark" data-bom="__new" style="width:100%;justify-content:center">+ Yeni ürün</button></div>':"")+
+    '<div style="padding:6px"><input class="in" id="pSearch" type="search" value="'+esc(S.pq||"")+'" placeholder="Ürün adı ya da kod ara…" style="width:100%" aria-label="Ürün ya da kod ara"></div>'+
+    Object.entries(groups).map(([g,ps])=>'<div data-pgrp><h4>'+esc(g)+'</h4>'+ps.map(([id,p])=>'<button type="button" data-bom="'+esc(id)+'" data-name="'+esc(trLower([p.name,...Object.values(p.codes||{})].join(" ")))+'" aria-current="'+(S.bomSel===id)+'">'+esc(p.name)+'<small>'+(p.parts||[]).length+' parça</small></button>').join("")+'</div>').join("")+'</nav>';
   if(!S.bomDraft||S.bomDraft._id!==S.bomSel){
-    const src=S.bomSel==="__new"?{name:"",program:"",customer:S.f.customer||"Ford",parts:[{part:"Gövde",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Lens",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"PCBA",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Kablo+Konnektör",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""}]}:S.products[S.bomSel];
-    S.bomDraft=JSON.parse(JSON.stringify({_id:S.bomSel,_dirty:S.bomSel==="__new",name:src.name||"",program:src.program||"",customer:src.customer||"",parts:(src.parts||[]).map(x=>Object.assign({},x,{type:normT(x.type)}))}));
+    const src=S.bomSel==="__new"?{name:"",program:S.cfg.programs[0]||"",customer:S.f.customer||"Ford",parts:BOM_TPL}:S.products[S.bomSel];
+    S.bomDraft=JSON.parse(JSON.stringify({_id:S.bomSel,_dirty:S.bomSel==="__new",name:src.name||"",program:src.program||"",customer:src.customer||"",codes:Object.assign({ford:"",iveco:"",sanel:""},src.codes||{}),parts:(src.parts||[]).map(x=>Object.assign({},x,{type:normT(x.type)}))}));
+    S.bomOrig=JSON.parse(JSON.stringify(S.bomDraft.parts));
   }
-  const d=S.bomDraft,dd=D();const used=Object.values(S.requests).filter(r=>!r.deleted&&r.product===S.bomSel).length;
-  const right='<section class="panel" aria-label="Ürün ağacı"><div class="ph"><h2>'+(S.bomSel==="__new"?"Yeni ürün":esc(d.name))+'</h2>'+(S.bomSel!=="__new"?'<span class="sub">'+used+' talepte kullanılıyor</span>':"")+'</div>'+
-    '<p class="hint">"Araç seti başına adet", Excel\'deki gibi 1 araç seti için gereken adettir (ör. Uppershelf 8, Stowage 2, Ambient gövde 9). Yeni talepte adet = araç seti × bu sayı + yedek. Üretici, malzeme ve sorumlu yeni taleplerde varsayılan olarak gelir.</p>'+
+  const d=S.bomDraft,dd=D(),isNew=S.bomSel==="__new";const used=Object.values(S.requests).filter(r=>!r.deleted&&r.product===S.bomSel).length;
+  // Müşteri kodları: üç ayrı kart, büyük ve kopyalanabilir
+  const cc=(k,lbl)=>{const v=d.codes[k]||"",id={ford:"bcFord",iveco:"bcIveco",sanel:"bcSanel"}[k];
+    return '<div class="ccard" style="--c:'+cColor(lbl)+'"><div class="ch"><span class="ctag" style="background:'+cColor(lbl)+'">'+lbl.toUpperCase()+'</span><span>'+lbl+' parça numarası</span></div><div class="cv"><input id="'+id+'" value="'+esc(v)+'" placeholder="—" aria-label="'+lbl+' kodu"'+dd+'>'+(v?'<button type="button" class="btn sm" data-copy="'+esc(v)+'" aria-label="'+lbl+' kodunu kopyala">Kopyala</button>':"")+'</div></div>'};
+  const by=itemsIndex(true);
+  const preqs=isNew?[]:Object.entries(S.requests).filter(([,r])=>!r.deleted&&r.product===S.bomSel&&apprOf(r)!=="rejected").sort((a,b)=>(a[1].due||"9999").localeCompare(b[1].due||"9999")||custSort(custOf(a[1]),custOf(b[1])));
+  const strip=preqs.map(([rid,r])=>{const st=reqStats(by[rid]),c=custOf(r),pend=apprOf(r)==="pending";
+    return '<button type="button" class="phc" style="--c:'+cColor(c)+'" '+(pend?'data-gopend="'+esc(rid)+'"':'data-gok="'+esc(dkey(r))+'"')+' title="'+(pend?"Onaylar'da aç":"Teslimatlar'da aç")+'"><span class="cu">'+esc(c.toUpperCase())+(pend?" · ONAY BEKLİYOR":"")+'</span><b>'+esc(phaseName(r))+'</b><small>'+esc(r.platform&&r.platform!==c?r.platform:" ")+'</small><span class="q">'+(qtyOf(r)||"—")+'</span>'+lpill(r.due,st.all)+'</button>'}).join("");
+  const head='<section class="phh"><div class="t"><h1>'+(isNew?"Yeni ürün":esc(d.name))+'</h1>'+(isNew?"":'<span class="s">'+esc([d.customer,d.program,d.parts.length+" alt parça",used+" talep"].filter(Boolean).join(" · "))+'</span>')+'<span class="grow"></span>'+
+    (!isNew&&canRequest()?'<button type="button" class="btn dark" data-newfor="'+esc(S.bomSel)+'">+ Bu ürün için talep</button>':"")+'</div>'+
+    '<div class="codes3">'+cc("ford","Ford")+cc("iveco","Iveco")+cc("sanel","Sanel")+'</div>'+
+    (strip?'<div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase">Fazlar ve teslimatlar</div><div class="phs">'+strip+'</div>':(isNew?"":'<p class="hint" style="margin:0">Bu ürün için henüz talep yok.</p>'))+'</section>';
+  const right='<section class="panel" aria-label="Ürün ağacı"><div class="ph"><h2>Ürün bilgisi ve alt parçalar</h2></div>'+
+    '<p class="hint">"Ürün başına adet", 1 adet ürün (lamba) için gereken parça sayısıdır; çoğu parça için 1. Yeni talepte parça adedi = ürün adedi × bu sayı + yedek. Tip, üretici, malzeme ve sorumlu yeni taleplerde varsayılan olarak gelir; kaydederken açık taleplere de uygulanabilir.</p>'+
     '<div class="form"><label class="fl">Ürün adı<input class="in" id="bName" value="'+esc(d.name)+'" style="width:220px"'+dd+'></label><label class="fl">Müşteri<input class="in" id="bCust" list="dlCustomers" value="'+esc(d.customer)+'" style="width:170px"'+dd+'></label><label class="fl">Program<input class="in" id="bProg" list="dlPrograms" value="'+esc(d.program)+'" style="width:170px"'+dd+'></label></div>'+
-    '<div style="border:1px solid var(--line);border-radius:4px;overflow-x:auto"><div class="bomrow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:32px"><div>Alt parça</div><div style="text-align:right">Araç seti başına</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div>Sorumlu</div><div></div></div>'+
+    '<div style="border:1px solid var(--line);border-radius:4px;overflow-x:auto"><div class="bomrow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:32px"><div>Alt parça</div><div>Stok kodu</div><div style="text-align:right">Ürün başına</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div style="text-align:right">Kütle (g)</div><div>Sorumlu</div><div></div></div>'+
     (d.parts.length?d.parts.map((p,i)=>'<div class="bomrow t-'+tcls(p.type)+'"><div><input class="cell b" data-bi="'+i+'" data-bf="part" value="'+esc(p.part)+'" list="dlParts" aria-label="Alt parça"'+dd+'></div>'+
-      '<div><input class="cell n" type="number" min="0" data-bi="'+i+'" data-bf="perSet" value="'+esc(p.perSet)+'" aria-label="Araç seti başına adet"'+dd+'></div>'+
+      '<div><input class="cell" data-bi="'+i+'" data-bf="stock" value="'+esc(p.stock||"")+'" placeholder="—" aria-label="Stok kodu"'+dd+'></div>'+
+      '<div><input class="cell n" type="number" min="0" data-bi="'+i+'" data-bf="perSet" value="'+esc(p.perSet)+'" aria-label="Ürün başına adet"'+dd+'></div>'+
       '<div><select class="cell tp tp-'+tcls(p.type)+'" data-bi="'+i+'" data-bf="type" aria-label="Tip"'+dd+'>'+opts(TYPES,p.type||"Belirsiz")+'</select></div>'+
       '<div><input class="cell" data-bi="'+i+'" data-bf="maker" value="'+esc(p.maker)+'" list="dlMakers" placeholder="—" aria-label="Üretici"'+dd+'></div>'+
       '<div><input class="cell" data-bi="'+i+'" data-bf="material" value="'+esc(p.material)+'" placeholder="—" aria-label="Ham madde"'+dd+'></div>'+
+      '<div><input class="cell n" type="number" min="0" step="0.01" data-bi="'+i+'" data-bf="massG" value="'+esc(p.massG??"")+'" placeholder="—" aria-label="Kütle (g)"'+dd+'></div>'+
       '<div><select class="cell" data-bi="'+i+'" data-bf="owner" aria-label="Sorumlu"'+dd+'>'+opts(S.cfg.people,p.owner,"—")+'</select></div>'+
       '<div>'+(dd?"":'<button type="button" class="rm" style="color:var(--muted)" data-brm="'+i+'" aria-label="Parçayı çıkar">✕</button>')+'</div></div>').join(""):'<p class="hint" style="padding:10px 12px;margin:0">Bu ürüne henüz alt parça eklenmemiş.</p>')+'</div>'+
     (dd?"":'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px"><button type="button" class="btn" id="bAdd">+ Alt parça ekle</button><span class="grow"></span>'+(d._dirty?'<span class="dirty">Kaydedilmemiş değişiklik</span>':"")+
-      (S.bomSel!=="__new"?'<button type="button" class="btn danger" id="bDel">Ürünü sil</button>':"")+'<button type="button" class="btn" id="bReset"'+(d._dirty&&S.bomSel!=="__new"?"":" disabled")+'>Geri al</button><button type="button" class="btn dark" id="bSave"'+(d._dirty?"":" disabled")+'>Kaydet</button></div><div id="bConfirm"></div>')+
+      (!isNew?'<button type="button" class="btn danger" id="bDel">Ürünü sil</button>':"")+'<button type="button" class="btn" id="bReset"'+(d._dirty&&!isNew?"":" disabled")+'>Geri al</button><button type="button" class="btn dark" id="bSave"'+(d._dirty?"":" disabled")+'>Kaydet</button></div>'+(!isNew&&used?'<label style="display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:12.5px;color:var(--ink-2);margin-top:8px"><input type="checkbox" id="bApply"'+(S.bomApply!==false?" checked":"")+'> Değişen tip, üretici, malzeme, stok kodu ve sorumluyu bu ürünün <b>açık</b> taleplerine de uygula</label>':"")+'<div id="bConfirm"></div>')+
     '</section>';
-  return '<div class="prod">'+left+right+'</div>'+datalists();
+  return '<div class="prod">'+left+'<div style="display:flex;flex-direction:column;gap:14px;min-width:0">'+head+right+'</div></div>'+datalists();
 }
-const LISTS=[["phases","Fazlar"],["platforms","Platformlar"],["people","Sorumlular"],["makers","Üreticiler"],["customers","Müşteriler"],["programs","Programlar"]];
+const BOM_TPL=[{part:"Gövde",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Lens",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"PCBA",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""},{part:"Kablo+Konnektör",perSet:1,type:"Sanel",maker:"Sanel",material:"",owner:""}];
+const LISTS=[["phases","Fazlar"],["platforms","Teslim yerleri"],["people","Sorumlular"],["makers","Üreticiler"],["customers","Müşteriler"],["programs","Programlar"]];
+function planPanel(){
+  const dd=D(),pl=S.cfg.plan||[];const cnt=id=>Object.values(S.requests).filter(r=>!r.deleted&&r.planId===id).length;
+  return '<section class="panel"><div class="ph"><h2>Faz planı</h2><span class="sub">Her satır bir teslimat: müşteri · faz · teslim yeri · termin. Termini değiştirince bu satıra bağlı tüm talepler güncellenir.</span></div>'+
+   '<div style="overflow-x:auto"><table class="plan"><thead><tr><th>Müşteri</th><th>Faz</th><th>Teslim yeri</th><th>Termin</th><th style="text-align:right">Talep</th><th></th></tr></thead><tbody>'+
+   pl.map((x,i)=>'<tr><td>'+esc(x.customer)+'</td><td><b>'+esc(x.phase)+'</b></td><td>'+esc(x.platform||"")+'</td><td><input class="in" type="date" data-plandue="'+i+'" value="'+esc(x.due||"")+'"'+dd+'></td><td class="num" style="text-align:right">'+cnt(x.id)+'</td><td>'+(dd||cnt(x.id)?"":'<button type="button" class="rm" data-planrm="'+i+'" aria-label="Satırı sil">✕</button>')+'</td></tr>').join("")+
+   '</tbody></table></div>'+
+   (dd?"":'<form class="form" id="planAdd" style="margin:0;align-items:flex-end"><label class="fl">Müşteri<select class="in" id="paC">'+opts(S.cfg.customers,"")+'</select></label><label class="fl">Faz<input class="in" id="paP" list="dlPhases" style="width:160px" required></label><label class="fl">Teslim yeri<input class="in" id="paS" list="dlPlatforms" style="width:150px"></label><label class="fl">Termin<input class="in" type="date" id="paD"></label><button class="btn" type="submit">+ Satır ekle</button></form>')+
+   '</section>';
+}
+async function setPlanDue(i,due){
+  const pl=(S.cfg.plan||[]).map(x=>Object.assign({},x));const x=pl[i];if(!x)return;x.due=due||null;
+  if(!await saveCfg({plan:pl}))return;let n=0;
+  for(const [rid,r] of Object.entries(S.requests)){if(r.deleted||r.planId!==x.id||r.due===x.due||!canEditReq(r))continue;if(await write("requests/"+rid,()=>reqRef(rid).update({due:x.due,updatedAt:nowISO()})))n++}
+  toast(planLabel(x)+": "+n+" talebin termini güncellendi");
+}
 function listsPanel(){
   const dd=D();
   return '<section class="panel"><div class="ph"><h2>Listeler</h2><span class="sub">Açılır menülerde çıkan seçenekler</span></div><div class="lists">'+LISTS.map(([k,l])=>'<div><h3 style="margin:0 0 8px;font:600 14px var(--f-cond)">'+l+'</h3><div class="tags">'+(S.cfg[k]||[]).map((v,i)=>'<span class="tag">'+esc(v)+(dd?"":'<button type="button" data-lrm="'+k+'" data-li="'+i+'" aria-label="'+esc(v)+' kaldır">×</button>')+'</span>').join("")+'</div>'+
-    (dd?"":'<form class="tags" data-ladd="'+k+'" style="gap:6px"><input class="in" placeholder="Ekle…" aria-label="'+l+' ekle" style="flex:1"><button class="btn" type="submit">Ekle</button></form>')+'</div>').join("")+'</div>'+(S.standalone?'<p class="hint" style="margin-top:16px">Tüm verinin yedeği: <a href="api/export.json" download>JSON olarak indir</a>. Sunucu ayrıca her gün otomatik yedek alır.</p>':"")+'</section>';
+    (dd?"":'<form class="tags" data-ladd="'+k+'" style="gap:6px"><input class="in" placeholder="Ekle…" aria-label="'+l+' ekle" style="flex:1"><button class="btn" type="submit">Ekle</button></form>')+'</div>').join("")+'</div></section>';
 }
 function markBomDirty(){S.bomDraft._dirty=true;const sv=$("#bSave"),rs=$("#bReset");if(sv)sv.disabled=false;if(rs&&S.bomSel!=="__new")rs.disabled=false;
   if(sv&&!$("#view .dirty")){const sp=document.createElement("span");sp.className="dirty";sp.textContent="Kaydedilmemiş değişiklik";sv.parentNode.insertBefore(sp,$("#bDel")||$("#bReset"))}}
+/* Ürün ağacında değişen alanları, bu ürünün açık talep kalemlerine uygular.
+   Yalnızca kalemde alan boşsa ya da eski ürün ağacı değeriyle aynıysa (elle değiştirilmemişse) yazar. */
+async function applyBomToOpen(pid,oldParts,newParts){
+  const F=["type","maker","material","stock","owner"];let n=0;
+  for(const [rid,r] of Object.entries(S.requests)){
+    if(r.deleted||r.product!==pid||!canEditReq(r))continue;const items={};
+    for(const [iid,it] of Object.entries(r.items||{})){
+      if(!it||it.deleted||DONE.includes(it.status)||it.status==="İptal")continue;
+      const np=newParts.find(x=>x.part===it.part);if(!np)continue;const op=oldParts.find(x=>x.part===it.part)||{};
+      const patch={};for(const f of F){const cur=f==="type"?normT(it[f]):(it[f]||""),nv=f==="type"?normT(np[f]):(np[f]||""),ov=f==="type"?normT(op[f]):(op[f]||"");
+        if(nv!==cur&&(cur===""||cur===ov||(f==="type"&&cur==="Belirsiz")))patch[f]=np[f]||""}
+      if(Object.keys(patch).length){items[iid]=stamp(patch);n++}}
+    if(Object.keys(items).length)await write("requests/"+rid,()=>reqRef(rid).update({items,updatedAt:nowISO()}));
+  }
+  if(n)toast(n+" açık kaleme ürün ağacı bilgisi uygulandı");
+}
 async function saveBom(){
   const d=S.bomDraft;if(!d.name.trim()){toast("Ürün adı gerekli.",true);return}
-  const parts=d.parts.filter(p=>p.part&&p.part.trim()).map(p=>({part:p.part.trim(),perSet:Number(p.perSet)||0,type:p.type||"Belirsiz",maker:p.maker||"",material:p.material||"",owner:p.owner||""}));
+  const parts=d.parts.filter(p=>p.part&&p.part.trim()).map(p=>({part:p.part.trim(),perSet:Number(p.perSet)||0,type:p.type||"Belirsiz",maker:p.maker||"",material:p.material||"",owner:p.owner||"",stock:p.stock||"",massG:p.massG??null,note:p.note||""}));
   let id=d._id;
   if(id==="__new"){id=trLower(d.name).replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||uid("p");if(S.products[id])id+="-"+Math.random().toString(36).slice(2,5)}
   const ord=S.products[id]?S.products[id].ord:Math.max(0,...Object.values(S.products).map(p=>p.ord||0))+1;
-  const ok=await write("products/"+id,()=>S.db.collection("products").doc(id).set(stamp({name:d.name.trim(),program:d.program||"",customer:d.customer||"",ord,parts})),"Ürün kaydedildi");
+  const ok=await write("products/"+id,()=>S.db.collection("products").doc(id).set(stamp({name:d.name.trim(),program:d.program||"",customer:d.customer||"",codes:d.codes||{},ord,parts})),"Ürün kaydedildi");
+  if(ok&&d._id!=="__new"&&S.bomApply!==false)await applyBomToOpen(id,S.bomOrig||[],parts);
   if(ok){S.bomSel=id;S.bomDraft=null;const nc={};if(d.program&&!S.cfg.programs.includes(d.program))nc.programs=[...S.cfg.programs,d.program];if(d.customer&&!S.cfg.customers.includes(d.customer))nc.customers=[...S.cfg.customers,d.customer];if(Object.keys(nc).length)saveCfg(nc);renderBody()}
 }
 
@@ -586,11 +1044,16 @@ function renderBody(){
   if(loginShown)return;
   if(focusedInView()){deferred=true;return}
   deferred=false;closeMenu();
+  if(!["liste","ozet","grafik","urunler","onay","yonetim"].includes(S.tab))S.tab="liste";
+  if(S.tab==="yonetim"&&!canYon())S.tab="liste";
+  $("#navYon").hidden=!canYon();
   document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
-  $("#btnNew").hidden=!canEdit();
-  if(S.tab==="yetki"&&!S.canManage)S.tab="liste";
-  if(S.tab==="yetki"){$("#filters").hidden=true;$("#view").innerHTML=viewAdmin();loadAdmin();return}
-  $("#view").innerHTML=S.tab==="grafik"?viewCharts():S.tab==="urunler"?viewProducts():viewList();
+  $("#btnNew").hidden=!canRequest();
+  const pc=pendOnly(),mr=myRejected(),pb=$("#pendBtn");$("#navOnayN").textContent=pc?String(pc):"";pb.hidden=!mr;pb.textContent="Reddedilen talebiniz: "+mr;
+  if(S.tab!=="liste"&&S.tab!=="grafik")$("#filters").hidden=true;
+  if(S.tab==="yonetim"){$("#view").innerHTML=viewYonetim();if(S.ysub==="kullanici")loadAdmin();if(S.ysub==="yedek"&&!BK.list&&!BK.err)loadBackups();renderBulk();return}
+  $("#view").innerHTML=S.tab==="ozet"?viewOzet():S.tab==="grafik"?viewCharts():S.tab==="urunler"?viewProducts():S.tab==="onay"?viewOnay():viewTeslimat();
+  if(S.tab==="urunler")applyPSearch();
   renderBulk();resolveNames();
 }
 async function resolveNames(){
@@ -633,8 +1096,10 @@ function bind(){
       if(f==="qty"||f==="delivered")val=val===""?null:Math.max(0,Number(val));
       if(f==="part"&&!val.trim()){toast("Parça adı boş bırakılamaz.",true);t.value=S.requests[t.dataset.rid].items[t.dataset.iid].part;return}
       updItem(t.dataset.rid,t.dataset.iid,{[f]:val});if(t.tagName==="SELECT")t.blur();return}
-    if(t.dataset.bf!==undefined){const i=+t.dataset.bi;let val=t.value;if(t.dataset.bf==="perSet")val=val===""?0:Number(val);S.bomDraft.parts[i][t.dataset.bf]=val;
+    if(t.dataset.bf!==undefined){const i=+t.dataset.bi;let val=t.value;if(t.dataset.bf==="perSet")val=val===""?0:Number(val);if(t.dataset.bf==="massG")val=val===""?null:Number(val);S.bomDraft.parts[i][t.dataset.bf]=val;
       if(t.dataset.bf==="type"){t.className="cell tp tp-"+tcls(val);t.closest(".bomrow").className="bomrow t-"+tcls(val)}markBomDirty();return}
+    if(t.id==="bApply"){S.bomApply=t.checked;return}
+    if(["bcFord","bcIveco","bcSanel"].includes(t.id)){S.bomDraft.codes[{bcFord:"ford",bcIveco:"iveco",bcSanel:"sanel"}[t.id]]=t.value.trim();markBomDirty();return}
     if(["bName","bProg","bCust"].includes(t.id)){S.bomDraft[{bName:"name",bProg:"program",bCust:"customer"}[t.id]]=t.value.trim();markBomDirty();return}
   });
   v.addEventListener("focusout",()=>setTimeout(()=>{if(deferred&&!focusedInView())renderBody()},0));
@@ -649,11 +1114,11 @@ function bind(){
     if(ds.rm){if(!b.classList.contains("arm")){b.classList.add("arm");b.textContent="Sil?";setTimeout(()=>{if(b.isConnected){b.classList.remove("arm");b.textContent="✕"}},3500);return}
       const [rid,iid]=ds.rm.split("/");updItem(rid,iid,{deleted:true}).then(ok=>ok&&toast("Kalem silindi"));return}
     // grafik → liste
-    const go=patch=>{Object.assign(S.f,patch);S.tab="liste";LS.set("tab",S.tab);saveF();render()};
+    const go=patch=>{Object.assign(S.f,{phase:"",dk:""},patch);S.tab="liste";LS.set("tab",S.tab);saveF();window.scrollTo(0,0);render()};
     if(ds.cprod){go({product:ds.cprod,owner:"",type:"",q:""});return}
     if(ds.cown){go({owner:ds.cown,type:"",q:""});return}
     if(ds.cmk){go({q:ds.cmk==="(belirsiz)"?"":ds.cmk,type:ds.cmk==="(belirsiz)"?"Belirsiz":"",status:"open"});return}
-    if(ds.gp){go({product:ds.gp,phase:ds.gph,status:"all",owner:"",type:"",q:""});return}
+    if(ds.gp){go({customer:ds.gc||"",product:ds.gp,phase:ds.gph,status:"all",owner:"",type:"",q:""});return}
     if(ds.gprod){go({product:ds.gprod,phase:"",owner:"",type:"",q:""});return}
     // ürünler
     if(ds.bom){if(S.bomDraft&&S.bomDraft._dirty&&S.bomSel!==ds.bom){const c=$("#bConfirm");if(c&&!c.dataset.go){c.dataset.go="1";c.innerHTML='<div class="warn" style="margin-top:10px">Kaydedilmemiş değişiklik var. <button type="button" class="btn" data-bomgo="'+esc(ds.bom)+'">Kaydetmeden geç</button></div>';return}}
@@ -675,76 +1140,142 @@ function bind(){
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(menuFor)closeMenu();else if(NR||ED)closeModal()}});
   $("#nav").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(!b)return;S.tab=b.dataset.tab;LS.set("tab",S.tab);S.sel.clear();render()});
   $("#bulk").addEventListener("click",e=>{if(e.target.id==="bkApply")applyBulk();if(e.target.id==="bkClear"){S.sel.clear();renderBody()}});
-  $("#btnNew").addEventListener("click",openNew);
+  $("#btnNew").addEventListener("click",()=>openNew());
 }
 
 /* ---------- Yeni talep ---------- */
 let NR=null;
-function openNew(){
-  if(!canEdit()){toast("Düzenleme yetkiniz yok.",true);return}
-  NR={prods:S.f.product?[S.f.product]:[],phase:S.f.phase||"",newPhase:"",platform:"",due:"",mode:"sets",sets:1,direct:4,spare:0,rows:{}};drawNew();
+function openNew(o){
+  if(!canRequest()){toast("Talep oluşturma yetkiniz yok.",true);return}
+  o=o||{};let planId=o.planId||"";const x=(S.cfg.plan||[]).find(p=>p.id===planId);if(!x)planId="";
+  NR={kind:o.kind||"plan",prods:o.prod&&S.products[o.prod]?[o.prod]:[],planId,customer:x?x.customer:(o.customer||S.f.customer||""),newPhase:"",platform:"",due:"",label:"",mode:"sets",sets:1,direct:4,spare:0,rows:{},np:null};
+  drawNew();
 }
+const npProd=()=>({name:(NR.np&&NR.np.name.trim())||"Yeni ürün",parts:[]});
 function bomRows(pid){
-  const p=S.products[pid];if(!p)return[];
-  if(!NR.rows[pid])NR.rows[pid]=(p.parts||[]).map(x=>Object.assign({on:true,qtyEdited:false,qty:0},x,{type:normT(x.type)}));
+  if(pid==="__np"){
+    if(!NR.rows.__np){const np=NR.np;const src=np.src==="copy"?((S.products[np.from]||{}).parts||[]).map(x=>Object.assign({},x,{stock:"",material:"",massG:null})):np.src==="tpl"?BOM_TPL:[];
+      NR.rows.__np=src.map(x=>Object.assign({on:true,qtyEdited:false,qty:0},x,{type:normT(x.type)}))}
+  }else{const p=S.products[pid];if(!p)return[];
+    if(!NR.rows[pid])NR.rows[pid]=(p.parts||[]).map(x=>Object.assign({on:true,qtyEdited:false,qty:0},x,{type:normT(x.type)}))}
   for(const r of NR.rows[pid])if(!r.qtyEdited)r.qty=NR.mode==="sets"?(Number(NR.sets)||0)*(Number(r.perSet)||0)+(Number(NR.spare)||0):(Number(NR.direct)||0)+(Number(NR.spare)||0);
   return NR.rows[pid];
 }
+function nrMsg(){
+  if(!NR)return "";
+  if(NR.kind==="plan"&&!(S.cfg.plan||[]).some(x=>x.id===NR.planId))return "Teslimatı seçin";
+  if(NR.kind!=="plan"&&!NR.customer)return "Müşteriyi seçin";
+  if(NR.kind==="newphase"&&!NR.newPhase.trim())return "Faz adını yazın";
+  if(NR.kind==="adhoc"&&!NR.due)return "Termin tarihini girin";
+  if(!NR.prods.length)return "En az bir ürün seçin";
+  if(NR.np){const n=NR.np.name.trim();if(!n)return "Yeni ürünün adını yazın";if(Object.values(S.products).some(p=>trLower(p.name)===trLower(n)))return "Bu adla bir ürün zaten var; listeden seçin"}
+  return "";
+}
+const nrReady=()=>!nrMsg();
+function syncGo(){const b=$("#nrGo"),m=$("#nrMsg");if(b)b.disabled=!nrReady();if(m)m.textContent=nrMsg()}
 function drawNew(){
   const prods=Object.entries(S.products).sort((a,b)=>(a[1].ord||0)-(b[1].ord||0));
   const groups={};for(const [id,p] of prods){const g=(p.customer||"Müşteri belirtilmemiş")+" · "+(p.program||"—");(groups[g]=groups[g]||[]).push([id,p])}
+  const pl=S.cfg.plan||[],viaA=!canEdit();
+  const K=[["plan","Plandaki teslimat","Faz planındaki bir teslimata ürün ekle"],["newphase","Yeni faz ya da teslim yeri",viaA?"Yönetici onaylayınca faz planına eklenir":"Plana yeni satır ekler: yeni faz, yeni yer ya da ikinci tarih"],["adhoc","Fazsız, sadece tarih","Faza bağlı olmayan tek seferlik teslimat"]];
+  const kinds='<div class="kind3" role="radiogroup" aria-label="Talep türü">'+K.map(([k,b,s])=>'<button type="button" class="kcard" role="radio" data-nrkind="'+k+'" aria-checked="'+(NR.kind===k)+'"><b>'+b+'</b><span>'+s+'</span></button>').join("")+'</div>';
+  let pane;
+  if(NR.kind==="plan"){const cs=[...new Set(pl.map(x=>x.customer))].sort(custSort),x=pl.find(p=>p.id===NR.planId);
+    pane=pl.length?'<label class="fl" style="flex:1;min-width:300px">Teslimat<select class="in" id="nrPlan"><option value="">Müşteri · faz · teslim yeri · termin seçin…</option>'+cs.map(c=>'<optgroup label="'+esc(c)+'">'+pl.filter(p=>p.customer===c).map(p=>'<option value="'+esc(p.id)+'"'+(NR.planId===p.id?" selected":"")+'>'+esc(p.phase+" · "+(p.platform||c)+" · "+(p.due?fmtD(p.due):"termin yok"))+'</option>').join("")+'</optgroup>').join("")+'</select></label>'+
+      (x?'<div style="display:flex;gap:10px;align-items:center">'+dblk(x.due,false)+'<span style="font-size:13px"><b>'+esc(longD(x.due))+'</b><br><span class="muted">'+esc(x.customer+" · "+x.phase+" · "+(x.platform||x.customer))+'</span></span></div>':""):
+      '<p class="hint" style="margin:0">Faz planı boş. "Yeni faz ya da teslim yeri" ile başlayın.</p>';
+  }else{
+    pane='<label class="fl">Müşteri<select class="in" id="nrCust" style="width:130px">'+opts(S.cfg.customers,NR.customer,"Seçin…")+'</select></label>'+
+      (NR.kind==="newphase"?'<label class="fl">Faz<input class="in" id="nrNewPhase" list="dlPhases" value="'+esc(NR.newPhase)+'" placeholder="ör. PV Test ya da DCV" style="width:190px"></label>':'<label class="fl">Açıklama (isteğe bağlı)<input class="in" id="nrLabel" value="'+esc(NR.label)+'" placeholder="ör. Fuar numunesi" style="width:200px"></label>')+
+      '<label class="fl">Teslim yeri<input class="in" id="nrPlat" list="dlPlatforms" value="'+esc(NR.platform)+'" placeholder="'+esc(NR.customer||"ör. Farplas")+'" style="width:160px"></label>'+
+      '<label class="fl">Termin'+(NR.kind==="adhoc"?" (zorunlu)":"")+'<input class="in" type="date" id="nrDue" value="'+esc(NR.due)+'"></label>'+
+      '<p class="hint" style="flex:1 1 100%;margin:0">'+(NR.kind==="newphase"?(viaA?"Faz planına, yönetici talebi onaylayınca eklenir.":"Faz planına yeni satır olarak eklenir. Aynı faza başka bir teslim yeri ya da ikinci bir tarih de böyle eklenir."):"Faz planına girmez; Teslimatlar'da \"Fazsız teslimatlar\" altında ve takvimde görünür.")+'</p>';
+  }
+  const np=NR.np;
+  const npPanel=np?'<div class="newp"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b>Yeni ürün</b><span class="muted" style="font-size:12.5px">'+(viaA?"Yönetici talebi onaylayınca Ürünler listesine eklenir.":"Talep oluşturulunca Ürünler listesine eklenir.")+'</span></div>'+
+    '<div class="form" style="margin:0;align-items:flex-end"><label class="fl">Ürün adı<input class="in" id="npName" value="'+esc(np.name)+'" style="width:210px" placeholder="ör. Map Lamp"></label><label class="fl">Ford kodu<input class="in" id="npFord" value="'+esc(np.codes.ford)+'" style="width:150px"></label><label class="fl">Iveco kodu<input class="in" id="npIveco" value="'+esc(np.codes.iveco)+'" style="width:130px"></label><label class="fl">Sanel kodu<input class="in" id="npSanel" value="'+esc(np.codes.sanel)+'" style="width:130px"></label></div>'+
+    '<div class="form" style="margin:0;align-items:flex-end"><div class="fl">Alt parçalar<div class="seg">'+[["copy","Başka üründen kopyala"],["tpl","Standart şablon"],["none","Parçasız"]].map(([k,l])=>'<button type="button" data-npsrc="'+k+'" aria-pressed="'+(np.src===k)+'">'+l+'</button>').join("")+'</div></div>'+
+    (np.src==="copy"?'<label class="fl">Kaynak ürün<select class="in" id="npFrom">'+prods.map(([id,p])=>'<option value="'+esc(id)+'"'+(np.from===id?" selected":"")+'>'+esc(p.name)+'</option>').join("")+'</select></label>':"")+'</div>'+
+    (np.src==="copy"?'<p class="hint" style="margin:0">Parça listesi, tip ve üretici kopyalanır; stok kodları ve ham madde boş gelir.</p>':"")+'</div>':"";
   let total=0;
-  const prev=NR.prods.map(pid=>{const rows=bomRows(pid),p=S.products[pid];const on=rows.filter(r=>r.on).length;total+=on;
-    return '<div class="pv"><div class="pvh"><b>'+esc(p.name)+'</b><span class="muted" style="font-size:12.5px">'+(NR.mode==="sets"?esc(NR.sets||0)+" araç seti":esc(NR.direct||0)+" adet")+' · '+on+' alt parça</span><span class="grow"></span>'+(rows.length?'<button type="button" class="link" data-nrall="'+esc(pid)+'">Tümünü seç / kaldır</button>':"")+'</div>'+
-      (rows.length?'<div class="prow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:30px"><div></div><div>Parça</div><div>×Set</div><div style="text-align:right">Adet</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div>Sorumlu</div></div>'+
+  const prev=NR.prods.map(pid=>{const rows=bomRows(pid),p=pid==="__np"?npProd():S.products[pid];if(!p)return "";const on=rows.filter(r=>r.on).length;total+=on;
+    return '<div class="pv"><div class="pvh"><b>'+esc(p.name)+'</b>'+(pid==="__np"?'<span class="newtag">YENİ</span>':"")+'<span class="muted" style="font-size:12.5px">'+(NR.mode==="sets"?esc(NR.sets||0)+" adet ürün":esc(NR.direct||0)+" adet (her parçadan)")+' · '+on+' alt parça</span><span class="grow"></span>'+(rows.length?'<button type="button" class="link" data-nrall="'+esc(pid)+'">Tümünü seç / kaldır</button>':"")+'</div>'+
+      (rows.length?'<div class="prow" style="background:var(--head);font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;min-height:30px"><div></div><div>Parça</div><div>×Ürün</div><div style="text-align:right">Adet</div><div>Tip</div><div>Üretici</div><div>Ham madde / Rev</div><div>Sorumlu</div></div>'+
       rows.map((r,i)=>'<div class="prow t-'+tcls(r.type)+(r.on?"":" off")+'"><div><input type="checkbox" class="cb" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="on"'+(r.on?" checked":"")+' aria-label="'+esc(r.part)+' dahil" style="margin-left:6px"></div>'+
-        '<div style="font-weight:600">'+esc(r.part)+'</div><div class="num muted">'+(NR.mode==="sets"?"×"+esc(r.perSet):"—")+'</div>'+
+        '<div style="font-weight:600">'+esc(r.part)+(r.stock?'<div class="codes" style="font-weight:400">'+esc(r.stock)+'</div>':"")+'</div><div class="num muted">'+(NR.mode==="sets"?"×"+esc(r.perSet):"—")+'</div>'+
         '<div><input class="cell n" type="number" min="0" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="qty" value="'+r.qty+'" aria-label="Adet"'+(r.qtyEdited?' style="font-weight:700"':"")+'></div>'+
         '<div><select class="cell tp tp-'+tcls(r.type)+'" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="type" aria-label="Tip">'+opts(TYPES,r.type||"Belirsiz")+'</select></div>'+
         '<div><input class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="maker" value="'+esc(r.maker)+'" list="dlMakers" aria-label="Üretici"></div>'+
         '<div><input class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="material" value="'+esc(r.material)+'" aria-label="Ham madde"></div>'+
         '<div><select class="cell" data-nr="'+esc(pid)+'" data-ni="'+i+'" data-nf="owner" aria-label="Sorumlu">'+opts(S.cfg.people,r.owner,"—")+'</select></div></div>').join(""):
       '<p class="hint" style="padding:10px 12px;margin:0">Bu ürünün alt parçası tanımlı değil; talep başlık olarak açılır, parçaları sonra eklersiniz.</p>')+'</div>'}).join("");
-  const phase=NR.phase==="__new"?NR.newPhase:NR.phase;const ready=NR.prods.length&&phase;
+  const msg=nrMsg(),nReq=NR.prods.length;
   $("#modal").innerHTML='<div class="scrim" id="scrim"><div class="drawer" role="dialog" aria-modal="true" aria-labelledby="nrT">'+
    '<div class="dh"><h2 id="nrT">Yeni talep</h2><span class="muted" style="font-size:12.5px">Alt parçalar ürün ağacından otomatik gelir</span><button type="button" class="x" data-close aria-label="Kapat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button></div>'+
-   '<div class="db"><div class="chips">'+Object.entries(groups).map(([g,ps])=>'<div class="cg">'+esc(g)+(ps.length>1?'<button type="button" class="link" data-nrgrp="'+esc(g)+'" style="text-transform:none;letter-spacing:0;font-weight:400">tam araç seti</button>':"")+'</div>'+ps.map(([id,p])=>'<button type="button" class="chip" data-nrp="'+esc(id)+'" data-grp="'+esc(g)+'" aria-pressed="'+NR.prods.includes(id)+'">'+esc(p.name)+'</button>').join("")).join("")+'</div>'+
-   '<div class="form" style="margin:0;align-items:flex-end">'+
-     '<label class="fl">Faz<select class="in" id="nrPhase" style="width:200px"><option value="">Seçin…</option>'+S.cfg.phases.map(p=>'<option'+(NR.phase===p?" selected":"")+'>'+esc(p)+'</option>').join("")+'<option value="__new"'+(NR.phase==="__new"?" selected":"")+'>+ Yeni faz…</option></select></label>'+
-     (NR.phase==="__new"?'<label class="fl">Yeni faz adı<input class="in" id="nrNewPhase" value="'+esc(NR.newPhase)+'" placeholder="ör. PV Test" style="width:170px"></label>':"")+
-     '<label class="fl">Platform<select class="in" id="nrPlat" style="width:120px">'+opts(S.cfg.platforms,NR.platform,"—")+'</select></label>'+
-     '<label class="fl">Termin<input class="in" type="date" id="nrDue" value="'+esc(NR.due)+'"></label>'+
-     '<div class="fl">Miktar<div class="seg"><button type="button" data-nrmode="sets" aria-pressed="'+(NR.mode==="sets")+'">Araç seti</button><button type="button" data-nrmode="direct" aria-pressed="'+(NR.mode==="direct")+'">Doğrudan adet</button></div></div>'+
-     (NR.mode==="sets"?'<label class="fl">Araç seti<input class="in num" type="number" min="0" id="nrSets" value="'+esc(NR.sets)+'" style="width:84px;text-align:right"></label>':'<label class="fl">Her parçadan<input class="in num" type="number" min="0" id="nrDirect" value="'+esc(NR.direct)+'" style="width:84px;text-align:right"></label>')+
+   '<div class="db"><div class="cg" style="margin:0">1 · Ne zaman, nereye?</div>'+kinds+'<div class="kpane">'+pane+'</div>'+
+   '<div class="cg" style="margin:0">2 · Hangi ürünler?</div><div class="chips">'+Object.entries(groups).map(([g,ps])=>'<div class="cg">'+esc(g)+(ps.length>1?'<button type="button" class="link" data-nrgrp="'+esc(g)+'" style="text-transform:none;letter-spacing:0;font-weight:400">tümünü seç</button>':"")+'</div>'+ps.map(([id,p])=>'<button type="button" class="chip" data-nrp="'+esc(id)+'" data-grp="'+esc(g)+'" aria-pressed="'+NR.prods.includes(id)+'">'+esc(p.name)+'</button>').join("")).join("")+
+     '<div class="cg">Listede yok mu?</div><button type="button" class="chip" data-nrnew aria-pressed="'+!!np+'">+ Yeni ürün</button></div>'+npPanel+
+   '<div class="cg" style="margin:0">3 · Kaç adet?</div><div class="form" style="margin:0;align-items:flex-end">'+
+     '<div class="fl">Miktar<div class="seg"><button type="button" data-nrmode="sets" aria-pressed="'+(NR.mode==="sets")+'">Ürün adedi</button><button type="button" data-nrmode="direct" aria-pressed="'+(NR.mode==="direct")+'">Her parçadan</button></div></div>'+
+     (NR.mode==="sets"?'<label class="fl">Ürün adedi<input class="in num" type="number" min="0" id="nrSets" value="'+esc(NR.sets)+'" style="width:84px;text-align:right"></label>':'<label class="fl">Her parçadan<input class="in num" type="number" min="0" id="nrDirect" value="'+esc(NR.direct)+'" style="width:84px;text-align:right"></label>')+
      '<label class="fl">Yedek<input class="in num" type="number" min="0" id="nrSpare" value="'+esc(NR.spare)+'" style="width:70px;text-align:right"></label></div>'+
-   (NR.prods.length?prev+'<p class="hint" style="margin:0">Adet, tip, üretici veya malzemeyi burada değiştirebilirsiniz; değişiklik yalnızca bu talebe uygulanır.</p>':'<p class="hint">Yukarıdan en az bir ürün seçin.</p>')+'</div>'+
-   '<div class="df"><span><b class="num">'+total+'</b> kalem · <b class="num">'+NR.prods.length+'</b> talep oluşturulacak</span><span class="grow"></span><button type="button" class="btn" data-close>Vazgeç</button><button type="button" class="btn dark" id="nrGo"'+(ready?"":" disabled")+'>Talebi oluştur</button></div></div></div>'+datalists();
+   (nReq?prev+'<p class="hint" style="margin:0">Adet, tip, üretici veya malzemeyi burada değiştirebilirsiniz; değişiklik yalnızca bu talebe uygulanır.</p>':'<p class="hint" style="margin:0">Yukarıdan en az bir ürün seçin.</p>')+'</div>'+
+   '<div class="df"><span><b class="num">'+total+'</b> kalem · <b class="num">'+nReq+'</b> talep</span><span id="nrMsg" class="dirty" role="status">'+esc(msg)+'</span><span class="grow"></span><button type="button" class="btn" data-close>Vazgeç</button><button type="button" class="btn dark" id="nrGo"'+(msg?" disabled":"")+'>'+(viaA?"Onaya gönder":"Talebi oluştur")+'</button></div></div></div>'+datalists();
 }
 async function createRequests(){
-  const phase=NR.phase==="__new"?NR.newPhase.trim():NR.phase;const go=$("#nrGo");go.disabled=true;go.textContent="Oluşturuluyor…";
-  if(phase&&!S.cfg.phases.includes(phase))await saveCfg({phases:[...S.cfg.phases,phase]});
-  let n=0;const one=NR.prods.length===1?NR.prods[0]:"";
-  for(const pid of NR.prods){
+  if(!nrReady()){syncGo();return}
+  const go=$("#nrGo");go.disabled=true;go.textContent="Oluşturuluyor…";
+  const viaApproval=!canEdit();   // Proje Mühendisi: talep onaya gider; yeni faz ve yeni ürün onayla birlikte eklenir
+  const pl=S.cfg.plan||[],cfg={};const fail=()=>{go.disabled=false;go.textContent="Tekrar dene"};
+  let customer=NR.customer,phase="",platform="",due=NR.due||null,planId=null,proposedPlan=null,adhoc=false,label="";
+  if(NR.kind==="plan"){const x=pl.find(p=>p.id===NR.planId);customer=x.customer;phase=x.phase;platform=x.platform||x.customer;due=x.due||null;planId=x.id}
+  else if(NR.kind==="newphase"){phase=NR.newPhase.trim();platform=NR.platform.trim()||customer;
+    const ex=planMatch({customer,phase,platform,due});
+    if(ex)planId=ex.id;
+    else if(viaApproval)proposedPlan={customer,phase,platform,due};
+    else{planId=planIdFor({customer,phase,platform,due});cfg.plan=[...pl,{id:planId,customer,phase,platform,due}]}
+    if(!viaApproval&&!S.cfg.phases.includes(phase))cfg.phases=[...S.cfg.phases,phase]}
+  else{adhoc=true;phase="Fazsız";label=NR.label.trim();platform=NR.platform.trim()||customer}
+  if(!viaApproval&&platform&&!S.cfg.platforms.includes(platform))cfg.platforms=[...S.cfg.platforms,platform];
+  if(Object.keys(cfg).length&&!await saveCfg(cfg))return fail();
+  // yeni ürün: Düzenleme/Yönetici hemen ekler; mühendisin önerisi talebin içinde onayı bekler
+  let npId=null,proposedProduct=null;
+  if(NR.np&&NR.prods.includes("__np")){
+    npId=slugId(NR.np.name);
+    const parts=bomRows("__np").map(r=>({part:r.part,perSet:Number(r.perSet)||1,type:r.type||"Belirsiz",maker:r.maker||"",material:r.material||"",owner:r.owner||"",stock:r.stock||"",massG:null,note:""}));
+    const doc={name:NR.np.name.trim(),customer,program:S.cfg.programs[0]||"",codes:NR.np.codes,parts};
+    if(viaApproval)proposedProduct=doc;
+    else{doc.ord=Math.max(0,...Object.values(S.products).map(p=>p.ord||0))+1;if(!await write("products/"+npId,()=>S.db.collection("products").doc(npId).set(stamp(doc))))return fail()}
+    NR.rows[npId]=NR.rows.__np;
+  }
+  let n=0;const created=[];
+  for(const pid0 of NR.prods){
+    const pid=pid0==="__np"?npId:pid0;
     const rows=(NR.rows[pid]||[]).filter(r=>r.on);const items={};
-    rows.forEach((r,i)=>{items["i"+pad(i+1)]=stamp({part:r.part,type:r.type||"Belirsiz",maker:r.maker||"",material:r.material||"",qty:r.qty,delivered:null,owner:r.owner||"",status:"Açık",note:"",ord:i+1})});
+    rows.forEach((r,i)=>{items["i"+pad(i+1)]=stamp({part:r.part,type:r.type||"Belirsiz",maker:r.maker||"",material:r.material||"",stock:r.stock||"",qty:r.qty,delivered:null,owner:r.owner||"",status:"Açık",note:r.note||"",ord:i+1})});
     const id=uid("r");
-    const ok=await write("requests/"+id,()=>reqRef(id).set(stamp({product:pid,phase,platform:NR.platform||"",due:NR.due||null,sets:NR.mode==="sets"?Number(NR.sets)||null:null,direct:NR.mode==="direct"?Number(NR.direct)||null:null,spare:Number(NR.spare)||0,note:"",createdAt:nowISO(),items})));
-    if(ok)n++;
+    const doc={product:pid,customer,phase,platform,planId,due,proposedPlan,approval:viaApproval?{state:"pending"}:undefined,sets:NR.mode==="sets"?Number(NR.sets)||null:null,direct:NR.mode==="direct"?Number(NR.direct)||null:null,spare:Number(NR.spare)||0,note:"",createdAt:nowISO(),items};
+    if(adhoc){doc.adhoc=true;doc.label=label}
+    if(pid0==="__np"&&proposedProduct)doc.proposedProduct=proposedProduct;
+    if(await write("requests/"+id,()=>reqRef(id).set(stamp(doc)))){n++;created.push(id)}
   }
   closeModal();
-  if(n){toast(n+" talep oluşturuldu");const p=one?S.products[one]:null;Object.assign(S.f,{phase,status:"open",product:one,type:"",owner:"",q:""});if(p)S.f.customer=p.customer||"—";saveF();S.tab="liste";LS.set("tab",S.tab);render()}
+  if(!n)return;
+  if(viaApproval){toast(n+" talep yönetici onayına gönderildi");S.on.tab="pending";S.on.sel=created[0];setTab("onay");return}
+  toast(n+" talep oluşturuldu");
+  Object.assign(S.f,{customer,phase:adhoc?"__adhoc":phase,dk:dkey({customer,phase,platform,due,adhoc,label}),status:"all",product:"",type:"",owner:"",q:""});saveF();setTab("liste");
 }
 
 /* ---------- Talep düzenle / parça ekle ---------- */
 let ED=null;
-function openEdit(rid){const r=S.requests[rid];if(!r)return;ED={rid,mode:"edit",phase:r.phase||"",platform:r.platform||"",due:r.due||"",sets:r.sets??"",direct:r.direct??"",spare:r.spare||0,note:r.note||"",confirm:false};drawEdit()}
+function openEdit(rid){const r=S.requests[rid];if(!r)return;ED={rid,mode:"edit",adhoc:!!r.adhoc,label:r.label||"",customer:r.customer||"",phase:r.phase||"",platform:r.platform||"",due:r.due||"",sets:r.sets??"",direct:r.direct??"",spare:r.spare||0,note:r.note||"",confirm:false};drawEdit()}
 function openAddPart(rid){const r=S.requests[rid];ED={rid,mode:"add",part:"",qty:r&&r.sets?"":(r&&r.direct)||"",type:"Sanel",maker:"",material:"",owner:""};drawEdit()}
 function drawEdit(){
   const r=S.requests[ED.rid];if(!r){closeModal();return}const p=prodOf(r);let body;
   if(ED.mode==="edit"){
     const n=Object.values(r.items||{}).filter(i=>!i.deleted).length;
-    body='<div class="form"><label class="fl">Faz<input class="in" id="edPhase" list="dlPhases" value="'+esc(ED.phase)+'" style="width:200px"></label><label class="fl">Platform<select class="in" id="edPlat" style="width:130px">'+opts(S.cfg.platforms,ED.platform,"—")+'</select></label><label class="fl">Termin<input class="in" type="date" id="edDue" value="'+esc(ED.due)+'"></label></div>'+
-      '<div class="form"><label class="fl">Araç seti<input class="in num" type="number" min="0" id="edSets" value="'+esc(ED.sets)+'" style="width:90px;text-align:right"></label><label class="fl">Doğrudan adet<input class="in num" type="number" min="0" id="edDirect" value="'+esc(ED.direct)+'" style="width:90px;text-align:right"></label><label class="fl">Yedek<input class="in num" type="number" min="0" id="edSpare" value="'+esc(ED.spare)+'" style="width:80px;text-align:right"></label></div>'+
+    body='<div class="form"><label class="fl">Müşteri<select class="in" id="edCust" style="width:120px">'+opts(S.cfg.customers,ED.customer,"—")+'</select></label>'+(ED.adhoc?'<label class="fl">Açıklama (fazsız)<input class="in" id="edLabel" value="'+esc(ED.label)+'" placeholder="Fazsız teslimat" style="width:180px"></label>':'<label class="fl">Faz<input class="in" id="edPhase" list="dlPhases" value="'+esc(ED.phase)+'" style="width:180px"></label>')+'<label class="fl">Teslim yeri<select class="in" id="edPlat" style="width:140px">'+opts(S.cfg.platforms,ED.platform,"—")+'</select></label><label class="fl">Termin<input class="in" type="date" id="edDue" value="'+esc(ED.due)+'"></label></div>'+
+      '<div class="form"><label class="fl">Ürün adedi<input class="in num" type="number" min="0" id="edSets" value="'+esc(ED.sets)+'" style="width:90px;text-align:right"></label><label class="fl">Her parçadan<input class="in num" type="number" min="0" id="edDirect" value="'+esc(ED.direct)+'" style="width:90px;text-align:right"></label><label class="fl">Yedek<input class="in num" type="number" min="0" id="edSpare" value="'+esc(ED.spare)+'" style="width:80px;text-align:right"></label></div>'+
       '<label class="fl" style="margin-bottom:12px">Talep notu<textarea class="in" id="edNote" rows="2" style="height:auto;padding:6px 8px">'+esc(ED.note)+'</textarea></label>'+
       '<p class="hint">Termin bu talepteki tüm kalemlere uygulanır; kaleme özel termini olan satırlar kendi tarihini korur.</p>'+
       (n?'<div><button type="button" class="btn" id="edRecalc">Adetleri ürün ağacına göre yeniden hesapla</button></div>':"")+
@@ -755,8 +1286,8 @@ function drawEdit(){
       '<p class="hint">Ürün ağacındaki bir parçayı seçerseniz tip, üretici ve adet otomatik dolar.</p>';
   }
   $("#modal").innerHTML='<div class="scrim" id="scrim"><div class="drawer" role="dialog" aria-modal="true" aria-labelledby="edT" style="width:min(620px,100%)">'+
-    '<div class="dh"><h2 id="edT">'+(ED.mode==="edit"?"Talebi düzenle":"Parça ekle")+'</h2><span class="muted" style="font-size:12.5px">'+esc(p.name)+' · '+esc(r.phase)+'</span><button type="button" class="x" data-close aria-label="Kapat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button></div>'+
-    '<div class="db">'+body+'</div><div class="df">'+(ED.mode==="edit"?'<button type="button" class="btn danger" id="edDel">Talebi sil</button>':"")+'<span class="grow"></span><button type="button" class="btn" data-close>Vazgeç</button><button type="button" class="btn dark" id="edSave">'+(ED.mode==="edit"?"Kaydet":"Ekle")+'</button></div></div></div>'+datalists();
+    '<div class="dh"><h2 id="edT">'+(ED.mode==="edit"?"Talebi düzenle":"Parça ekle")+'</h2><span class="muted" style="font-size:12.5px">'+esc(p.name)+' · '+esc(phaseName(r))+'</span><button type="button" class="x" data-close aria-label="Kapat"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button></div>'+
+    '<div class="db">'+body+'</div><div class="df">'+(ED.mode==="edit"?'<button type="button" class="btn danger" id="edDel">'+(apprOf(r)!=="approved"&&isMine(r)&&!S.canApprove?"Talebi geri çek":"Talebi sil")+'</button>':"")+(ED.mode==="edit"&&apprOf(r)==="rejected"&&isMine(r)?'<span class="muted" style="font-size:12.5px;margin-left:8px">Kaydedince talep tekrar onaya gider.</span>':"")+'<span class="grow"></span><button type="button" class="btn" data-close>Vazgeç</button><button type="button" class="btn dark" id="edSave">'+(ED.mode==="edit"?"Kaydet":"Ekle")+'</button></div></div></div>'+datalists();
 }
 function closeModal(){NR=null;ED=null;$("#modal").innerHTML="";if(deferred)renderBody()}
 function bindModal(){
@@ -769,6 +1300,9 @@ function bindModal(){
       if(ds.nrgrp){const ids=[...m.querySelectorAll('[data-grp="'+CSS.escape(ds.nrgrp)+'"]')].map(x=>x.dataset.nrp);const all=ids.every(i=>NR.prods.includes(i));NR.prods=all?NR.prods.filter(i=>!ids.includes(i)):[...new Set([...NR.prods,...ids])];drawNew();return}
       if(ds.nrmode){NR.mode=ds.nrmode;drawNew();return}
       if(ds.nrall){const rows=NR.rows[ds.nrall];const on=!rows.every(r=>r.on);rows.forEach(r=>r.on=on);drawNew();return}
+      if(ds.nrkind){NR.kind=ds.nrkind;drawNew();return}
+      if(ds.nrnew!==undefined){if(NR.np){NR.np=null;NR.prods=NR.prods.filter(x=>x!=="__np");delete NR.rows.__np;drawNew()}else{const first=(NR.prods.find(x=>S.products[x]))||Object.keys(S.products)[0]||"";NR.np={name:"",codes:{ford:"",iveco:"",sanel:""},src:first?"copy":"tpl",from:first};NR.prods=[...NR.prods,"__np"];drawNew();const i=$("#npName");i&&i.focus()}return}
+      if(ds.npsrc){NR.np.src=ds.npsrc;delete NR.rows.__np;drawNew();return}
       if(b.id==="nrGo"){createRequests();return}
     }
     if(ED){
@@ -782,46 +1316,53 @@ function bindModal(){
         if(!n){toast("Değişecek adet yok.");return}
         await write("requests/"+rid,()=>reqRef(rid).update({items,sets:sets||null,direct:direct||null,spare,updatedAt:nowISO()}),n+" kalemin adedi güncellendi");return}
       if(b.id==="edSave"){
-        if(ED.mode==="edit"){const ph=ED.phase.trim();if(!ph){toast("Faz boş olamaz.",true);return}
-          const ok=await write("requests/"+rid,()=>reqRef(rid).update(stamp({phase:ph,platform:ED.platform,due:ED.due||null,sets:ED.sets===""?null:Number(ED.sets),direct:ED.direct===""?null:Number(ED.direct),spare:Number(ED.spare)||0,note:ED.note})),"Talep güncellendi");
-          if(ok&&!S.cfg.phases.includes(ph))saveCfg({phases:[...S.cfg.phases,ph]});if(ok)closeModal();
+        if(ED.mode==="edit"){const ph=ED.adhoc?"Fazsız":ED.phase.trim();if(!ph){toast("Faz boş olamaz.",true);return}
+          const ok=await write("requests/"+rid,()=>reqRef(rid).update(stamp(Object.assign({customer:ED.customer||"",phase:ph,platform:ED.platform,planId:(r.planId&&r.phase===ph&&(r.platform||"")===(ED.platform||"")&&(r.customer||"")===(ED.customer||"")&&(r.due||"")===(ED.due||""))?r.planId:null,due:ED.due||null,sets:ED.sets===""?null:Number(ED.sets),direct:ED.direct===""?null:Number(ED.direct),spare:Number(ED.spare)||0,note:ED.note},ED.adhoc?{label:ED.label.trim()}:{}))),"Talep güncellendi");
+          if(ok&&canEdit()&&!ED.adhoc&&!S.cfg.phases.includes(ph))saveCfg({phases:[...S.cfg.phases,ph]});if(ok)closeModal();
         }else{
           if(!ED.part.trim()){toast("Parça adı girin.",true);return}
           const ids=Object.keys(r.items||{});let k=ids.length+1,iid;do{iid="i"+pad(k++)}while(ids.includes(iid));
           const ord=Math.max(0,...Object.values(r.items||{}).map(i=>i.ord||0))+1;
-          const ok=await write("requests/"+rid,()=>reqRef(rid).update({items:{[iid]:stamp({part:ED.part.trim(),type:ED.type,maker:ED.maker,material:ED.material,qty:ED.qty===""?null:Number(ED.qty),delivered:null,owner:ED.owner,status:"Açık",note:"",ord})},updatedAt:nowISO()}),"Parça eklendi");
+          const ok=await write("requests/"+rid,()=>reqRef(rid).update({items:{[iid]:stamp({part:ED.part.trim(),type:ED.type,maker:ED.maker,material:ED.material,stock:ED.stock||"",qty:ED.qty===""?null:Number(ED.qty),delivered:null,owner:ED.owner,status:"Açık",note:"",ord})},updatedAt:nowISO()}),"Parça eklendi");
           if(ok)closeModal();
         }
       }
     }
   });
+  /* Metin alanları her tuşta NR'ye yazılır; çekmece yeniden çizilmez (odak kaybolmasın) */
+  const nrText=t=>{if(!NR)return false;const tx={nrNewPhase:"newPhase",nrPlat:"platform",nrLabel:"label",nrDue:"due"},npc={npFord:"ford",npIveco:"iveco",npSanel:"sanel"};
+    if(tx[t.id]){NR[tx[t.id]]=t.value;syncGo();return true}if(t.id==="npName"&&NR.np){NR.np.name=t.value;syncGo();return true}if(npc[t.id]&&NR.np){NR.np.codes[npc[t.id]]=t.value.trim();return true}return false};
+  m.addEventListener("input",e=>{nrText(e.target)});
   m.addEventListener("change",e=>{
     const t=e.target;
     if(NR){
-      const map={nrPhase:"phase",nrNewPhase:"newPhase",nrPlat:"platform",nrDue:"due",nrSets:"sets",nrDirect:"direct",nrSpare:"spare"};
-      if(map[t.id]){NR[map[t.id]]=t.value;if(!["nrPlat","nrDue"].includes(t.id))drawNew();return}
+      if(t.id==="nrPlan"){const x=(S.cfg.plan||[]).find(p=>p.id===t.value);NR.planId=t.value;if(x)NR.customer=x.customer;drawNew();return}
+      if(t.id==="nrCust"){NR.customer=t.value;drawNew();return}
+      if(t.id==="npFrom"){NR.np.from=t.value;delete NR.rows.__np;drawNew();return}
+      if(nrText(t))return;
+      const nums={nrSets:"sets",nrDirect:"direct",nrSpare:"spare"};if(nums[t.id]){NR[nums[t.id]]=t.value;drawNew();return}
       if(t.dataset.nr){const r=NR.rows[t.dataset.nr][+t.dataset.ni],f=t.dataset.nf;if(f==="on")r.on=t.checked;else if(f==="qty"){r.qty=Number(t.value)||0;r.qtyEdited=true}else r[f]=t.value;drawNew();return}
     }
     if(ED){
-      const map={edPhase:"phase",edPlat:"platform",edDue:"due",edSets:"sets",edDirect:"direct",edSpare:"spare",edNote:"note",apPart:"part",apQty:"qty",apType:"type",apMaker:"maker",apMat:"material",apOwner:"owner"};
+      const map={edLabel:"label",edCust:"customer",edPhase:"phase",edPlat:"platform",edDue:"due",edSets:"sets",edDirect:"direct",edSpare:"spare",edNote:"note",apPart:"part",apQty:"qty",apType:"type",apMaker:"maker",apMat:"material",apOwner:"owner"};
       if(map[t.id])ED[map[t.id]]=t.value;
-      if(t.id==="apPart"){const r=S.requests[ED.rid];const bp=(S.products[r.product]?.parts||[]).find(x=>x.part===t.value);if(bp){Object.assign(ED,{type:bp.type,maker:bp.maker,material:bp.material,owner:bp.owner});if(r.sets)ED.qty=r.sets*bp.perSet+(r.spare||0);drawEdit()}}
+      if(t.id==="apPart"){const r=S.requests[ED.rid];const bp=(S.products[r.product]?.parts||[]).find(x=>x.part===t.value);if(bp){Object.assign(ED,{type:bp.type,maker:bp.maker,material:bp.material,owner:bp.owner,stock:bp.stock||""});if(r.sets)ED.qty=r.sets*bp.perSet+(r.spare||0);drawEdit()}}
     }
   });
 }
 
 /* ---------- CSV ---------- */
 async function exportCsv(){
-  const list=allItems().filter(x=>passes(x,S.f,S.tab==="liste"?{}:{status:1})).sort((a,b)=>(a.due||"").localeCompare(b.due||"")||(a.p.ord||0)-(b.p.ord||0)||(a.it.ord||0)-(b.it.ord||0));
-  const H=["Müşteri","Proje","Platform","Faz","Termin","Alt Parça","Üretim Tipi","Üretici","Ham Madde","Araç Set","Talep Miktarı","Teslim Edilen","Sorumlu","Durum","Not"];
+  const list=allItems().filter(x=>passes(x,S.f)).sort((a,b)=>(a.due||"").localeCompare(b.due||"")||(a.p.ord||0)-(b.p.ord||0)||(a.it.ord||0)-(b.it.ord||0));
+  const H=["Müşteri","Ürün","Program","Faz","Teslim Yeri","Termin","Alt Parça","Stok Kodu","Üretim Tipi","Üretici","Ham Madde","Ürün Adedi","Talep Miktarı","Teslim Edilen","Sorumlu","Durum","Not"];
   const q=v=>{v=v==null?"":String(v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
-  const lines=[H.join(";")].concat(list.map(x=>[x.p.customer,x.p.name,x.r.platform,x.r.phase,x.due?fmtD(x.due):"",x.it.part,x.type,x.it.maker,x.it.material,x.r.sets||"",x.it.qty??"",x.it.delivered??"",x.it.owner,x.it.status,x.it.note].map(q).join(";")));
+  const lines=[H.join(";")].concat(list.map(x=>[custOf(x.r),x.p.name,x.p.program,x.r.adhoc?"Fazsız"+(x.r.label?" · "+x.r.label:""):x.r.phase,x.r.platform,x.due?fmtD(x.due):"",x.it.part,x.it.stock||"",x.type,x.it.maker,x.it.material,x.r.sets||"",x.it.qty??"",x.it.delivered??"",x.it.owner,x.it.status,x.it.note].map(q).join(";")));
   if(!S.downloads){toast("Bu görünümde dosya indirme kullanılamıyor.",true);return}
   try{await S.downloads.save({filename:"prototip-listesi-"+todayISO()+".csv",data:"﻿"+lines.join("\r\n")});toast(list.length+" satır indirildi")}catch(e){if(e&&e.code!=="declined")toast("İndirme başarısız oldu.",true)}
 }
 
 /* ---------- Başlatma ---------- */
-bindFilters();bind();bindModal();bindAdmin();
+bindFilters();bind();bindModal();bindAdmin();bindPlan();bindApproval();bindV2();
 document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
 async function boot(){
   if(!window.claude||!window.claude.use){return bootStandalone()}
@@ -833,7 +1374,7 @@ async function boot(){
   const onErr=e=>{setSync("Bağlantı kesildi",true);if(e&&e.code!=="revoked")toast("Canlı bağlantı kesildi; sayfayı yenileyin.",true)};
   db.collection("products").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.products=o;S.loaded.p=true;if(S.bomDraft&&!S.bomDraft._dirty)S.bomDraft=null;ready()},onErr);
   db.collection("requests").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.requests=o;S.loaded.r=true;ready()},onErr);
-  db.doc("config/lists").onSnapshot(s=>{const d=s.exists?s.data():{};S.cfg={phases:d.phases||[],platforms:d.platforms||[],people:d.people||[],makers:d.makers||[],customers:d.customers||[],programs:d.programs||[]};ready()},onErr);
+  db.doc("config/lists").onSnapshot(s=>{const d=s.exists?s.data():{};S.cfg={phases:d.phases||[],platforms:d.platforms||[],people:d.people||[],makers:d.makers||[],customers:d.customers||[],programs:d.programs||[],plan:d.plan||[]};ready()},onErr);
 }
 function ready(){if(S.loaded.p&&S.loaded.r){if(!pending)setSync("Canlı · "+Object.values(S.requests).filter(r=>!r.deleted).length+" talep");render()}}
 /* ---------- Sunucu (kurum içi) modu: REST + canlı olaylar ---------- */
@@ -880,8 +1421,8 @@ async function bootStandalone(){
     if(r.status===401){showLogin();return}
     if(r.ok){const j=await r.json();
       if(j.user){S.me=j.user;S.meDisplay=j.display||j.user;S.serverUser=true}
-      S.auth=!!j.auth;S.role=j.role||"";S.canManage=!!j.canManage;$("#navAdmin").hidden=!S.canManage;$("#logout").hidden=!S.auth||!!j.sso;
-      if(j.readonly){S.canWrite=false;S.canWriteKnown=true;$("#ro").hidden=false;$("#ro").textContent=j.role==="viewer"?"Görüntüleme yetkiniz var. Düzenleme yetkisi için Ar-Ge yöneticisine başvurun.":"Bu sunucu yalnızca okuma modunda çalışıyor."}
+      S.auth=!!j.auth;S.role=j.role||"";S.canManage=!!j.canManage;S.canApprove=!!j.canApprove;if(j.canRequest!==undefined)S.canRequest=!!j.canRequest;$("#logout").hidden=!S.auth||!!j.sso;
+      if(j.readonly){S.canWrite=false;S.canWriteKnown=true;$("#ro").hidden=false;$("#ro").textContent=j.role==="engineer"?"Proje Mühendisi: \"Yeni talep\" ile talep oluşturabilirsiniz; talepleriniz Onaylar\'da bekler, yönetici onaylayınca Teslimatlar\'a ve Özet\'e girer.":j.role==="viewer"?"Görüntüleme yetkiniz var. Düzenleme yetkisi için Ar-Ge yöneticisine başvurun.":"Bu sunucu yalnızca okuma modunda çalışıyor."}
       else{S.canWriteKnown=true}}}catch(e){}
   renderWho();$("#who").addEventListener("click",editWho);
   setSync("Yükleniyor…");
@@ -889,10 +1430,10 @@ async function bootStandalone(){
   S.db=db;
   db.collection("products").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.products=o;S.loaded.p=true;if(S.bomDraft&&!S.bomDraft._dirty)S.bomDraft=null;ready()});
   db.collection("requests").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.requests=o;S.loaded.r=true;ready()});
-  db.doc("config/lists").onSnapshot(s=>{const d=s.exists?s.data():{};S.cfg={phases:d.phases||[],platforms:d.platforms||[],people:d.people||[],makers:d.makers||[],customers:d.customers||[],programs:d.programs||[]};ready()});
+  db.doc("config/lists").onSnapshot(s=>{const d=s.exists?s.data():{};S.cfg={phases:d.phases||[],platforms:d.platforms||[],people:d.people||[],makers:d.makers||[],customers:d.customers||[],programs:d.programs||[],plan:d.plan||[]};ready()});
 }
 /* ---------- Giriş ---------- */
-const ROLE_TR={viewer:"Görüntüleme",editor:"Düzenleme",admin:"Yönetici",none:"Engelli"};
+const ROLE_TR={viewer:"Görüntüleme",engineer:"Proje Mühendisi",editor:"Düzenleme",admin:"Yönetici",none:"Engelli"};
 async function api(method,path,body){
   const r=await fetch(path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined,cache:"no-store"});
   let j={};try{j=await r.json()}catch(e){}
@@ -931,24 +1472,66 @@ function viewAdmin(){
     (ADM.err?'<div class="warn">'+esc(ADM.err)+'</div>':"")+
     '<form class="form" id="uAdd" style="margin:0;align-items:flex-end"><label class="fl">Kullanıcı adı<input class="in" id="uAddU" placeholder="ör. ahmet.kaya" style="width:220px" required></label>'+
     '<label class="fl">Rol<select class="in" id="uAddR">'+opts("editor")+'</select></label><button class="btn dark" type="submit">Ekle / güncelle</button></form>'+
-    '<p class="hint" style="margin:0"><b>Görüntüleme:</b> listeyi ve grafikleri görür. <b>Düzenleme:</b> talep, parça ve durum değiştirir. <b>Yönetici:</b> düzenler ve bu sayfadan yetki verir. <b>Engelli:</b> giriş yapamaz.</p>'+
+    '<p class="hint" style="margin:0"><b>Görüntüleme:</b> Özet, Teslimatlar ve Ürünler\'i görür. <b>Proje Mühendisi:</b> talep oluşturur (yeni faz, fazsız teslimat, yeni ürün dahil); talep yönetici onayından sonra Teslimatlar\'a girer. <b>Düzenleme:</b> talep, parça ve durum değiştirir. <b>Yönetici:</b> düzenler, talepleri onaylar/reddeder ve bu sayfadan yetki verir. <b>Engelli:</b> giriş yapamaz.</p>'+
     '<div style="overflow-x:auto"><table class="utbl"><thead><tr><th>Kullanıcı</th><th>Rol</th><th>Son giriş</th><th>Son değiştiren</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
 }
 async function loadAdmin(){
   if(ADM.busy)return;ADM.busy=true;
   try{const j=await api("GET","api/admin/users");ADM.users=j;ADM.err=""}catch(e){ADM.err=e.message}
-  ADM.busy=false;if(S.tab==="yetki")$("#view").innerHTML=viewAdmin();
+  ADM.busy=false;setYcont("kullanici",viewAdmin);
 }
 async function adminDo(method,user,body,msg){
   try{const j=await api(method,"api/admin/users/"+encodeURIComponent(user),body);ADM.users.users=j.users;ADM.err="";ADM.confirm="";toast(msg)}
   catch(e){ADM.err=e.message;toast(e.message,true)}
-  $("#view").innerHTML=viewAdmin();
+  setYcont("kullanici",viewAdmin);
+}
+function fmtDT(s){return s?new Date(s).toLocaleString("tr-TR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}):""}
+async function approveReq(rid){
+  const r=S.requests[rid];if(!r)return;const patch={approval:{state:"approved"},updatedAt:nowISO()};
+  if(r.proposedProduct&&!S.products[r.product]){const pp=r.proposedProduct;
+    const ok=await write("products/"+r.product,()=>S.db.collection("products").doc(r.product).set(stamp({name:pp.name,customer:pp.customer||custOf(r),program:pp.program||"",codes:pp.codes||{},parts:pp.parts||[],ord:Math.max(0,...Object.values(S.products).map(p=>p.ord||0))+1})));
+    if(!ok)return;patch.proposedProduct=null}
+  if(r.proposedPlan&&r.proposedPlan.phase){   // önerilen yeni faz onayla birlikte faz planına eklenir
+    const x=Object.assign({},r.proposedPlan);x.platform=x.platform||x.customer;x.due=x.due||null;
+    const ex=planMatch(x),cfg={};let id;
+    if(ex)id=ex.id;else{id=planIdFor(x);cfg.plan=[...(S.cfg.plan||[]),{id,customer:x.customer,phase:x.phase,platform:x.platform,due:x.due}]}
+    if(!S.cfg.phases.includes(x.phase))cfg.phases=[...S.cfg.phases,x.phase];if(x.platform&&!S.cfg.platforms.includes(x.platform))cfg.platforms=[...S.cfg.platforms,x.platform];
+    if(Object.keys(cfg).length&&!await saveCfg(cfg))return;patch.planId=id;patch.proposedPlan=null}
+  if(r.adhoc&&r.platform&&!S.cfg.platforms.includes(r.platform))await saveCfg({platforms:[...S.cfg.platforms,r.platform]});
+  if(await write("requests/"+rid,()=>reqRef(rid).update(patch),prodOf(r).name+" · "+phaseName(r)+" onaylandı"))render();
+}
+let RJ=null;
+function openReject(rid){const r=S.requests[rid];if(!r)return;RJ={rid};
+  $("#modal").innerHTML='<div class="scrim" id="rjScrim"><div class="drawer" role="dialog" aria-modal="true" aria-labelledby="rjT" style="width:min(520px,100%)"><div class="dh"><h2 id="rjT">Talebi reddet</h2><span class="muted" style="font-size:12.5px">'+esc(prodOf(r).name)+' · '+esc(phaseName(r))+'</span></div>'+
+   '<div class="db"><label class="fl">Neden (talebi açan kişi görecek)<textarea class="in" id="rjReason" rows="3" style="height:auto;padding:6px 8px" placeholder="ör. Adet DVP planıyla uyuşmuyor, 60 olmalı"></textarea></label></div>'+
+   '<div class="df"><span class="grow"></span><button type="button" class="btn" id="rjNo">Vazgeç</button><button type="button" class="btn danger" id="rjGo">Reddet</button></div></div></div>';
+  $("#rjReason").focus();
+  $("#rjNo").onclick=()=>{RJ=null;$("#modal").innerHTML=""};
+  $("#rjGo").onclick=async()=>{const why=$("#rjReason").value.trim();if(!why){toast("Ret nedenini yazın.",true);return}
+    if(await write("requests/"+rid,()=>reqRef(rid).update({approval:{state:"rejected",reason:why},updatedAt:nowISO()}),"Talep reddedildi")){RJ=null;$("#modal").innerHTML="";render()}};
+}
+function bindApproval(){
+  $("#view").addEventListener("click",e=>{const a=e.target.closest("[data-approve]"),j=e.target.closest("[data-reject]");
+    if(a){e.stopPropagation();approveReq(a.dataset.approve)}else if(j){e.stopPropagation();openReject(j.dataset.reject)}},true);
+  $("#pendBtn").addEventListener("click",()=>{S.on.tab="rejected";S.on.sel=null;setTab("onay")});
+}
+function bindPlan(){
+  const v=$("#view");
+  v.addEventListener("change",e=>{const t=e.target;if(t.dataset.plandue!==undefined){setPlanDue(+t.dataset.plandue,t.value)}});
+  v.addEventListener("click",e=>{const b=e.target.closest("[data-planrm]");if(!b)return;const pl=(S.cfg.plan||[]).filter((_,i)=>i!==+b.dataset.planrm);saveCfg({plan:pl})});
+  v.addEventListener("submit",e=>{const f=e.target.closest("#planAdd");if(!f)return;e.preventDefault();e.stopPropagation();
+    const c=$("#paC").value,ph=$("#paP").value.trim(),s=$("#paS").value.trim()||c,d=$("#paD").value||null;if(!ph)return;
+    const id=trLower(c+"-"+ph+"-"+s).replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    if((S.cfg.plan||[]).some(x=>x.id===id)){toast("Bu satır zaten var.",true);return}
+    const patch={plan:[...(S.cfg.plan||[]),{id,customer:c,phase:ph,platform:s,due:d}]};
+    if(!S.cfg.phases.includes(ph))patch.phases=[...S.cfg.phases,ph];if(s&&!S.cfg.platforms.includes(s))patch.platforms=[...S.cfg.platforms,s];
+    saveCfg(patch).then(ok=>ok&&toast("Faz planına eklendi: "+planLabel(patch.plan[patch.plan.length-1])))},true);
 }
 function bindAdmin(){
   const v=$("#view");
-  v.addEventListener("change",e=>{const s=e.target.closest("[data-urole]");if(!s||S.tab!=="yetki")return;adminDo("PUT",s.dataset.urole,{role:s.value},s.dataset.urole+": "+ROLE_TR[s.value])});
-  v.addEventListener("click",e=>{const b=e.target.closest("[data-urm]");if(!b||S.tab!=="yetki")return;const u=b.dataset.urm;
-    if(ADM.confirm!==u){ADM.confirm=u;$("#view").innerHTML=viewAdmin();return}adminDo("DELETE",u,null,u+" kaldırıldı")});
+  v.addEventListener("change",e=>{const s=e.target.closest("[data-urole]");if(!s||S.tab!=="yonetim")return;adminDo("PUT",s.dataset.urole,{role:s.value},s.dataset.urole+": "+ROLE_TR[s.value])});
+  v.addEventListener("click",e=>{const b=e.target.closest("[data-urm]");if(!b||S.tab!=="yonetim")return;const u=b.dataset.urm;
+    if(ADM.confirm!==u){ADM.confirm=u;setYcont("kullanici",viewAdmin);return}adminDo("DELETE",u,null,u+" kaldırıldı")});
   v.addEventListener("submit",e=>{const f=e.target.closest("#uAdd");if(!f)return;e.preventDefault();const u=$("#uAddU").value.trim(),r=$("#uAddR").value;if(u)adminDo("PUT",u,{role:r},u+": "+ROLE_TR[r])});
   $("#logout").addEventListener("click",async()=>{try{await api("POST","api/logout",{})}catch(e){}location.reload()});
 }

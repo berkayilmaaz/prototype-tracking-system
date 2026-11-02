@@ -11,8 +11,8 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 | Port | 8080 (değiştirilebilir) |
 | Dış bağlantı | Yok. Sayfa internetten hiçbir şey yüklemez |
 | Giriş | Şirket kullanıcı adı ve şifresiyle (Active Directory / LDAP) + bir yerel yönetici hesabı |
-| Yetki | Kullanıcı bazında rol: Görüntüleme, Düzenleme, Yönetici (yetki verebilir), Engelli |
-| Yedek | Günlük otomatik (`data/backups/`, son 30 gün) + istenince JSON dışa aktarma |
+| Yetki | Kullanıcı bazında rol: Görüntüleme, Proje Mühendisi (talep açar, yönetici onaylar), Düzenleme, Yönetici (onay + yetki verir), Engelli |
+| Yedek | Günlük otomatik (`data/backups/`, son 30 gün) + **Yönetim → Yedekler**'den tek tıkla `.db` indirme |
 | Kayıt geçmişi | Her değişiklik kim/ne zaman bilgisiyle `history` tablosuna yazılır |
 
 ## Sistem şeması
@@ -27,6 +27,19 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 
 Şemanın kaynağı `docs/mimari.html` (tarayıcıda açılır) ve `docs/mimari.svg`.
 
+## Ekranlar
+
+| Sekme | Kim kullanır | Ne gösterir |
+|---|---|---|
+| **Teslimatlar** | Herkes (açılış sayfası) | Solda müşteri → faz rayı. Bir faz seçilince her teslim yeri/tarih bir kart olur (ör. DCV: Farplas 13 Kas, Ford 16 Kas, Oto Trim 7 Ara). Altta her teslimat tarih bloğu, kalan gün ve ilerlemeyle; ürün satırına tıklayınca alt parçalar açılır ve düzenlenir. Yalnızca **onaylı** talepler görünür. |
+| **Özet** | Herkes | 5 kutu (geciken, önümüzdeki 3 hafta, genel ilerleme, onay bekleyen, termini belirsiz), **aylık teslimat takvimi**, yaklaşan teslimatlar, eksik bilgiler. Müşteriye göre süzülür. Takvimdeki ya da listedeki bir teslimata tıklayınca Teslimatlar'da o teslimat açılır. |
+| **Grafik** | Herkes | Termin çizelgesi (her ürünün faz terminleri, bugün çizgisi; bitti / termini geçti / 14 gün içinde / ileride), ürün bazlı ilerleme, sorumlu iş yükü, üreticide bekleyen. Müşteri, ürün, sorumlu ve aramayla süzülür; işarete ya da çubuğa tıklayınca Teslimatlar'da açılır. |
+| **Ürünler** | Herkes (düzenleme: Düzenleme/Yönetici) | Ürün listesi ve kodla arama. Ürün detayında **Ford / Iveco / Sanel kodları** üç ayrı kartta (kopyala düğmesiyle), ürünün tüm faz/teslimatları ve ürün ağacı. |
+| **Onaylar** | Yönetici karar verir; herkes görür | Proje mühendislerinden gelen talepler ana listeden ayrı, burada bekler: Bekleyen / Reddedilen / Son onaylanan. Yönetici adetleri düzeltip onaylar (toplu onay da var) ya da nedenini yazıp reddeder. |
+| **Yönetim** | Düzenleme: Faz planı, Listeler · Yönetici: + Yedekler, Kullanıcılar | **Yedekler:** "Şimdi yedek indir (.db)" ve günlük yedeklerin listesi. **Kullanıcılar ve yetkiler**, **Faz planı** (termin değişince bağlı talepler güncellenir), **Listeler**. |
+
+**Yeni talep** üç türlüdür: *Plandaki teslimat* (faz planından seç), *Yeni faz ya da teslim yeri* (plana yeni satır; aynı faza ikinci bir tarih de böyle eklenir), *Fazsız, sadece tarih* (faza bağlı olmayan tek seferlik teslimat; Teslimatlar'da "Fazsız teslimatlar" altında ve takvimde görünür). Aynı ekrandan **yeni ürün** de eklenebilir (alt parçalar başka bir üründen kopyalanabilir ya da şablondan gelir).
+
 ## Klasör yapısı
 
 ```
@@ -34,9 +47,8 @@ prototip-takip/
 ├─ server.py            Sunucu (HTTP + API + canlı güncelleme + yedek)
 ├─ auth.py              Giriş (AD/LDAP), yerel yönetici, roller ve oturumlar
 ├─ app/index.html       Arayüz (tek dosya)
-├─ seed/seed.json       İlk kurulum verisi (güncel Excel'den üretildi)
-├─ seed/bom.json        Ürün ağacı ve açılır liste tanımları
-├─ tools/excel_to_seed.py   Excel → seed.json dönüştürücü (openpyxl gerekir)
+├─ seed/seed.json       İlk kurulum verisi ("H84X PROTOTİPLER GENEL" Excel'inden üretildi)
+├─ tools/genel_to_seed.py   Excel (ürün × faz matrisi) → seed.json dönüştürücü (openpyxl gerekir)
 ├─ docs/                Sistem şeması (png, svg, html)
 ├─ data/                Veritabanı ve yedekler (ilk çalıştırmada oluşur)
 ├─ Dockerfile, docker-compose.yml
@@ -115,7 +127,7 @@ docker compose exec prototip-takip python server.py --set-admin-password
 ### 6. Tarayıcıdan ilk giriş ve yetkiler
 
 1. `http://<sunucu-adresi>:8080` açın, kullanıcı adı `admin` ve 5. adımdaki şifreyle girin.
-2. **Yetkiler** sekmesinde *Kullanıcı adı* alanına `berkay.yilmaz` yazın, rol **Yönetici** seçip *Ekle / güncelle*.
+2. **Yönetim → Kullanıcılar ve yetkiler** bölümünde *Kullanıcı adı* alanına `berkay.yilmaz` yazın, rol **Yönetici** seçip *Ekle / güncelle*.
 3. Bundan sonra yetkileri Ar-Ge (Berkay Yılmaz) dağıtır. Diğer şirket kullanıcıları kendi Windows kullanıcı adı ve şifresiyle girer; ilk girişte "Görüntüleme" rolü alır.
 
 ### 7. Yedek ve iç adres
@@ -192,9 +204,10 @@ WantedBy=multi-user.target
 
 | Rol | Ne yapabilir |
 |---|---|
-| Görüntüleme (`viewer`) | Liste ve grafikleri görür, Excel'e aktarır |
-| Düzenleme (`editor`) | Talep, parça, durum, ürün ağacı ve listeleri değiştirir |
-| Yönetici (`admin`) | Düzenler ve **Yetkiler** sekmesinden başkalarına rol verir (başka yönetici de atayabilir) |
+| Görüntüleme (`viewer`) | Özet, Teslimatlar, Ürünler ve Onaylar'ı görür, Excel'e aktarır |
+| Proje Mühendisi (`engineer`) | Görür; **talep oluşturur** (yeni faz, fazsız teslimat ve yeni ürün önerisi dahil), talep yönetici onayına gider (aşağıda) |
+| Düzenleme (`editor`) | Talep, parça, durum, ürün ağacı, faz planı ve listeleri değiştirir |
+| Yönetici (`admin`) | Düzenler, **talepleri onaylar/reddeder** ve **Yönetim** sekmesinden başkalarına rol verir (başka yönetici de atayabilir) ve **yedek indirir** |
 | Engelli (`none`) | Giriş yapamaz |
 
 - Şirket hesabıyla ilk kez giren herkes `PT_DEFAULT_ROLE` rolüyle (varsayılan: Görüntüleme) eklenir. Henüz giriş yapmamış birine de kullanıcı adını yazarak önceden rol verilebilir.
@@ -202,6 +215,16 @@ WantedBy=multi-user.target
 - Kimse kendi rolünü değiştiremez; yerel yönetici hesabı değiştirilemez ve silinemez.
 - Aynı kullanıcı adıyla 5 dakika içinde 5 hatalı denemeden sonra 5 dakika beklenir (AD hesabının kilitlenmesini de önler).
 - Her değişiklik `history` tablosuna kullanıcı adıyla kaydedilir.
+
+### Talep onay akışı (Proje Mühendisi)
+
+1. Proje Mühendisi **Yeni talep** ile türü seçer: faz planındaki bir teslimat (ör. *Iveco · Batch 2*), yeni bir faz/teslim yeri ya da fazsız (sadece tarihli) teslimat. Ürünleri ve adedi girer (listede olmayan ürünü **+ Yeni ürün** ile önerebilir), **Onaya gönder** der.
+2. Talep ana listeye, toplamlara ve takvime **girmez**; **Onaylar** sekmesinde bekler (menüde sayaç çıkar). Herkes orada görebilir.
+3. **Yönetici** Onaylar'da talebi inceler, gerekirse adetleri düzeltir; **Onayla** (birden fazlasını seçip toplu da onaylayabilir) ya da **Reddet** (neden yazılır). Onaylanınca talep Teslimatlar'a ve Özet'e girer; önerilen yeni faz faz planına, önerilen yeni ürün Ürünler listesine eklenir. Karar veren kişi ve zaman talepte saklanır.
+4. Proje Mühendisi yalnızca **kendi** açtığı ve **henüz onaylanmamış** talebi düzenleyebilir ya da geri çekebilir. Reddedilen talebi (üstte "Reddedilen talebiniz" uyarısı çıkar) düzeltip kaydederse önceki ret nedeniyle birlikte tekrar onaya gider. Onaylanmış talepleri değiştiremez.
+5. Düzenleme rolü onay bekleyen taleplere dokunamaz ve onay veremez; kendi açtığı talepler doğrudan onaylıdır.
+
+Bu kurallar sunucuda da uygulanır (yalnızca arayüzde gizlenmez).
 
 ### İlk kurulumda yerel yönetici
 
@@ -212,7 +235,7 @@ docker compose exec prototip-takip python server.py --set-admin-password
 # Docker olmadan:  python server.py --set-admin-password
 ```
 
-Sonra tarayıcıdan `admin` ile girip **Yetkiler** sekmesinden Ar-Ge'de düzenleme yapacak kişilere *Düzenleme*, yetki dağıtacak kişilere *Yönetici* rolü verin.
+Sonra tarayıcıdan `admin` ile girip **Yönetim → Kullanıcılar ve yetkiler** bölümünden Ar-Ge'de düzenleme yapacak kişilere *Düzenleme*, yetki dağıtacak kişilere *Yönetici* rolü verin.
 
 ### AD bağlantısını denemek
 
@@ -230,7 +253,7 @@ Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı,
 - **`ldap://` (389) şifreleri ağda açık taşır.** Mümkünse `PT_LDAP_URL=ldaps://10.34.10.1:636` kullanın. Sertifika kurum içi bir CA ile imzalıysa CA dosyasını `PT_LDAP_CA_FILE` ile verin. AD "LDAP signing" zorunlu tutuyorsa `ldap://` ile giriş reddedilir; uygulama bunu "şifreli bağlantı gerekli" diye bildirir.
 - **Tarayıcı ile uygulama arası da HTTP'dir;** giriş şifresi bu yolda da açık gider. Önüne IIS/nginx koyup HTTPS açmanız ve `PT_COOKIE_SECURE=1` ayarlamanız önerilir. Vekilde `/api/events` için tamponlamayı kapatın (nginx: `proxy_buffering off;`); bu adres canlı güncelleme akışıdır (Server-Sent Events).
 - Uygulama yalnızca iç ağdan erişilebilir olmalı. Ters vekil arkasında `PT_HOST=127.0.0.1` ile çalıştırın.
-- İsterseniz giriş ekranı yerine IIS Windows Authentication kullanılabilir: vekil kullanıcı adını bir başlıkla iletir, `PT_USER_HEADER` o başlığın adına ayarlanır (rol yine Yetkiler sekmesinden verilir).
+- İsterseniz giriş ekranı yerine IIS Windows Authentication kullanılabilir: vekil kullanıcı adını bir başlıkla iletir, `PT_USER_HEADER` o başlığın adına ayarlanır (rol yine Yönetim → Kullanıcılar ve yetkiler'den verilir).
 
 ## Ayarlar (ortam değişkenleri)
 
@@ -248,7 +271,7 @@ Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı,
 | `PT_LDAP_BASE_DN` | alan adından | Görünen adı (displayName) aramak için kök, ör. `dc=sanelelk,dc=local` |
 | `PT_LDAP_CA_FILE` | (boş) | `ldaps` için kurum CA sertifikası |
 | `PT_LDAP_TLS_VERIFY` | 1 | `0` ise ldaps sertifikası doğrulanmaz (önerilmez) |
-| `PT_DEFAULT_ROLE` | viewer | İlk kez giren kullanıcının rolü: `viewer`, `editor`, `none` |
+| `PT_DEFAULT_ROLE` | viewer | İlk kez giren kullanıcının rolü: `viewer`, `engineer`, `editor`, `none` |
 | `PT_ADMIN_USER` | admin | Yerel yönetici kullanıcı adı |
 | `PT_SESSION_HOURS` | 168 | Oturum süresi (saat) |
 | `PT_COOKIE_SECURE` | (boş) | `1`: çerez yalnızca HTTPS'te gönderilir |
@@ -257,20 +280,44 @@ Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı,
 ## Yedekleme ve geri yükleme
 
 - Sunucu her gün `data/backups/prototip-YYYY-AA-GG.db` dosyasını oluşturur.
+- **Tarayıcıdan (Yönetici):** Yönetim → Yedekler → *Şimdi yedek indir (.db)* o anki verinin tutarlı bir kopyasını indirir; aynı ekranda günlük yedekler listelenir ve tek tek indirilebilir. Dosya kullanıcı rollerini ve yerel yönetici şifresinin özetini de içerir, güvenli yerde saklayın.
+- `.db` yedeğinden geri yükleme: sunucuyu durdurun, dosyayı `data/prototip.db` yerine koyun (yanındaki `-wal`/`-shm` dosyalarını silin), sunucuyu başlatın.
 - Anlık tam yedek: tarayıcıdan `/api/export.json` ya da `python server.py --export yedek.json`.
 - Geri yükleme: `python server.py --import yedek.json`. Bu komut önce mevcut verinin yedeğini alır, sonra veriyi değiştirir. Sunucuyu durdurup çalıştırın.
 - Kurum yedekleme sistemine `data/backups/` klasörünü eklemek yeterli (bu dosyalar çalışırken tutarlı alınmış kopyalardır).
 
-## Excel'den yeniden veri yükleme
+## Veri modeli (kısaca)
 
-Ar-Ge yeni bir Excel listesi gönderir ve uygulamadaki verinin tamamen o listeyle değiştirilmesi istenirse:
+- **Ürün:** ad, program (H84X), Ford / Iveco / Sanel kodu ve ürün ağacı (alt parçalar: stok kodu, ham madde kodu, kütle, ürün başına adet, tip, üretici, sorumlu).
+- **Talep:** bir ürünün bir faz için istenen adedi. Talepte **müşteri** (Ford / Iveco / Sanel), **faz**, **teslim yeri** (Ford, Pelzer Pimsa, Assan Hanil, Oto Trim, Farplas…) ve termin vardır; alt parçalar ürün ağacından gelir.
+- **Faz planı** (Yönetim → Faz planı): Excel'deki her faz sütunu bir satırdır (müşteri · faz · teslim yeri · termin). Aynı müşteri · faz · teslim yeri için farklı tarihli birden fazla satır olabilir. Talepler plandan seçilerek açılır; plandaki termin değişince bağlı tüm talepler güncellenir.
+- **Teslimat:** aynı müşteri · faz · teslim yeri · termine sahip talepler bir teslimat olarak gruplanır (Teslimatlar ve takvim bu gruplamayı kullanır).
+- **Fazsız teslimat:** `adhoc: true` ve isteğe bağlı `label` (ör. "Fuar numunesi") taşıyan, faz planına bağlı olmayan talep.
+- **Onay alanları:** `approval` (durum, talep eden, karar veren, neden), `proposedPlan` (önerilen yeni faz), `proposedProduct` (önerilen yeni ürün; onayla `products` koleksiyonuna eklenir).
+
+## Excel'den veriyi sıfırdan yükleme
+
+Uygulamadaki **talepleri ve ürünleri** Excel'deki hale getirir. Kullanıcılar ve roller korunur; önceki veri otomatik yedeklenir.
 
 ```bash
 pip install openpyxl
-python tools/excel_to_seed.py "Ar-Ge Prototip List.xlsx" seed/seed.json
-python server.py --import seed/seed.json
+python tools/genel_to_seed.py "H84X PROTOTİPLER GENEL 3.xlsx" seed/seed.json
+# 11 ürün, 80 talep, 455 kalem, 16 faz sütunu -> seed/seed.json
+# Gri olduğu için alınmayan satırlar: Ambient Lighting Door Pocket Right, ...
 ```
-Dikkat: Bu işlem uygulamada sonradan yapılmış değişikliklerin üzerine yazar; önceki hali otomatik yedeklenir.
+
+Dönüştürücü Excel'in ilk sayfasını okur: 1. satır müşteri grubu (FORD / IVECO / SANEL), 2. satır teslim yeri, 3. satır faz, 4. satır termin; 5. satırdan itibaren her satır bir ürün, hücreler o fazdaki ürün adedi. **Gri dolgulu satırlar alınmaz**, adedi 0 olan hücreler talep oluşturmaz, görseller yok sayılır. Excel'de tip, üretici ve sorumlu olmadığı için bunlar boş gelir; Ürünler sekmesinden ürün ağacına girilip açık taleplere tek tuşla uygulanır.
+
+**Canlı sunucuda (Docker):** yeni `seed/seed.json` repoya gönderildikten sonra:
+
+```bash
+git pull
+docker compose up -d --build                                            # yeni sürüm + yeni seed imaja girer
+docker compose exec prototip-takip python server.py --import seed/seed.json
+docker compose restart prototip-takip                                   # açık ekranlar yeniden yüklensin
+```
+
+`--import` önce `data/backups/prototip-ice-aktarma-oncesi-….db` yedeğini alır. Dikkat: yayına girdikten sonra bu işlem uygulamada yapılmış tüm talep/durum değişikliklerinin üzerine yazar.
 
 ## API (bilgi için)
 
@@ -285,6 +332,8 @@ Dikkat: Bu işlem uygulamada sonradan yapılmış değişikliklerin üzerine yaz
 | GET | `/api/health` | Sağlık kontrolü |
 | POST | `/api/login`, `/api/logout` | Giriş / çıkış (JSON) |
 | GET / PUT / DELETE | `/api/admin/users`, `/api/admin/users/{kullanıcı}` | Yetki paneli (yalnızca Yönetici) |
+| GET | `/api/admin/backup.db` | Anlık SQLite yedeği (yalnızca Yönetici) |
+| GET | `/api/admin/backups`, `/api/admin/backups/{dosya}` | Günlük yedek listesi / indirme (yalnızca Yönetici) |
 
 Koleksiyonlar: `products` (ürün ağacı), `requests` (talepler; alt parçalar `items` alanında), `config` (`lists` belgesi: faz, platform, sorumlu, üretici listeleri).
 
