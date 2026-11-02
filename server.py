@@ -422,6 +422,11 @@ class Handler(BaseHTTPRequestHandler):
             if self.auth and not self._need("admin"):
                 return
             return self._backups(path)
+        if path == "/api/export.xlsx":   # "Excel'e aktar": Genel tablo düzeni + Kalemler
+            import export_xlsx
+            data = export_xlsx.build(self.store.state())
+            return self._send_file(data, f"H84X-prototipler-{dt.date.today().strftime('%d.%m.%Y')}.xlsx",
+                                   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         if path == "/api/export.json":
             st = self.store.state()
             body = json.dumps({"products": st["products"], "requests": st["requests"], "config": st["config"],

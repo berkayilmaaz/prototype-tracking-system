@@ -46,6 +46,7 @@ Ar-Ge biriminin prototip talep listesini (eski "Ar-Ge Prototip List.xlsx") taray
 prototip-takip/
 ├─ server.py            Sunucu (HTTP + API + canlı güncelleme + yedek)
 ├─ auth.py              Giriş (AD/LDAP), yerel yönetici, roller ve oturumlar
+├─ export_xlsx.py       "Excel'e aktar": Genel tablo düzeninde .xlsx üretir
 ├─ app/index.html       Arayüz (tek dosya)
 ├─ seed/seed.json       İlk kurulum verisi ("H84X PROTOTİPLER GENEL" Excel'inden üretildi)
 ├─ tools/genel_to_seed.py   Excel (ürün × faz matrisi) → seed.json dönüştürücü (openpyxl gerekir)
@@ -241,7 +242,7 @@ WantedBy=multi-user.target
 
 | Rol | Ne yapabilir |
 |---|---|
-| Görüntüleme (`viewer`) | Özet, Teslimatlar, Ürünler ve Onaylar'ı görür, Excel'e aktarır |
+| Görüntüleme (`viewer`) | Özet, Teslimatlar, Grafik, Ürünler ve Onaylar'ı görür, Excel'e aktarır |
 | Proje Mühendisi (`engineer`) | Görür; **talep oluşturur** (yeni faz, fazsız teslimat ve yeni ürün önerisi dahil), talep yönetici onayına gider (aşağıda) |
 | Düzenleme (`editor`) | Talep, parça, durum, ürün ağacı, faz planı ve listeleri değiştirir |
 | Yönetici (`admin`) | Düzenler, **talepleri onaylar/reddeder** ve **Yönetim** sekmesinden başkalarına rol verir (başka yönetici de atayabilir) ve **yedek indirir** |
@@ -332,6 +333,18 @@ Hata alınırsa mesaj nedenini söyler (sunucuya ulaşılamadı, şifre hatalı,
 - **Fazsız teslimat:** `adhoc: true` ve isteğe bağlı `label` (ör. "Fuar numunesi") taşıyan, faz planına bağlı olmayan talep.
 - **Onay alanları:** `approval` (durum, talep eden, karar veren, neden), `proposedPlan` (önerilen yeni faz), `proposedProduct` (önerilen yeni ürün; onayla `products` koleksiyonuna eklenir).
 
+## Excel'e aktar
+
+Teslimatlar'daki **Excel'e aktar** düğmesi "H84X PROTOTİPLER GENEL" düzeninde bir `.xlsx` indirir (kurulum veya ek paket gerekmez):
+
+- **Genel** sayfası: satırlar ürün; sütunlar müşteri (FORD / IVECO / SANEL) → teslim yeri → faz → termin (4 başlık satırı). Hücrede o teslimatın ürün adedi; TOPLAM sütunu ve satırı formüllü. Ardından Ford / Iveco / Sanel kodları ve her alt parça için stok kodu + ham madde (+ kütle). Hücre rengi: yeşil tamamı hazır, kırmızı termini geçti ve eksik var, sarı 7 gün içinde.
+- **Kalemler** sayfası: tüm alt parça kalemleri (durum, sorumlu, teslim edilen…) filtreli tek tablo.
+- Yeni ürün, yeni faz/teslim yeri ya da fazsız teslimat eklendiğinde satır ve sütunlar kendiliğinden oluşur. Onay bekleyen talepler dahil edilmez.
+
+## Sorumlu listesi
+
+Parça satırındaki **Sorumlu** menüsünde listedeki kişiler çıkar. Yeni kişi iki yoldan eklenir: menüden **+ Kişi ekle…** (ad soyad yazılır, o kaleme de atanır) ya da **Yönetim → Listeler → Sorumlular**. Liste herkes için ortaktır.
+
 ## Excel'den veriyi sıfırdan yükleme
 
 Uygulamadaki **talepleri ve ürünleri** Excel'deki hale getirir. Kullanıcılar ve roller korunur; önceki veri otomatik yedeklenir.
@@ -365,6 +378,7 @@ docker compose restart prototip-takip                                   # açık
 | PATCH | `/api/docs/{koleksiyon}/{id}` | İç içe birleştirerek güncelle |
 | DELETE | `/api/docs/{koleksiyon}/{id}` | Sil |
 | GET | `/api/events` | Canlı değişiklik akışı (SSE) |
+| GET | `/api/export.xlsx` | Excel'e aktar (Genel tablo + Kalemler) |
 | GET | `/api/export.json` | Tam yedek |
 | GET | `/api/health` | Sağlık kontrolü |
 | POST | `/api/login`, `/api/logout` | Giriş / çıkış (JSON) |

@@ -5,3 +5,4 @@ data/backups/
 __pycache__/
 .env
 *.pem
+graphify-out/

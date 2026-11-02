@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 WORKDIR /app
-COPY server.py auth.py ./
+COPY server.py auth.py export_xlsx.py ./
 COPY app ./app
 COPY seed ./seed
 COPY tools ./tools

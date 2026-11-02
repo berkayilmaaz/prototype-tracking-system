@@ -588,7 +588,7 @@ function rowHtml(x){
     '<div><input class="cell" '+k+' data-f="material" value="'+esc(it.material)+'" placeholder="—" aria-label="Ham madde"'+d+'></div>'+
     '<div><input class="cell n" type="number" min="0" inputmode="numeric" '+k+' data-f="qty" value="'+(it.qty??"")+'" placeholder="—" aria-label="Adet"'+d+'></div>'+
     '<div><input class="cell n" type="number" min="0" inputmode="numeric" '+k+' data-f="delivered" value="'+(it.delivered??"")+'" placeholder="0" aria-label="Teslim edilen"'+d+'></div>'+
-    '<div><select class="cell" '+k+' data-f="owner" aria-label="Sorumlu"'+d+'>'+opts(S.cfg.people,it.owner,"—")+'</select></div>'+
+    '<div><select class="cell" '+k+' data-f="owner" aria-label="Sorumlu"'+d+'>'+opts(S.cfg.people,it.owner,"—")+(ce&&canEdit()?'<option value="__add">+ Kişi ekle…</option>':"")+'</select></div>'+
     '<div><button type="button" class="st" data-stbtn="'+esc(key)+'" aria-haspopup="menu" aria-label="Durum: '+esc(it.status)+'"'+d+'><span class="'+sqOf(it.status)+'"></span><span class="l">'+esc(it.status||"Açık")+'</span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#626B75" stroke-width="1.5" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5"/></svg></button></div>'+
     '<div style="display:flex;align-items:center">'+dueBadge+late+'<input class="cell muted" '+k+' data-f="note" value="'+esc(it.note)+'" placeholder="'+(ce?"Not ekle":"")+'" aria-label="Not" title="'+esc(it.note)+'" data-by="'+esc(it.by||"")+'"'+d+'></div>'+
     '<div>'+(ce?'<button type="button" class="rm" data-rm="'+esc(key)+'" aria-label="'+esc(it.part)+' sil" title="Kalemi sil">✕</button>':"")+'</div></div>';
@@ -1093,6 +1093,9 @@ function bind(){
     if(t.id==="selAll"){allItems().filter(x=>passes(x,S.f)).forEach(x=>{const k=x.rid+"/"+x.iid;t.checked?S.sel.add(k):S.sel.delete(k)});renderBody();return}
     if(t.dataset.iid&&t.dataset.f){
       const f=t.dataset.f;let val=t.value;
+      if(f==="owner"&&val==="__add"){const it=S.requests[t.dataset.rid].items[t.dataset.iid];const nm=(window.prompt("Sorumlu listesine eklenecek kişinin adı soyadı:")||"").trim().slice(0,60);
+        if(!nm){t.value=it.owner||"";return}
+        if(!S.cfg.people.includes(nm))saveCfg({people:[...S.cfg.people,nm].sort((a,b)=>a.localeCompare(b,"tr"))});updItem(t.dataset.rid,t.dataset.iid,{owner:nm}).then(ok=>ok&&toast(nm+" sorumlu listesine eklendi"));t.blur();return}
       if(f==="qty"||f==="delivered")val=val===""?null:Math.max(0,Number(val));
       if(f==="part"&&!val.trim()){toast("Parça adı boş bırakılamaz.",true);t.value=S.requests[t.dataset.rid].items[t.dataset.iid].part;return}
       updItem(t.dataset.rid,t.dataset.iid,{[f]:val});if(t.tagName==="SELECT")t.blur();return}
@@ -1353,6 +1356,7 @@ function bindModal(){
 
 /* ---------- CSV ---------- */
 async function exportCsv(){
+  if(S.standalone){const a=document.createElement("a");a.href="api/export.xlsx";a.download="";document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),1000);toast("Excel hazırlanıyor…");return}
   const list=allItems().filter(x=>passes(x,S.f)).sort((a,b)=>(a.due||"").localeCompare(b.due||"")||(a.p.ord||0)-(b.p.ord||0)||(a.it.ord||0)-(b.it.ord||0));
   const H=["Müşteri","Ürün","Program","Faz","Teslim Yeri","Termin","Alt Parça","Stok Kodu","Üretim Tipi","Üretici","Ham Madde","Ürün Adedi","Talep Miktarı","Teslim Edilen","Sorumlu","Durum","Not"];
   const q=v=>{v=v==null?"":String(v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
